@@ -1,18 +1,16 @@
-# ![HasBogor](URL_GAMBAR) <!-- Replace URL_GAMBAR with the actual image link -->
+# <h1 align="center">HasBogor</h1>
 
-# Project Title
-HasBogor
+<p align="center">
+    <img src="logo.png" alt="HasBogor" width="300"> <!-- Atur ukuran sesuai kebutuhan -->
+</p>
 
-A brief description of what this project does and who it's for.
-
-**Nama-nama anggota kelompok**:
-- Akmal Nabil Fikri - 2306152084
-- Rebecca Zaneta Octoria Hutajulu - 2306275065
-- Michael Ignasius 
-- 2306259950
-- Ivan Jehuda Angi - 2306152222
-- Ismail Yanuar Anwas - 2306245781
-- Widya Mutia Ichsan - 2306165912
+## Anggota Kelompok
+- **Akmal Nabil Fikri** - 2306152084
+- **Rebecca Zaneta Octoria Hutajulu** - 2306275065
+- **Michael Ignasius** - 2306259950
+- **Ivan Jehuda Angi** - 2306152222
+- **Ismail Yanuar Anwas** - 2306245781
+- **Widya Mutia Ichsan** - 2306165912
 
 ## Table of Contents
 - [Deskripsi Aplikasi](#deskripsi-aplikasi)
@@ -23,18 +21,11 @@ A brief description of what this project does and who it's for.
 - [Desain dan Struktur Aplikasi](#desain-dan-struktur-aplikasi)
   - [USER](#user)
   - [ADMIN](#admin)
-  - [Login Page](#login-page)
-  - [Home Page](#home-page)
-  - [Detail Product](#detail-product)
-  - [Cart Page](#cart-page)
-  - [Riwayat Pembelian](#riwayat-pembelian)
-  - [Product Management Page](#product-management-page)
-  - [Promo Management Page](#promo-management-page)
 
 ## Deskripsi Aplikasi
-HasBogor adalah aplikasi web yang hadir untuk menjawab kebutuhan wisatawan dan masyarakat dalam menemukan produk oleh-oleh khas Bogor dengan lebih mudah dan efisien. Aplikasi ini menyediakan pusat informasi dan transaksi oleh-oleh khas Bogor seperti makanan khas, kerajinan tangan, dan banyak lagi. Pengguna dapat memesan produk secara online dan berinteraksi dengan komunitas melalui ulasan dan rekomendasi produk.
+**HasBogor** adalah aplikasi web yang bertujuan untuk memenuhi kebutuhan wisatawan dan masyarakat dalam menemukan produk oleh-oleh khas Bogor dengan lebih mudah dan efisien. Aplikasi ini menyediakan pusat informasi dan transaksi untuk oleh-oleh khas Bogor, termasuk makanan khas, kerajinan tangan, dan banyak lagi. Pengguna dapat memesan produk secara online serta berinteraksi dengan komunitas melalui ulasan dan rekomendasi produk.
 
-Kebermanfaatan aplikasi ini:
+### Kebermanfaatan Aplikasi
 - Mendukung pengrajin lokal dalam menjual produk mereka.
 - Meningkatkan akses wisatawan ke produk-produk khas Bogor.
 - Mempermudah transaksi dan memperkaya pengalaman belanja oleh-oleh.
@@ -55,101 +46,103 @@ Kebermanfaatan aplikasi ini:
 ## Sumber Initial Dataset Kategori Utama Produk
 | **Kategori Produk** | **Deskripsi**                                                               | **Sumber Data**            |
 |---------------------|-----------------------------------------------------------------------------|----------------------------|
-| Makanan             | Berbagai makanan khas Bogor seperti brownies, dodol, dan keripik.           | (dikirim oleh Ismail)       |
-| Souvenir            | Kerajinan tangan unik sebagai kenang-kenangan.                             | (dikirim oleh Ismail)       |
-
-## Promo
-Diskon dan penawaran spesial untuk produk tertentu selama periode tertentu, seperti saat hari-hari besar atau tanggal kembar.
+| Makanan             | Berbagai makanan khas Bogor seperti brownies, dodol, dan keripik.           | Menyusul                  |
+| Souvenir            | Kerajinan tangan unik sebagai kenang-kenangan.                             | Menyusul                  |
 
 ## Role atau Peran Pengguna Beserta Deskripsinya
 | **Role**         | **Deskripsi**                                                                                 |
 |------------------|-----------------------------------------------------------------------------------------------|
 | Admin            | Menambahkan produk dan promo ke katalog, mengelola transaksi dan ulasan.                      |
 | User             | Melihat dan membeli produk, memberikan ulasan, dan rating. Harus memiliki akun.               |
-| Guest (Optional) | Melihat-lihat produk, tapi tidak bisa membeli atau memberikan ulasan.                         |
-| Customer Service (Optional) | Menangani pertanyaan dan keluhan pengguna. Melihat data pengguna dan pesanan.       |
+| Guest (Optional) | Melihat-lihat produk, tetapi tidak bisa membeli atau memberikan ulasan.                      |
+| Customer Service (Optional) | Menangani pertanyaan dan keluhan pengguna, serta melihat data pengguna dan pesanan.  |
 
 ## Desain dan Struktur Aplikasi
 
-### USER
-| **Atribut**       | **Deskripsi**                         | **Tipe Data**   |
-|-------------------|---------------------------------------|-----------------|
-| ID User           | Identifikasi unik untuk pengguna      | Integer (UIUD)  |
-| Nama User         | Nama lengkap pengguna                 | String          |
-| Email             | Alamat email pengguna                 | String          |
-| Password          | Kata sandi yang di-hash               | String (hashed) |
-| Tanggal Bergabung | Tanggal pendaftaran                   | Date Time       |
-| Status            | Status akun, misal: Aktif, Tidak Aktif| String          |
+### USER <div align="center"></div>
 
-### ADMIN
-| **Atribut**        | **Deskripsi**                              | **Tipe Data**   |
-|--------------------|--------------------------------------------|-----------------|
-| ID Admin           | Identifikasi unik untuk admin              | Integer (UIUD)  |
-| Nama Admin/toko    | Nama lengkap admin                         | String          |
-| Email              | Email admin                                | String          |
-| Password           | Kata sandi yang di-hash                    | String (hashed) |
-| Tanggal Bergabung  | Tanggal admin mendaftar                    | DateTime        |
-| Status             | Status admin, misal: Aktif, Tidak Aktif     | String          |
+#### Atribut User
+| Atribut            | Deskripsi                                   | Tipe Data      |
+|--------------------|---------------------------------------------|-----------------|
+| ID User            | Identifikasi unik untuk pengguna            | Integer (UUID)  |
+| Nama User          | Nama lengkap pengguna                       | String          |
+| Email              | Alamat email pengguna                       | String          |
+| Password           | Kata Sandi untuk login                      | String (hashed)  |
+| Tanggal Bergabung  | Tanggal saat pengguna mendaftar            | DateTime        |
+| Status             | Status akun (Aktif, Tidak Aktif)          | String          |
 
-### Login Page
-| **Atribut**  | **Deskripsi**                   | **Tipe Data** |
-|--------------|---------------------------------|---------------|
-| Username     | Nama pengguna untuk login       | String        |
-| Password     | Kata sandi untuk login          | String        |
+#### Login Page
+| Atribut     | Deskripsi                            | Tipe Data  |
+|-------------|--------------------------------------|------------|
+| Username    | Nama pengguna untuk login            | String     |
+| Password    | Kata sandi untuk login               | String     |
 
-### Home Page
-| **Atribut**          | **Deskripsi**                                 | **Tipe Data** |
-|----------------------|-----------------------------------------------|---------------|
-| Kategori             | Jenis kategori oleh-oleh (Makanan, Barang)     | String        |
-| ID Kategori          | Identifikasi unik untuk kategori               | Integer (UIUD)|
-| Nama Kategori        | Nama lengkap kategori                          | String        |
-| Gambar Kategori      | URL gambar untuk kategori                      | String        |
-| Deskripsi Kategori   | Penjelasan singkat tentang kategori             | Text          |
-| Daftar Produk        | List produk yang termasuk dalam kategori        | Array of IDs  |
+#### Home Page
+| Atribut            | Deskripsi                                                        | Tipe Data          |
+|--------------------|------------------------------------------------------------------|---------------------|
+| Kategori           | Jenis kategori oleh-oleh, dibagi menjadi 2 (makanan/barang)     | String              |
+| ID Kategori        | Identifikasi unik untuk kategori                                   | Integer (UUID)      |
+| Nama Kategori      | Nama lengkap kategori                                             | String              |
+| Gambar Kategori    | URL gambar untuk kategori                                          | String              |
+| Deskripsi Kategori | Penjelasan singkat tentang kategori                               | Text                |
+| Daftar Produk      | List produk yang termasuk dalam kategori                          | Array of Product IDs |
 
-### Detail Product
-| **Atribut**      | **Deskripsi**                                  | **Tipe Data**    |
-|------------------|------------------------------------------------|------------------|
-| ID Produk        | Identifikasi unik untuk produk                  | Integer (UIUD)   |
-| Nama Produk      | Nama dari produk                                | String           |
-| Deskripsi        | Penjelasan tentang produk                       | Text             |
-| Harga            | Harga produk                                    | Float            |
-| Gambar           | URL gambar produk                               | String           |
-| Ulasan dan Rating| Ulasan pengguna dan rating produk               | Array of Objects |
-| Tambah ke Favorit| Fitur untuk menyimpan produk sebagai favorit    | -                |
+#### Detail Product
+| Atribut              | Deskripsi                                 | Tipe Data          |
+|----------------------|-------------------------------------------|---------------------|
+| ID Produk            | Identifikasi unik untuk produk            | Integer (UUID)      |
+| Nama Produk          | Nama dari produk                          | String              |
+| Deskripsi            | Penjelasan tentang produk                 | Text                |
+| Harga                | Harga Produk                             | Float               |
+| Gambar               | URL gambar produk                         | String              |
+| Ulasan dan Rating    | Ulasan pengguna dan rating produk        | Array of Objects    |
+| Tambah ke Favorit    | Fitur untuk menyimpan produk sebagai Favorit | -                  |
 
-### Cart Page
-| **Atribut**     | **Deskripsi**                                 | **Tipe Data** |
-|-----------------|-----------------------------------------------|---------------|
-| Daftar Produk   | Produk yang ada di keranjang                  | String        |
-| Total Harga     | Total harga keseluruhan produk di keranjang   | Integer       |
-| Pengiriman      | Informasi pengiriman                          | -             |
-| Pembayaran      | Informasi pembayaran                          | -             |
-| Checkout        | Proses finalisasi transaksi                   | -             |
+#### Cart Page
+| Atribut           | Deskripsi                                   | Tipe Data         |
+|-------------------|---------------------------------------------|--------------------|
+| Daftar Produk      | Produk yang ada di keranjang               | Array of Products   |
+| Total Harga       | Total harga produk dalam keranjang          | Float               |
+| Pengiriman        | Informasi mengenai pengiriman               | String              |
+| Pembayaran        | Metode pembayaran                            | String              |
+| Checkout          | Proses penyelesaian pembelian               | String              |
 
-### Riwayat Pembelian
-| **Atribut**         | **Deskripsi**                               | **Tipe Data**     |
-|---------------------|---------------------------------------------|-------------------|
-| Daftar Transaksi    | Semua transaksi yang sudah dilakukan        | Array of Objects  |
-| Detail Transaksi    | Detail dari setiap transaksi                | Array of Objects  |
-| Tanggal Pembelian   | Tanggal transaksi                           | DateTime          |
-| Status Pembayaran   | Status pembayaran (Sukses/Gagal)            | String            |
+#### Riwayat Pembelian
+| Atribut           | Deskripsi                                  | Tipe Data         |
+|-------------------|--------------------------------------------|--------------------|
+| Daftar Transaksi   | Semua transaksi yang telah dilakukan       | Array of Objects    |
+| Detail Transaksi   | Detail setiap transaksi                     | Array of Objects    |
+| Tanggal Pembelian  | Tanggal transaksi                          | DateTime           |
+| Status Pembayaran  | Status pembayaran (Sukses/Gagal)          | String              |
 
-### Product Management Page
-| **Atribut**       | **Deskripsi**                                   | **Tipe Data**   |
-|-------------------|-------------------------------------------------|-----------------|
-| ID Produk         | Identifikasi unik untuk setiap produk           | Integer (UIUD)  |
-| Nama Produk       | Nama produk                                     | String          |
-| Deskripsi Produk  | Keterangan produk                               | String          |
-| Rating            | Rating produk                                   | Float           |
-| Stok              | Jumlah produk tersedia                          | Integer         |
-| Toko Penjual      | Nama penjual produk                             | String          |
+### ADMIN <div align="center"></div>
 
-### Promo Management Page
-| **Atribut**       | **Deskripsi**                                 | **Tipe Data**   |
-|-------------------|-----------------------------------------------|-----------------|
-| ID Promo          | Identifikasi unik untuk promo                 | Integer (UIUD)  |
-| Kode              | Kode promo                                    | String          |
-| Potongan Harga    | Diskon dari promo                             | String          |
-| Masa berlaku      | Rentang waktu promo berlaku                   | Float           |
-| Minimal Transaksi | Batas minimal harga produk untuk promo berlaku | Integer         |
+#### Tabel Admin
+| Atribut           | Deskripsi                                   | Tipe Data         |
+|-------------------|---------------------------------------------|--------------------|
+| ID Admin           | Identifikasi unik untuk pengguna            | Integer (UUID)     |
+| Nama Admin/Toko    | Nama lengkap admin                          | String             |
+| Email              | Alamat email admin                          | String             |
+| Password           | Kata Sandi untuk login                      | String (hashed)    |
+| Tanggal Bergabung   | Tanggal saat admin mendaftar               | DateTime           |
+| Status             | Status akun (Aktif, Tidak Aktif)          | String             |
+
+#### Product Management Page (Tambah, Edit & Hapus Product)
+| Atribut           | Deskripsi                                   | Tipe Data         |
+|-------------------|---------------------------------------------|--------------------|
+| ID Produk          | Identifikasi unik untuk setiap produk       | Integer (UUID)     |
+| Nama Produk        | Nama dari produk                            | String             |
+| Deskripsi Produk   | Keterangan produk                          | String             |
+| Rating             | Rating produk                              | Float              |
+| Stok               | Jumlah ketersediaan Produk                 | Integer            |
+| Toko Penjual       | Keterangan Penjual Produk                  | String             |
+
+#### Promo Management Page (Tambah, Edit & Hapus Promo)
+| Atribut            | Deskripsi                                   | Tipe Data         |
+|--------------------|---------------------------------------------|--------------------|
+| ID Promo           | Identifikasi unik untuk setiap promo       | Integer (UUID)     |
+| Kode               | Kode Promo                                 | String             |
+| Potongan Harga     | Jumlah Potongan Harga Produk               | Float              |
+| Masa berlaku       | Rentang waktu berlaku promo                 | String             |
+| Minimal Transaksi  | Minimal harga transaksi untuk mendapatkan promo | Float              |
+| Toko Terkait      | Toko yang bisa menggunakan promo            | Array of Toko IDs  |
