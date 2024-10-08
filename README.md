@@ -34,10 +34,9 @@
 | **Modul**       | **Deskripsi**                                                                 |
 |-----------------|-------------------------------------------------------------------------------|
 | Autentikasi     | Mengelola login dan registrasi pengguna, termasuk pengelolaan password.       |
-| Produk          | Menampilkan daftar produk, detail produk, dan fitur pencarian.               |
-| Keranjang       | Mengelola produk yang ditambahkan ke keranjang dan proses checkout.           |
-| Pembayaran      | Menangani proses pembayaran dan konfirmasi transaksi.                         |
-| Ulasan          | Pengguna dapat memberikan ulasan dan rating pada produk.                     |
+| Produk          | Menampilkan daftar produk, detail produk, dan fitur pencarian.                |
+| Keranjang       | Menyimpan produk yang ditambahkan ke keranjang                                |
+| Ulasan          | Pengguna dapat memberikan ulasan dan rating pada produk.                      |
 | Event           | Menampilkan acara lokal di Bogor.                                             |
 | Kontak          | Form kontak untuk layanan pelanggan.                                          |
 | Promo           | Mengolah dan menampilkan promo dan diskon.                                    |
