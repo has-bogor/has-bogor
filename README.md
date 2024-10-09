@@ -51,7 +51,8 @@ Pada sumber dataset awal ini, kami mengumpulkan informasi melalui metode manual
 | **Kategori Produk** | **Deskripsi**                                                               | **Sumber Data**                     |
 |---------------------|-----------------------------------------------------------------------------|-------------------------------------|
 | Makanan             | Berbagai makanan khas Bogor seperti brownies, dodol, dan keripik.           | [Dataset Makanan](#dataset-makanan) |
-| Souvenir            | Kerajinan tangan unik sebagai kenang-kenangan.                              | [Dataset Makanan](#dataset-souvenir)-                                   |
+| Souvenir            | Kerajinan tangan unik sebagai kenang-kenangan.                              | [Dataset Souvenir](#dataset-souvenir)-                                   |
+
 
 ---
 ### Dataset Makanan
