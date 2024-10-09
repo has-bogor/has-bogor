@@ -261,3 +261,5 @@ Pada sumber dataset awal ini, kami mengumpulkan informasi melalui metode manual
 | Masa berlaku       | Rentang waktu berlaku promo                     | String             |
 | Minimal Transaksi  | Minimal harga transaksi untuk mendapatkan promo | Float              |
 | Toko Terkait       | Toko yang bisa menggunakan promo                | Array of Toko IDs  |
+
+Link Deployment: http://michael-ignasius-hasbogor.pbp.cs.ui.ac.id/
