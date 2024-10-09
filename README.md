@@ -132,7 +132,15 @@ Pada sumber dataset awal ini, kami mengumpulkan informasi melalui metode manual
 | 27 | Pulpen Bambu PNS3          | Alat Tulis      | 1,800      | Pulpen berbahan bambu dengan desain yang ramah lingkungan                                  | [gisacraft](https://www.gisacraft.com/product-tag/souvenir-murah-bogor/)   |
 | 28 | Centong Plastik Maxi GSC182 | Peralatan Dapur | 1,850      | Centong plastik dengan ukuran maxi untuk keperluan dapur                                   | [gisacraft](https://www.gisacraft.com/product-tag/souvenir-murah-bogor/)   |
 | 29 | Sisir Kayu LL8             | Peralatan Pribadi| 1,900     | Sisir kayu yang cocok digunakan untuk berbagai jenis rambut                                | [gisacraft](https://www.gisacraft.com/product-tag/souvenir-murah-bogor/)   |
-
+| 30 | Souvenir Gelas Enamel  | Peralatan Dapur    | 7,000        | Gelas enamel berbagai warna dengan gambar di sisinya                                 | [gisacraft](https://www.gisacraft.com/product/souvenir-gelas-enamel-warna-warni-gsc170/) |
+| 31 | Pouch Rasfur Bunga     | Kerajinan          | 5,000       | Pouch yang terbuat dari rasfur dengan motif bunga                                      | [gisacraft](https://www.gisacraft.com/product/souvenir-pouch-rasfur-bunga-dpt91/) |
+| 32 | Pouch Kanvas Motif Lapis Furing | Kerajinan | 4,700       | Pouch yang terbuat dari kanvas dilapisi dengan furing                                  | [gisacraft](https://www.gisacraft.com/product/souvenir-pouch-kanvas-motif-lapis-furing-pv11/) |
+| 33 | Kantung Goni Kecil DPT100   | Kerajinan     | 3,000       | Kantung kecil terbuat dari karung goni untuk menyimpan barang                          | [gisacraft](https://www.gisacraft.com/product/souvenir-kantung-goni-kecil-dpt100/) |
+| 34 | Dompet Anyaman Bambu GSC107 | Kerajinan     | 4,500       | Dompet sederhana terbuat dari anyaman bambu                                            | [gisacraft](https://www.gisacraft.com/product/souvenir-dompet-anyaman-bambu-gsc107/) |
+| 35 | Key Holder Bahan Hosana Kancing | Aksesori  | 4,500       | Aksesori untuk menyimpan kunci terbuat dari hosana dilengkapi dengan kancing           | [gisacraft](https://www.gisacraft.com/product/gsc76/) |
+| 36 | Dompet Ulir Pisang Anyaman Mendong | Kerajinan | 6,000    | Dompet berbentuk silinder yang terbuat dari anyaman mendong                            | [gisacraft](https://www.gisacraft.com/product/souvenir-dompet-ulir-pisang-anyaman-mendong-dpt104/) |
+| 37 | Dompet Batik Beranak Set 3  | Kerajinan     | 6,400       | 3 dompet dengan motif batik dengan ukuran bervariasi                                   | [gisacraft](https://www.gisacraft.com/product/souvenir-dompet-batik-beranak-set-3-dpt99/) |
+| 38 | Keranjang Mini anyaman Bambu | Kerajinan    | 4,000       | Keranjang mini terbuat dari anyaman bambu yang bisa menyimpan barang                   | [gisacraft](https://www.gisacraft.com/product-tag/souvenir-murah-bogor/page/10/) |
 
 ## Role atau Peran Pengguna Beserta Deskripsinya
 | **Role**                    | **Deskripsi**                                                                        |
