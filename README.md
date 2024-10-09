@@ -50,11 +50,11 @@ Pada sumber dataset awal ini, kami mengumpulkan informasi melalui metode manual
 
 | **Kategori Produk** | **Deskripsi**                                                               | **Sumber Data**                     |
 |---------------------|-----------------------------------------------------------------------------|-------------------------------------|
-| Makanan             | Berbagai makanan khas Bogor seperti brownies, dodol, dan keripik.           | [Data manual](#data-manual-makanan) |
-| Souvenir            | Kerajinan tangan unik sebagai kenang-kenangan.                              | -                                   |
+| Makanan             | Berbagai makanan khas Bogor seperti brownies, dodol, dan keripik.           | [Dataset Makanan](#dataset-makanan) |
+| Souvenir            | Kerajinan tangan unik sebagai kenang-kenangan.                              | [Dataset Makanan](#dataset-souvenir)-                                   |
 
 ---
-### Data Manual Makanan
+### Dataset Makanan
 | No | Nama Oleh-oleh         | Kategori        | Harga (Rp)          | Deskripsi                                                               | Referensi                                                             |
 |----|------------------------|-----------------|---------------------|-------------------------------------------------------------------------|-----------------------------------------------------------------------|
 | 1  | Asinan Bogor           | Makanan         | 25.000 - 50.000     | Campuran buah dan sayur dalam kuah asam manis pedas, khas Bogor         | [pergi kuliner](https://pergikuliner.com/restaurants/bogor/asinan-asli-bogor-bogor-tengah)       |
@@ -98,6 +98,40 @@ Pada sumber dataset awal ini, kami mengumpulkan informasi melalui metode manual
 | 39 | Kue Roti Lapis         | Kue             | 40.000 - 80.000     | Kue lapis dengan variasi rasa yang menarik                              | [Tokopedia](https://www.tokopedia.com/find/kue-roti-lapis)         |
 | 40 | Kue Talas              | Kue             | 30.000 - 60.000     | Kue dari talas yang enak dan lembut                                     | [Tokopedia](https://www.tokopedia.com/find/kue-talas)              |
 ---
+## Dataset Souvenir
+
+| No | Nama Oleh-oleh         | Kategori          | Harga (Rp)       | Deskripsi                                                                          | Referensi                                  |
+|----|------------------------|-------------------|------------------|------------------------------------------------------------------------------------|--------------------------------------------|
+| 1  | Kerajinan Anyaman Bambu| Kerajinan Tangan  | 50,000 - 150,000 | Keranjang, baki, dan perabotan rumah dari bambu buatan tangan lokal.               | [Sentra Kerajinan Sentul](https://sentulcraftcenter.com) |
+| 2  | Keramik Bogor          | Kerajinan Tangan  | 100,000 - 300,000| Produk keramik seperti vas bunga dan piring dekoratif oleh pengrajin lokal.        | [Perpus Teknik](https://perpusteknik.com)           |
+| 3  | Cokelat Bogor          | Makanan           | 25,000 - 75,000  | Cokelat khas Bogor dengan kemasan kreatif sebagai oleh-oleh wisatawan.             | [Souvenir Bogor](https://souvenirbogor.com)          |
+| 4  | Kue Rangin             | Makanan           | 20,000 - 50,000  | Kue tradisional dengan kemasan menarik dan sentuhan kerajinan lokal.               | [Sentra Kerajinan Bogor](https://kerajinansentul.com)  |
+| 5  | Manisan Bogor          | Makanan           | 15,000 - 45,000  | Buah lokal Bogor yang diawetkan dengan sentuhan kemasan kerajinan.                 | [Pesona Kuliner](https://pesonakulinerbogor.com)          |
+| 6  | Ukiran Kayu Bogor      | Kerajinan Tangan  | 75,000 - 200,000 | Ukiran kayu kecil berupa patung dan hiasan dinding, merefleksikan budaya lokal.    | [Kerajinan Tangan Bogor](https://bogorhandicrafts.com)  |
+| 7  | Batik Bogor            | Tekstil           | 150,000 - 500,000| Batik khas Bogor dengan motif flora dan fauna lokal.                               | [Pesona Kerajinan Sentul](https://sentulcrafts.com) |
+| 8  | Miniatur Kebun Raya    | Souvenir Edukatif | 100,000 - 250,000| Miniatur replika Kebun Raya Bogor sebagai souvenir edukatif.                       | [Handicraft Bogor](https://handicraftbogor.com)        |
+| 9  | Kerajinan Kertas           | Kerajinan        | 70,000     | Kerajinan kertas handmade dengan desain unik dan kreatif                                    |                                                                           |
+| 10 | Lesung Keramik             | Kerajinan        | 120,000    | Keramik tangan dengan berbagai bentuk seperti mug, vas bunga, mangkuk, dan guci            | [kumparan](https://kumparan.com/jendela-dunia/5-rekomendasi-souvenir-khas-bogor-untuk-oleh-oleh-21naUlT0k1w/full) |
+| 11 | Wayang Golek               | Seni             | 150,000    | Wayang golek khas Sunda yang merupakan ikon dan ciri khas kota Bogor                       | [kumparan](https://kumparan.com/jendela-dunia/5-rekomendasi-souvenir-khas-bogor-untuk-oleh-oleh-21naUlT0k1w/full) |
+| 12 | Miniatur Bangunan          | Kerajinan        | 100,000    | Miniatur bangunan bersejarah di Bogor, membawa aura historis dari bangunan tersebut        | [kumparan](https://kumparan.com/jendela-dunia/5-rekomendasi-souvenir-khas-bogor-untuk-oleh-oleh-21naUlT0k1w/full) |
+| 13 | Batik Tulis                | Pakaian          | 250,000    | Batik tulis khas Bogor dengan inovasi busana dari desain dan warna yang menarik            | [kumparan](https://kumparan.com/jendela-dunia/5-rekomendasi-souvenir-khas-bogor-untuk-oleh-oleh-21naUlT0k1w/full) |
+| 14 | Kaos Unchal                | Pakaian          | 80,000     | Kaos Unchal khas Bogor dengan desain grafis dan kata-kata lucu yang cocok untuk oleh-oleh  | [kumparan](https://kumparan.com/jendela-dunia/5-rekomendasi-souvenir-khas-bogor-untuk-oleh-oleh-21naUlT0k1w/full) |
+| 15 | Sedotan Kayu Bambu LL9     | Peralatan Minum  | 1,000      | Sedotan kayu bambu yang ramah lingkungan dan cocok digunakan untuk minuman                 | [gisacraft](https://www.gisacraft.com/product-tag/souvenir-murah-bogor/)   |
+| 16 | Gantungan Kunci Botol GK53c| Aksesori         | 1,200      | Gantungan kunci berbentuk botol yang terbuat dari bahan plastik dengan desain unik         | [gisacraft](https://www.gisacraft.com/product-tag/souvenir-murah-bogor/)   |
+| 17 | Gagang Kerangka Kipas 17an GSC175 | Aksesori  | 1,250      | Kerangka kipas untuk acara 17-an dengan desain klasik                                      | [gisacraft](https://www.gisacraft.com/product-tag/souvenir-murah-bogor/)   |
+| 18 | Pembuka Botol LL12         | Peralatan Dapur | 1,350      | Pembuka botol yang terbuat dari bahan logam berkualitas                                    | [gisacraft](https://www.gisacraft.com/product-tag/souvenir-murah-bogor/)   |
+| 19 | Gantungan Kunci Kendang Medium GK52 | Aksesori | 1,400      | Gantungan kunci berbentuk kendang dengan ukuran medium                                     | [gisacraft](https://www.gisacraft.com/product-tag/souvenir-murah-bogor/)   |
+| 20 | Gagang Kerangka Kipas Tepi Kulit Hitam 19an GSC174 | Aksesori | 1,500 | Kerangka kipas dengan tepi kulit hitam yang elegan                                         | [gisacraft](https://www.gisacraft.com/product-tag/souvenir-murah-bogor/)   |
+| 21 | Tempat Lilin Koting Kupu LL13 | Dekorasi     | 1,550      | Tempat lilin dengan desain kupu-kupu yang cantik                                           | [gisacraft](https://www.gisacraft.com/product-tag/souvenir-murah-bogor/)   |
+| 22 | Gantungan Kunci Bahan Kulit Kacang GSC138 | Aksesori | 1,599      | Gantungan kunci dari bahan kulit kacang berukuran sekitar 2x9 cm                           | [gisacraft](https://www.gisacraft.com/product-tag/souvenir-murah-bogor/)   |
+| 23 | Undangan Gulung Natural UGL1 | Undangan       | 1,700      | Undangan pernikahan berbentuk gulung dengan desain natural                                 | [gisacraft](https://www.gisacraft.com/product-tag/souvenir-murah-bogor/)   |
+| 24 | Pulpen Kapsul PNS4         | Alat Tulis      | 1,700      | Pulpen berbentuk kapsul dengan warna-warna menarik                                         | [gisacraft](https://www.gisacraft.com/product-tag/souvenir-murah-bogor/)   |
+| 25 | Pulpen Silver dan Emas PNS5 | Alat Tulis     | 1,700      | Pulpen dengan warna perak dan emas yang elegan                                             | [gisacraft](https://www.gisacraft.com/product-tag/souvenir-murah-bogor/)   |
+| 26 | Gantungan Kunci Dompet Mini GK54 | Aksesori   | 1,600      | Gantungan kunci berbentuk dompet mini yang praktis                                         | [gisacraft](https://www.gisacraft.com/product-tag/souvenir-murah-bogor/)   |
+| 27 | Pulpen Bambu PNS3          | Alat Tulis      | 1,800      | Pulpen berbahan bambu dengan desain yang ramah lingkungan                                  | [gisacraft](https://www.gisacraft.com/product-tag/souvenir-murah-bogor/)   |
+| 28 | Centong Plastik Maxi GSC182 | Peralatan Dapur | 1,850      | Centong plastik dengan ukuran maxi untuk keperluan dapur                                   | [gisacraft](https://www.gisacraft.com/product-tag/souvenir-murah-bogor/)   |
+| 29 | Sisir Kayu LL8             | Peralatan Pribadi| 1,900     | Sisir kayu yang cocok digunakan untuk berbagai jenis rambut                                | [gisacraft](https://www.gisacraft.com/product-tag/souvenir-murah-bogor/)   |
+
 
 ## Role atau Peran Pengguna Beserta Deskripsinya
 | **Role**                    | **Deskripsi**                                                                        |
