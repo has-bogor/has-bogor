@@ -35,7 +35,7 @@
 |-----------------|-------------------------------------------------------------------------------|
 | Autentikasi     | Mengelola login dan registrasi pengguna, termasuk pengelolaan password.       |
 | Produk          | Menampilkan daftar produk, detail produk, dan fitur pencarian.                |
-| Keranjang       | Menyimpan produk yang ditambahkan ke keranjang                                |
+| Keranjang       | Menyimpan produk yang ditambahkan ke keranjang (semacam wishlist)             |
 | Ulasan          | Pengguna dapat memberikan ulasan dan rating pada produk.                      |
 | Event           | Menampilkan acara lokal di Bogor.                                             |
 | Kontak          | Form kontak untuk layanan pelanggan.                                          |
