@@ -107,8 +107,12 @@ Pada sumber dataset awal ini, kami mengumpulkan informasi melalui metode manual
 | 47 | Strudel Bogor| Makanan    | 40,000-45,000       |Strudel Bogor isi pastry dengan 6 jenis isian | [Shopee](https://shopee.co.id/Strudel-Bogor-Apel-Bakso-Banana-Sweet-Cheese-Martabak-i.48225756.759746646?xptdk=17881796-05ef-45ad-a401-3bf8a068c1b5) |
 | 48 | Bika Bogor             | Kue             | 30.000 - 60.000     | Bika yang lembut, harum dan enak                                     | [Shopee](https://shopee.co.id/bikabogor)       |
 | 49 | Macaroni Panggang             | Makanan             | 30.000 - 150.000     | Homemade macaroni oanggang terbaik sejak 2001              | [Shopee](https://id.shp.ee/dXvE23q)    |
-| 50 | Rumah Mochibo             | Kue             | 30.000 - 50.000     | Pelopor oleh-oleh kue mochi isi buah khas Bogor                                     | [pergikuliner| 
-| 51 | Lapis Tokyo Cake            | Kue             | 30.000 - 150.000     | Cake Pertama dengan fla lembut dan rasa legit               | [Tokopedia] (https://www.tokopedia.com/lapistokyocake)| 
+| 50 | Rumah Mochibo             | Kue             | 30.000 - 50.000     | Pelopor oleh-oleh kue mochi isi buah khas Bogor                                     | [pergikuliner]| 
+| 51 | Lapis Tokyo Cake            | Kue             | 30.000 - 150.000     | Cake Pertama dengan fla lembut dan rasa legit               | [Tokopedia](https://www.tokopedia.com/lapistokyocake)| 
+| 52 | PapaPia            | Kue             | 50.000 - 100.000     | Pia autentik dari Kota Bogor yang sangat legendaris   | [Blibli](https://www.blibli.com/brand/papapia?srsltid=AfmBOor6qhaC442f9e_AZuchX4ZmsUlIDXFSf61fB_ApHTmMdxP2MmKi)| 
+| 53 | DoughSis            | Kue             | 30.000 - 100.000     | Berbagai macam kue yang terbuat dari ubi segar    | [Grab](https://food.grab.com/id/id/restaurant/doughsis-tegallega-delivery/6-CZA3E2KXGPK2TX)| 
+| 54 | Roti Roll Bogor            | Kue             | 30.000 - 110.000     | Roti lembut dengan topping melimpah!!    | [Grab](https://food.grab.com/id/en/restaurant/roti-roll-bogor-gerai-pajajaran-bogor-delivery/6-C6THSFWDCCDJSA?sourceID=20240926_090326_b36bf05a2ac5f254_MEXMPS)| 
+| 55 | Chocomory            | Kue             | 40.000 - 100.000     | Pie berbagai rasa yang lembut!!    | [GoFood](https://gofood.co.id/id/jakarta/restaurant/cheesy-pie-by-chocomory-pajajaran-raya-18-5384f399-3866-4d59-9864-59228f9a1810)| 
 
 
 ---
