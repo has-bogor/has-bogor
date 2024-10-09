@@ -98,14 +98,17 @@ Pada sumber dataset awal ini, kami mengumpulkan informasi melalui metode manual
 | 38 | Kue Bolu Susu          | Kue             | 30.000 - 60.000     | Bolu susu dengan rasa yang lembut                                       | [Tokopedia](https://www.tokopedia.com/find/kue-bolu-susu)          |
 | 39 | Kue Roti Lapis         | Kue             | 40.000 - 80.000     | Kue lapis dengan variasi rasa yang menarik                              | [Tokopedia](https://www.tokopedia.com/find/kue-roti-lapis)         |
 | 40 | Kue Talas              | Kue             | 30.000 - 60.000     | Kue dari talas yang enak dan lembut                                     | [Tokopedia](https://www.tokopedia.com/find/kue-talas)              |
-| 40 | Strudel Bogor| Makanan    | 40,000-45,000       |Strudel Bogor isi pastry dengan 6 jenis isian | [Shopee](https://shopee.co.id/Strudel-Bogor-Apel-Bakso-Banana-Sweet-Cheese-Martabak-i.48225756.759746646?xptdk=17881796-05ef-45ad-a401-3bf8a068c1b5) |
 | 41 | Strudel Lilit| Makanan    | 30,000-35,000       |Strudel lilit Bogor| [Shopee](https://shopee.co.id/Strudel-Lilit-Bogor-i.48225756.13137855172?xptdk=758551b4-1aa4-4958-918f-d75a3d589f45) |
 | 42 | Strudel Sei Sapi| Makanan    | 35,000       |Strudel Sei Bogor| [Shopee](https://shopee.co.id/Strudel-Sei-Sapi-i.48225756.9288045737?xptdk=ba92351e-c8d5-454b-b163-472456ad095c) |
 | 43 | Apple Pie| Makanan    | 63,000       |Apple Pie Medium| [pergikuliner](https://pergikuliner.com/restaurants/pia-apple-pie-bogor-tengah/menus) |
 | 44 | Asinan Buah| Makanan    | 35,000       |Asinan buah segar| [pergikuliner](https://pergikuliner.com/restaurants/asinan-sedap-gedung-dalam-bogor-timur/menus) |
 | 45 | Asinan Sayur| Makanan    | 35,000       |Asinan sayur segar| [pergikuliner](https://pergikuliner.com/restaurants/asinan-sedap-gedung-dalam-bogor-timur/menus) |
 | 46 | Asinan Campur| Makanan    | 35,000       |Asinan campuran buah dan sayur segar| [pergikuliner](https://pergikuliner.com/restaurants/asinan-sedap-gedung-dalam-bogor-timur/menus) |
-| 47 | Roti Unyil| Makanan ringan    | 1,700       |Roti unyil khas venus yang legendaris| [venusbakery](https://venusbakery.co.id/) |
+| 47 | Strudel Bogor| Makanan    | 40,000-45,000       |Strudel Bogor isi pastry dengan 6 jenis isian | [Shopee](https://shopee.co.id/Strudel-Bogor-Apel-Bakso-Banana-Sweet-Cheese-Martabak-i.48225756.759746646?xptdk=17881796-05ef-45ad-a401-3bf8a068c1b5) |
+| 48 | Bika Bogor             | Kue             | 30.000 - 60.000     | Bika yang lembut, harum dan enak                                     | [Shopee](https://shopee.co.id/bikabogor)       |
+| 49 | Macaroni Panggang             | Makanan             | 30.000 - 150.000     | Homemade macaroni oanggang terbaik sejak 2001              | [Shopee](https://id.shp.ee/dXvE23q)    |
+| 50 | Rumah Mochibo             | Kue             | 30.000 - 50.000     | Pelopor oleh-oleh kue mochi isi buah khas Bogor                                     | [pergikuliner| 
+| 51 | Lapis Tokyo Cake            | Kue             | 30.000 - 150.000     | Cake Pertama dengan fla lembut dan rasa legit               | [Tokopedia] (https://www.tokopedia.com/lapistokyocake)| 
 
 
 ---
