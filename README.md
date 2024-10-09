@@ -37,10 +37,11 @@
 | Produk          | Menampilkan daftar produk, detail produk, dan fitur pencarian.                |
 | Keranjang       | Menyimpan produk yang ditambahkan ke keranjang (semacam wishlist)             |
 | Ulasan          | Pengguna dapat memberikan ulasan dan rating pada produk.                      |
-| Event           | Menampilkan acara lokal di Bogor.                                             |
-| Kontak          | Form kontak untuk layanan pelanggan.                                          |
 | Promo           | Mengolah dan menampilkan promo dan diskon.                                    |
 | Rekomendasi     | Memberikan rekomendasi produk kepada pengguna.                                |
+| Inventory Management     | Mengelola barang yang dijual toko.                       |
+|Pembayaran  |   Berupa layanan yang memungkingkan pembeli melakukan pembayaran secara online (dummy data)|
+
 
 ## Sumber Initial Dataset Kategori Utama Produk
 Pada sumber dataset awal ini, kami mengumpulkan informasi melalui metode manua
