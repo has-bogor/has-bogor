@@ -1,902 +1,1102 @@
 [
- {
-   "model": "penyimpanan.katalog",
-   "id": 1,
-   "nama": "Asinan Bogor",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 25000,
-   "Deskripsi": "Campuran buah dan sayur dalam kuah asam manis pedas, khas Bogor",
-   "toko": "Pergi Kuliner"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 2,
-   "nama": "Roti Unyil Venus",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 15000,
-   "Deskripsi": "Roti mini dengan berbagai varian rasa, populer sejak 1978",
-   "toko": "Pergi Kuliner"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 3,
-   "nama": "Talas Bogor",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 20000,
-   "Deskripsi": "Umbi-umbian khas Bogor yang diolah menjadi berbagai makanan",
-   "toko": "Superkue"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 4,
-   "nama": "Makaroni Ngehe",
-   "Kategori": "Makanan Ringan",
-   "Harga (Rp)": 15000,
-   "Deskripsi": "Makaroni kering dengan bumbu pedas khas",
-   "toko": "Pergi Kuliner"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 5,
-   "nama": "Lapis Talas Bogor",
-   "Kategori": "Kue",
-   "Harga (Rp)": 50000,
-   "Deskripsi": "Kue lapis dengan campuran talas, lembut dan gurih",
-   "toko": "Superkue"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 6,
-   "nama": "Dodol Talas",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 30000,
-   "Deskripsi": "Makanan manis dan kenyal berbahan dasar talas",
-   "toko": "Lazada"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 7,
-   "nama": "Pie Apel Bogor",
-   "Kategori": "Kue",
-   "Harga (Rp)": 40000,
-   "Deskripsi": "Pie dengan isian apel segar, perpaduan manis dan asam",
-   "toko": "Pergi Kuliner"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 8,
-   "nama": "Bolu Lapis Sangkuriang",
-   "Kategori": "Kue",
-   "Harga (Rp)": 60000,
-   "Deskripsi": "Bolu berlapis dengan tekstur lembut dan rasa yang khas",
-   "toko": "LapisBogor"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 9,
-   "nama": "Kue Soes Merdeka",
-   "Kategori": "Kue",
-   "Harga (Rp)": 30000,
-   "Deskripsi": "Kue sus dengan varian isi yang beragam",
-   "toko": "Pergi Kuliner"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 10,
-   "nama": "Keripik Talas",
-   "Kategori": "Makanan Ringan",
-   "Harga (Rp)": 20000,
-   "Deskripsi": "Keripik renyah berbahan dasar talas",
-   "toko": "Tokopedia"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 11,
-   "nama": "Tahu Susu Lembang",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 25000,
-   "Deskripsi": "Tahu dengan tekstur lembut dan rasa susu yang khas",
-   "toko": "Shopee"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 12,
-   "nama": "Brownies Kukus Amanda",
-   "Kategori": "Kue",
-   "Harga (Rp)": 40000,
-   "Deskripsi": "Brownies kukus dengan berbagai varian rasa",
-   "toko": "Pergi Kuliner"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 13,
-   "nama": "Bakso Aux",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 30000,
-   "Deskripsi": "Bakso dengan tekstur kenyal dan rasa yang khas",
-   "toko": "Go Travelly"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 14,
-   "nama": "Cakwe Renata",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 15000,
-   "Deskripsi": "Cakwe dengan tekstur renyah dan bumbu khas",
-   "toko": "Gojek"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 15,
-   "nama": "Emping Melinjo",
-   "Kategori": "Makanan Ringan",
-   "Harga (Rp)": 20000,
-   "Deskripsi": "Keripik dari biji melinjo dengan rasa gurih khas",
-   "toko": "Bobobox"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 16,
-   "nama": "Es Pala Bogor",
-   "Kategori": "Minuman",
-   "Harga (Rp)": 10000,
-   "Deskripsi": "Minuman segar khas Bogor dengan ekstrak buah pala",
-   "toko": "RRI"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 17,
-   "nama": "Pancake Durian D'Linow",
-   "Kategori": "Kue",
-   "Harga (Rp)": 50000,
-   "Deskripsi": "Pancake dengan isian durian asli",
-   "toko": "Pergi Kuliner"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 18,
-   "nama": "Kue Lapis Talas Sari",
-   "Kategori": "Kue",
-   "Harga (Rp)": 60000,
-   "Deskripsi": "Kue lapis premium dengan campuran talas Bogor",
-   "toko": "Jawa Pos"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 19,
-   "nama": "Brownis Talas",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 25000,
-   "Deskripsi": "Camilan manis khas yang menggabungkan cita rasa cokelat premium dengan sentuhan unik dari talas",
-   "toko": "Traveloka"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 20,
-   "nama": "Kue Satu",
-   "Kategori": "Kue",
-   "Harga (Rp)": 20000,
-   "Deskripsi": "Kue tradisional berbahan dasar kacang hijau",
-   "toko": "Shopee"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 21,
-   "nama": "Sambal Teri Bawang",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 30000,
-   "Deskripsi": "Sambal dengan campuran teri",
-   "toko": "Tokopedia"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 22,
-   "nama": "Mochi Talas",
-   "Kategori": "Kue",
-   "Harga (Rp)": 25000,
-   "Deskripsi": "Kue mochi dengan isian talas khas Bogor",
-   "toko": "Shopee"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 23,
-   "nama": "Kacang Bogor",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 20000,
-   "Deskripsi": "Kacang Bogor",
-   "toko": "Detik"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 24,
-   "nama": "Ketan Srikaya Pandan",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 25000,
-   "Deskripsi": "Makanan ketan srikaya dengan campuran pandan",
-   "toko": "Tokopedia"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 25,
-   "nama": "Toge Goreng",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 15000,
-   "Deskripsi": "Hidangan khas Bogor dengan toge, mi, dan kuah kacang",
-   "toko": "Detik"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 26,
-   "nama": "Cendol Bogor",
-   "Kategori": "Minuman",
-   "Harga (Rp)": 10000,
-   "Deskripsi": "Minuman manis dan segar dengan campuran cendol",
-   "toko": "Detik"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 27,
-   "nama": "Pudding Lapis Bogor",
-   "Kategori": "Kue",
-   "Harga (Rp)": 40000,
-   "Deskripsi": "Puding berlapis dengan berbagai varian rasa",
-   "toko": "Gojek"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 28,
-   "nama": "Lempung Cianjur",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 30000,
-   "Deskripsi": "Lempung khas Cianjur, enak dan kenyal",
-   "toko": "Tokopedia"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 29,
-   "nama": "Coto Makassar",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 40000,
-   "Deskripsi": "Hidangan berkuah yang kaya rempah dan rasa",
-   "toko": "Bobobox"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 30,
-   "nama": "Kue Cubir",
-   "Kategori": "Kue",
-   "Harga (Rp)": 25000,
-   "Deskripsi": "Kue cubir dengan cita rasa unik dan lezat",
-   "toko": "Tokopedia"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 31,
-   "nama": "Pie Susu Bogor",
-   "Kategori": "Kue",
-   "Harga (Rp)": 25000,
-   "Deskripsi": "Pie dengan isian susu yang lembut",
-   "toko": "Tokopedia"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 32,
-   "nama": "Keripik Singkong",
-   "Kategori": "Makanan Ringan",
-   "Harga (Rp)": 20000,
-   "Deskripsi": "Keripik renyah dari singkong",
-   "toko": "Tokopedia"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 33,
-   "nama": "Kerupuk Kulit",
-   "Kategori": "Makanan Ringan",
-   "Harga (Rp)": 20000,
-   "Deskripsi": "Kerupuk dari kulit ikan yang gurih",
-   "toko": "Tokopedia"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 34,
-   "nama": "Pudding Karamel",
-   "Kategori": "Kue",
-   "Harga (Rp)": 25000,
-   "Deskripsi": "Puding karamel yang lembut dan enak",
-   "toko": "Tokopedia"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 35,
-   "nama": "Roti Tawa",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 10000,
-   "Deskripsi": "Roti tawa khas Bogor yang enak",
-   "toko": "Tokopedia"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 36,
-   "nama": "Keripik Pisang",
-   "Kategori": "Makanan Ringan",
-   "Harga (Rp)": 20000,
-   "Deskripsi": "Keripik dari pisang yang renyah",
-   "toko": "Tokopedia"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 37,
-   "nama": "Kue Cubir Beras Ketan",
-   "Kategori": "Kue",
-   "Harga (Rp)": 25000,
-   "Deskripsi": "Kue cubir dari beras ketan yang kenyal",
-   "toko": "Tokopedia"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 38,
-   "nama": "Kue Bolu Susu",
-   "Kategori": "Kue",
-   "Harga (Rp)": 30000,
-   "Deskripsi": "Bolu susu dengan rasa yang lembut",
-   "toko": "Tokopedia"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 39,
-   "nama": "Kue Roti Lapis",
-   "Kategori": "Kue",
-   "Harga (Rp)": 40000,
-   "Deskripsi": "Kue lapis dengan variasi rasa yang menarik",
-   "toko": "Tokopedia"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 40,
-   "nama": "Kue Talas",
-   "Kategori": "Kue",
-   "Harga (Rp)": 30000,
-   "Deskripsi": "Kue dari talas yang enak dan lembut",
-   "toko": "Tokopedia"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 41,
-   "nama": "Strudel Lilit",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 30000,
-   "Deskripsi": "Strudel lilit Bogor",
-   "toko": "Shopee"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 42,
-   "nama": "Strudel Sei Sapi",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 35000,
-   "Deskripsi": "Strudel Sei Bogor",
-   "toko": "Shopee"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 43,
-   "nama": "Apple Pie",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 63000,
-   "Deskripsi": "Apple Pie Medium",
-   "toko": "Pergi Kuliner"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 44,
-   "nama": "Asinan Buah",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 35000,
-   "Deskripsi": "Asinan buah segar",
-   "toko": "Pergi Kuliner"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 45,
-   "nama": "Asinan Sayur",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 35000,
-   "Deskripsi": "Asinan sayur segar",
-   "toko": "Pergi Kuliner"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 46,
-   "nama": "Asinan Campur",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 35000,
-   "Deskripsi": "Asinan campuran buah dan sayur segar",
-   "toko": "Pergi Kuliner"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 47,
-   "nama": "Strudel Bogor",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 40000,
-   "Deskripsi": "Strudel Bogor isi pastry dengan 6 jenis isian",
-   "toko": "Shopee"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 48,
-   "nama": "Bika Bogor",
-   "Kategori": "Kue",
-   "Harga (Rp)": 30000,
-   "Deskripsi": "Bika yang lembut, harum dan enak",
-   "toko": "Shopee"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 49,
-   "nama": "Macaroni Panggang",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 30000,
-   "Deskripsi": "Homemade macaroni oanggang terbaik sejak 2001",
-   "toko": "Shopee"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 50,
-   "nama": "Rumah Mochibo",
-   "Kategori": "Kue",
-   "Harga (Rp)": 30000,
-   "Deskripsi": "Pelopor oleh-oleh kue mochi isi buah khas Bogor",
-   "toko": "Pergi Kuliner"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 51,
-   "nama": "Lapis Tokyo Cake",
-   "Kategori": "Kue",
-   "Harga (Rp)": 30000,
-   "Deskripsi": "Cake Pertama dengan fla lembut dan rasa legit",
-   "toko": "Tokopedia"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 52,
-   "nama": "PapaPia",
-   "Kategori": "Kue",
-   "Harga (Rp)": 50000,
-   "Deskripsi": "Pia autentik dari Kota Bogor yang sangat legendaris",
-   "toko": "BliBli"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 53,
-   "nama": "DoughSis",
-   "Kategori": "Kue",
-   "Harga (Rp)": 30000,
-   "Deskripsi": "Berbagai macam kue yang terbuat dari ubi segar",
-   "toko": "Grab"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 54,
-   "nama": "Roti Roll Bogor",
-   "Kategori": "Kue",
-   "Harga (Rp)": 30000,
-   "Deskripsi": "Roti lembut dengan topping melimpah!!",
-   "toko": "Grab"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 55,
-   "nama": "Chocomory",
-   "Kategori": "Kue",
-   "Harga (Rp)": 4000,
-   "Deskripsi": "Pie berbagai rasa yang lembut!!",
-   "toko": "Gofood"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 56,
-   "nama": "Cokelat Bogor",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 25000,
-   "Deskripsi": "Cokelat khas Bogor dengan kemasan kreatif sebagai oleh-oleh wisatawan.",
-   "toko": "Souvenir Bogor"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 57,
-   "nama": "Kue Rangin",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 20000,
-   "Deskripsi": "Kue tradisional dengan kemasan menarik dan sentuhan kerajinan lokal.",
-   "toko": "Sentra Kerajinan Bogor"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 58,
-   "nama": "Manisan Bogor",
-   "Kategori": "Makanan",
-   "Harga (Rp)": 15000,
-   "Deskripsi": "Buah lokal Bogor yang diawetkan dengan sentuhan kemasan kerajinan.",
-   "toko": "Pesona Kuliner"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 59,
-   "nama": "Kerajinan Anyaman Bambu",
-   "Kategori": "Kerajinan Tangan",
-   "Harga (Rp)": 50000,
-   "Deskripsi": "Keranjang, baki, dan perabotan rumah dari bambu buatan tangan lokal.",
-   "toko": "Sentra Kerajinan Sentul"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 60,
-   "nama": "Keramik Bogor",
-   "Kategori": "Kerajinan Tangan",
-   "Harga (Rp)": 100000,
-   "Deskripsi": "Produk keramik seperti vas bunga dan piring dekoratif oleh pengrajin lokal.",
-   "toko": "Perpus Teknik"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 61,
-   "nama": "Ukiran Kayu Bogor",
-   "Kategori": "Kerajinan Tangan",
-   "Harga (Rp)": 75000,
-   "Deskripsi": "Ukiran kayu kecil berupa patung dan hiasan dinding, merefleksikan budaya lokal.",
-   "toko": "Kerajinan Tangan Bogor"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 62,
-   "nama": "Batik Bogor",
-   "Kategori": "Tekstil",
-   "Harga (Rp)": 150000,
-   "Deskripsi": "Batik khas Bogor dengan motif flora dan fauna lokal.",
-   "toko": "Pesona Kerajinan Sentul"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 63,
-   "nama": "Miniatur Kebun Raya",
-   "Kategori": "Souvenir Edukatif",
-   "Harga (Rp)": 100000,
-   "Deskripsi": "Miniatur replika Kebun Raya Bogor sebagai souvenir edukatif.",
-   "toko": "Handicraft Bogor"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 64,
-   "nama": "Kerajinan Kertas",
-   "Kategori": "Kerajinan",
-   "Harga (Rp)": 70000,
-   "Deskripsi": "Kerajinan kertas handmade dengan desain unik dan kreatif",
-   "toko": "Tokopedia"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 65,
-   "nama": "Lesung Keramik",
-   "Kategori": "Kerajinan",
-   "Harga (Rp)": 120000,
-   "Deskripsi": "Keramik tangan dengan berbagai bentuk seperti mug, vas bunga, mangkuk, dan guci",
-   "toko": "Kumparan"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 66,
-   "nama": "Wayang Golek",
-   "Kategori": "Seni",
-   "Harga (Rp)": 150000,
-   "Deskripsi": "Wayang golek khas Sunda yang merupakan ikon dan ciri khas kota Bogor",
-   "toko": "Kumparan"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 67,
-   "nama": "Miniatur Bangunan",
-   "Kategori": "Kerajinan",
-   "Harga (Rp)": 100000,
-   "Deskripsi": "Miniatur bangunan bersejarah di Bogor, membawa aura historis dari bangunan tersebut",
-   "toko": "Kumparan"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 68,
-   "nama": "Batik Tulis",
-   "Kategori": "Pakaian",
-   "Harga (Rp)": 250000,
-   "Deskripsi": "Batik tulis khas Bogor dengan inovasi busana dari desain dan warna yang menarik",
-   "toko": "Kumparan"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 69,
-   "nama": "Kaos Unchal",
-   "Kategori": "Pakaian",
-   "Harga (Rp)": 80000,
-   "Deskripsi": "Kaos Unchal khas Bogor dengan desain grafis dan kata-kata lucu yang cocok untuk oleh-oleh",
-   "toko": "Kumparan"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 70,
-   "nama": "Sedotan Kayu Bambu LL9",
-   "Kategori": "Peralatan Minum",
-   "Harga (Rp)": 1000,
-   "Deskripsi": "Sedotan kayu bambu yang ramah lingkungan dan cocok digunakan untuk minuman",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 71,
-   "nama": "Gantungan Kunci Botol GK53c",
-   "Kategori": "Aksesori",
-   "Harga (Rp)": 1200,
-   "Deskripsi": "Gantungan kunci berbentuk botol yang terbuat dari bahan plastik dengan desain unik",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 72,
-   "nama": "Gagang Kerangka Kipas 17an GSC175",
-   "Kategori": "Aksesori",
-   "Harga (Rp)": 1250,
-   "Deskripsi": "Kerangka kipas untuk acara 17-an dengan desain klasik",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 73,
-   "nama": "Pembuka Botol LL12",
-   "Kategori": "Peralatan Dapur",
-   "Harga (Rp)": 1350,
-   "Deskripsi": "Pembuka botol yang terbuat dari bahan logam berkualitas",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 74,
-   "nama": "Gantungan Kunci Kendang Medium GK52",
-   "Kategori": "Aksesori",
-   "Harga (Rp)": 1400,
-   "Deskripsi": "Gantungan kunci berbentuk kendang dengan ukuran medium",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 75,
-   "nama": "Gagang Kerangka Kipas Tepi Kulit Hitam 19an GSC174",
-   "Kategori": "Aksesori",
-   "Harga (Rp)": 1500,
-   "Deskripsi": "Kerangka kipas dengan tepi kulit hitam yang elegan",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 76,
-   "nama": "Tempat Lilin Koting Kupu LL13",
-   "Kategori": "Dekorasi",
-   "Harga (Rp)": 1550,
-   "Deskripsi": "Tempat lilin dengan desain kupu-kupu yang cantik",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 77,
-   "nama": "Gantungan Kunci Bahan Kulit Kacang GSC138",
-   "Kategori": "Aksesori",
-   "Harga (Rp)": 1599,
-   "Deskripsi": "Gantungan kunci dari bahan kulit kacang berukuran sekitar 2x9 cm",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 78,
-   "nama": "Undangan Gulung Natural UGL1",
-   "Kategori": "Undangan",
-   "Harga (Rp)": 1700,
-   "Deskripsi": "Undangan pernikahan berbentuk gulung dengan desain natural",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 79,
-   "nama": "Pulpen Kapsul PNS4",
-   "Kategori": "Alat Tulis",
-   "Harga (Rp)": 1700,
-   "Deskripsi": "Pulpen berbentuk kapsul dengan warna-warna menarik",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 80,
-   "nama": "Pulpen Silver dan Emas PNS5",
-   "Kategori": "Alat Tulis",
-   "Harga (Rp)": 1700,
-   "Deskripsi": "Pulpen dengan warna perak dan emas yang elegan",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 81,
-   "nama": "Gantungan Kunci Dompet Mini GK54",
-   "Kategori": "Aksesori",
-   "Harga (Rp)": 1600,
-   "Deskripsi": "Gantungan kunci berbentuk dompet mini yang praktis",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 82,
-   "nama": "Pulpen Bambu PNS3",
-   "Kategori": "Alat Tulis",
-   "Harga (Rp)": 1800,
-   "Deskripsi": "Pulpen berbahan bambu dengan desain yang ramah lingkungan",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 83,
-   "nama": "Centong Plastik Maxi GSC182",
-   "Kategori": "Peralatan Dapur",
-   "Harga (Rp)": 1850,
-   "Deskripsi": "Centong plastik dengan ukuran maxi untuk keperluan dapur",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 84,
-   "nama": "Sisir Kayu LL8",
-   "Kategori": "Peralatan Pribadi",
-   "Harga (Rp)": 1900,
-   "Deskripsi": "Sisir kayu yang cocok digunakan untuk berbagai jenis rambut",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 85,
-   "nama": "Souvenir Gelas Enamel",
-   "Kategori": "Peralatan Dapur",
-   "Harga (Rp)": 7000,
-   "Deskripsi": "Gelas enamel berbagai warna dengan gambar di sisinya",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 86,
-   "nama": "Pouch Rasfur Bunga",
-   "Kategori": "Kerajinan",
-   "Harga (Rp)": 5000,
-   "Deskripsi": "Pouch yang terbuat dari rasfur dengan motif bunga",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 87,
-   "nama": "Pouch Kanvas Motif Lapis Furing",
-   "Kategori": "Kerajinan",
-   "Harga (Rp)": 4700,
-   "Deskripsi": "Pouch yang terbuat dari kanvas dilapisi dengan furing",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 88,
-   "nama": "Kantung Goni Kecil DPT100",
-   "Kategori": "Kerajinan",
-   "Harga (Rp)": 3000,
-   "Deskripsi": "Kantung kecil terbuat dari karung goni untuk menyimpan barang",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 89,
-   "nama": "Dompet Anyaman Bambu GSC107",
-   "Kategori": "Kerajinan",
-   "Harga (Rp)": 4500,
-   "Deskripsi": "Dompet sederhana terbuat dari anyaman bambu",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 90,
-   "nama": "Key Holder Bahan Hosana Kancing",
-   "Kategori": "Aksesori",
-   "Harga (Rp)": 4500,
-   "Deskripsi": "Aksesori untuk menyimpan kunci terbuat dari hosana dilengkapi dengan kancing",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 91,
-   "nama": "Dompet Ulir Pisang Anyaman Mendong",
-   "Kategori": "Kerajinan",
-   "Harga (Rp)": 6000,
-   "Deskripsi": "Dompet berbentuk silinder yang terbuat dari anyaman mendong",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 92,
-   "nama": "Dompet Batik Beranak Set 3",
-   "Kategori": "Kerajinan",
-   "Harga (Rp)": 6400,
-   "Deskripsi": "3 dompet dengan motif batik dengan ukuran bervariasi",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 93,
-   "nama": "Keranjang Mini anyaman Bambu",
-   "Kategori": "Kerajinan",
-   "Harga (Rp)": 4000,
-   "Deskripsi": "Keranjang mini terbuat dari anyaman bambu yang bisa menyimpan barang",
-   "toko": "Gisacraft"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 94,
-   "nama": "Magnet kulkas Puncak Bogor",
-   "Kategori": "Kerajinan",
-   "Harga (Rp)": 22500,
-   "Deskripsi": "Hiasan magnet yang dapat ditempelkan pada kulkas",
-   "toko": "Tokopedia"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 95,
-   "nama": "Gantungan kunci relief",
-   "Kategori": "Kerajinan",
-   "Harga (Rp)": 9500,
-   "Deskripsi": "Gantungan kunci dengan motif berbentuk ukiran pada kayu",
-   "toko": "Tokopedia"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 96,
-   "nama": "Gantungan kunci Tugu Kujang",
-   "Kategori": "Kerajinan",
-   "Harga (Rp)": 5000,
-   "Deskripsi": "Gantungan kunci yang berbentuk miniatur dari Tugu Kujang di Bogor",
-   "toko": "Shopee"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 97,
-   "nama": "Pot tanaman berbentuk tempat wisata",
-   "Kategori": "Kerajinan",
-   "Harga (Rp)": 48000,
-   "Deskripsi": "Pot tanaman berbentuk miniatur tempat-tempat wisata di Bogor",
-   "toko": "Direktori Bogor"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 98,
-   "nama": "Pin peniti Tugu Kujang",
-   "Kategori": "Kerajinan",
-   "Harga (Rp)": 9800,
-   "Deskripsi": "pin peniti untuk menyambung kain berbentuk miniatur Tugu Kujang di Bogor",
-   "toko": "Bukalapak"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 99,
-   "nama": "Kaos motif Batik Kujang",
-   "Kategori": "Pakaian",
-   "Harga (Rp)": 175000,
-   "Deskripsi": "Baju kaos dengan motif Batik Kujang",
-   "toko": "Shopee"
- },
- {
-   "model": "penyimpanan.katalog",
-   "id": 100,
-   "nama": "Kemeja motif Batik Kujang",
-   "Kategori": "Pakaian",
-   "Harga (Rp)": 199000,
-   "Deskripsi": "Baju kemeja dengan motif Batik Kujang",
-   "toko": "Tokopedia"
- }
+  {
+    "model": "penyimpanan.katalog",
+    "id": 1,
+    "fields": {
+      "nama": "Asinan Bogor",
+      "kategori": "Makanan",
+      "harga": 25000,
+      "deskripsi": "Campuran buah dan sayur dalam kuah asam manis pedas, khas Bogor",
+      "toko": "Pergi Kuliner"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 2,
+    "fields": {
+      "nama": "Roti Unyil Venus",
+      "kategori": "Makanan",
+      "harga": 15000,
+      "deskripsi": "Roti mini dengan berbagai varian rasa, populer sejak 1978",
+      "toko": "Pergi Kuliner"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 3,
+    "fields": {
+      "nama": "Talas Bogor",
+      "kategori": "Makanan",
+      "harga": 20000,
+      "deskripsi": "Umbi-umbian khas Bogor yang diolah menjadi berbagai makanan",
+      "toko": "Superkue"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 4,
+    "fields": {
+      "nama": "Makaroni Ngehe",
+      "kategori": "Makanan Ringan",
+      "harga": 15000,
+      "deskripsi": "Makaroni kering dengan bumbu pedas khas",
+      "toko": "Pergi Kuliner"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 5,
+    "fields": {
+      "nama": "Lapis Talas Bogor",
+      "kategori": "Kue",
+      "harga": 50000,
+      "deskripsi": "Kue lapis dengan campuran talas, lembut dan gurih",
+      "toko": "Superkue"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 6,
+    "fields": {
+      "nama": "Dodol Talas",
+      "kategori": "Makanan",
+      "harga": 30000,
+      "deskripsi": "Makanan manis dan kenyal berbahan dasar talas",
+      "toko": "Lazada"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 7,
+    "fields": {
+      "nama": "Pie Apel Bogor",
+      "kategori": "Kue",
+      "harga": 40000,
+      "deskripsi": "Pie dengan isian apel segar, perpaduan manis dan asam",
+      "toko": "Pergi Kuliner"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 8,
+    "fields": {
+      "nama": "Bolu Lapis Sangkuriang",
+      "kategori": "Kue",
+      "harga": 60000,
+      "deskripsi": "Bolu berlapis dengan tekstur lembut dan rasa yang khas",
+      "toko": "LapisBogor"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 9,
+    "fields": {
+      "nama": "Kue Soes Merdeka",
+      "kategori": "Kue",
+      "harga": 30000,
+      "deskripsi": "Kue sus dengan varian isi yang beragam",
+      "toko": "Pergi Kuliner"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 10,
+    "fields": {
+      "nama": "Keripik Talas",
+      "kategori": "Makanan Ringan",
+      "harga": 20000,
+      "deskripsi": "Keripik renyah berbahan dasar talas",
+      "toko": "Tokopedia"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 11,
+    "fields": {
+      "nama": "Tahu Susu Lembang",
+      "kategori": "Makanan",
+      "harga": 25000,
+      "deskripsi": "Tahu dengan tekstur lembut dan rasa susu yang khas",
+      "toko": "Shopee"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 12,
+    "fields": {
+      "nama": "Brownies Kukus Amanda",
+      "kategori": "Kue",
+      "harga": 40000,
+      "deskripsi": "Brownies kukus dengan berbagai varian rasa",
+      "toko": "Pergi Kuliner"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 13,
+    "fields": {
+      "nama": "Bakso Aux",
+      "kategori": "Makanan",
+      "harga": 30000,
+      "deskripsi": "Bakso dengan tekstur kenyal dan rasa yang khas",
+      "toko": "Go Travelly"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 14,
+    "fields": {
+      "nama": "Cakwe Renata",
+      "kategori": "Makanan",
+      "harga": 15000,
+      "deskripsi": "Cakwe dengan tekstur renyah dan bumbu khas",
+      "toko": "Gojek"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 15,
+    "fields": {
+      "nama": "Emping Melinjo",
+      "kategori": "Makanan Ringan",
+      "harga": 20000,
+      "deskripsi": "Keripik dari biji melinjo dengan rasa gurih khas",
+      "toko": "Bobobox"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 16,
+    "fields": {
+      "nama": "Es Pala Bogor",
+      "kategori": "Minuman",
+      "harga": 10000,
+      "deskripsi": "Minuman segar khas Bogor dengan ekstrak buah pala",
+      "toko": "RRI"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 17,
+    "fields": {
+      "nama": "Pancake Durian D'Linow",
+      "kategori": "Kue",
+      "harga": 50000,
+      "deskripsi": "Pancake dengan isian durian asli",
+      "toko": "Pergi Kuliner"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 18,
+    "fields": {
+      "nama": "Kue Lapis Talas Sari",
+      "kategori": "Kue",
+      "harga": 60000,
+      "deskripsi": "Kue lapis premium dengan campuran talas Bogor",
+      "toko": "Jawa Pos"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 19,
+    "fields": {
+      "nama": "Brownis Talas",
+      "kategori": "Makanan",
+      "harga": 25000,
+      "deskripsi": "Camilan manis khas yang menggabungkan cita rasa cokelat premium dengan sentuhan unik dari talas",
+      "toko": "Traveloka"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 20,
+    "fields": {
+      "nama": "Kue Satu",
+      "kategori": "Kue",
+      "harga": 20000,
+      "deskripsi": "Kue tradisional berbahan dasar kacang hijau",
+      "toko": "Shopee"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 21,
+    "fields": {
+       "nama": "sambal teri bawang",
+       "kategori": "makanan",
+       "harga": 30000,
+       "deskripsi": "sambal dengan campuran teri",
+       "toko": "tokopedia"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "pk": 22,
+    "fields": {
+       "nama": "mochi talas",
+       "kategori": "kue",
+       "harga": 25000,
+       "deskripsi": "kue mochi dengan isian talas khas bogor",
+       "toko": "shopee"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "pk": 23,
+    "fields": {
+       "nama": "kacang bogor",
+       "kategori": "makanan",
+       "harga": 20000,
+       "deskripsi": "kacang bogor",
+       "toko": "detik"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "pk": 24,
+    "fields": {
+       "nama": "ketan srikaya pandan",
+       "kategori": "makanan",
+       "harga": 25000,
+       "deskripsi": "makanan ketan srikaya dengan campuran pandan",
+       "toko": "tokopedia"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "pk": 25,
+    "fields": {
+       "nama": "toge goreng",
+       "kategori": "makanan",
+       "harga": 15000,
+       "deskripsi": "hidangan khas bogor dengan toge, mi, dan kuah kacang",
+       "toko": "detik"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "pk": 26,
+    "fields": {
+       "nama": "cendol bogor",
+       "kategori": "minuman",
+       "harga": 10000,
+       "deskripsi": "minuman manis dan segar dengan campuran cendol",
+       "toko": "detik"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "pk": 27,
+    "fields": {
+       "nama": "pudding lapis bogor",
+       "kategori": "kue",
+       "harga": 40000,
+       "deskripsi": "puding berlapis dengan berbagai varian rasa",
+       "toko": "gojek"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "pk": 28,
+    "fields": {
+       "nama": "lempung cianjur",
+       "kategori": "makanan",
+       "harga": 30000,
+       "deskripsi": "lempung khas cianjur, enak dan kenyal",
+       "toko": "tokopedia"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "pk": 29,
+    "fields": {
+       "nama": "coto makassar",
+       "kategori": "makanan",
+       "harga": 40000,
+       "deskripsi": "hidangan berkuah yang kaya rempah dan rasa",
+       "toko": "bobobox"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "pk": 30,
+    "fields": {
+       "nama": "kue cubir",
+       "kategori": "kue",
+       "harga": 25000,
+       "deskripsi": "kue cubir dengan cita rasa unik dan lezat",
+       "toko": "tokopedia"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "pk": 31,
+    "fields": {
+       "nama": "pie susu bogor",
+       "kategori": "kue",
+       "harga": 25000,
+       "deskripsi": "pie dengan isian susu yang lembut",
+       "toko": "tokopedia"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "pk": 32,
+    "fields": {
+       "nama": "keripik singkong",
+       "kategori": "makanan ringan",
+       "harga": 20000,
+       "deskripsi": "keripik renyah dari singkong",
+       "toko": "tokopedia"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "pk": 33,
+    "fields": {
+       "nama": "kerupuk kulit",
+       "kategori": "makanan ringan",
+       "harga": 20000,
+       "deskripsi": "kerupuk dari kulit ikan yang gurih",
+       "toko": "tokopedia"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "pk": 34,
+    "fields": {
+       "nama": "pudding karamel",
+       "kategori": "kue",
+       "harga": 25000,
+       "deskripsi": "puding karamel yang lembut dan enak",
+       "toko": "tokopedia"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "pk": 35,
+    "fields": {
+       "nama": "roti tawa",
+       "kategori": "makanan",
+       "harga": 10000,
+       "deskripsi": "roti tawa khas bogor yang enak",
+       "toko": "tokopedia"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "pk": 36,
+    "fields": {
+       "nama": "keripik pisang",
+       "kategori": "makanan ringan",
+       "harga": 20000,
+       "deskripsi": "keripik dari pisang yang renyah",
+       "toko": "tokopedia"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "pk": 37,
+    "fields": {
+       "nama": "kue cubir beras ketan",
+       "kategori": "kue",
+       "harga": 25000,
+       "deskripsi": "kue cubir dari beras ketan yang kenyal",
+       "toko": "tokopedia"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "pk": 38,
+    "fields": {
+       "nama": "kue bolu susu",
+       "kategori": "kue",
+       "harga": 30000,
+       "deskripsi": "bolu susu dengan rasa yang lembut",
+       "toko": "tokopedia"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "pk": 39,
+    "fields": {
+       "nama": "kue roti lapis",
+       "kategori": "kue",
+       "harga": 40000,
+       "deskripsi": "kue lapis dengan variasi rasa yang menarik",
+       "toko": "tokopedia"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "pk": 40,
+    "fields": {
+       "nama": "kue talas",
+       "kategori": "kue",
+       "harga": 30000,
+       "deskripsi": "kue dari talas yang enak dan lembut",
+       "toko": "tokopedia"
+    }
+ },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 41,
+    "fields": {
+      "nama": "strudel lilit",
+      "kategori": "makanan",
+      "harga": 30000,
+      "deskripsi": "strudel lilit bogor",
+      "toko": "shopee"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 42,
+    "fields": {
+      "nama": "strudel sei sapi",
+      "kategori": "makanan",
+      "harga": 35000,
+      "deskripsi": "strudel sei bogor",
+      "toko": "shopee"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 43,
+    "fields": {
+      "nama": "apple pie",
+      "kategori": "makanan",
+      "harga": 63000,
+      "deskripsi": "apple pie medium",
+      "toko": "pergi kuliner"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 44,
+    "fields": {
+      "nama": "asinan buah",
+      "kategori": "makanan",
+      "harga": 35000,
+      "deskripsi": "asinan buah segar",
+      "toko": "pergi kuliner"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 45,
+    "fields": {
+      "nama": "asinan sayur",
+      "kategori": "makanan",
+      "harga": 35000,
+      "deskripsi": "asinan sayur segar",
+      "toko": "pergi kuliner"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 46,
+    "fields": {
+      "nama": "asinan campur",
+      "kategori": "makanan",
+      "harga": 35000,
+      "deskripsi": "asinan campuran buah dan sayur segar",
+      "toko": "pergi kuliner"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 47,
+    "fields": {
+      "nama": "strudel bogor",
+      "kategori": "makanan",
+      "harga": 40000,
+      "deskripsi": "strudel bogor isi pastry dengan 6 jenis isian",
+      "toko": "shopee"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 48,
+    "fields": {
+      "nama": "bika bogor",
+      "kategori": "kue",
+      "harga": 30000,
+      "deskripsi": "bika yang lembut, harum dan enak",
+      "toko": "shopee"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 49,
+    "fields": {
+      "nama": "macaroni panggang",
+      "kategori": "makanan",
+      "harga": 30000,
+      "deskripsi": "homemade macaroni panggang terbaik sejak 2001",
+      "toko": "shopee"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 50,
+    "fields": {
+      "nama": "rumah mochibo",
+      "kategori": "kue",
+      "harga": 30000,
+      "deskripsi": "pelopor oleh-oleh kue mochi isi buah khas bogor",
+      "toko": "pergi kuliner"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 51,
+    "fields": {
+      "nama": "lapis tokyo cake",
+      "kategori": "kue",
+      "harga": 30000,
+      "deskripsi": "cake pertama dengan fla lembut dan rasa legit",
+      "toko": "tokopedia"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 52,
+    "fields": {
+      "nama": "papapia",
+      "kategori": "kue",
+      "harga": 50000,
+      "deskripsi": "pia autentik dari kota bogor yang sangat legendaris",
+      "toko": "blibli"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 53,
+    "fields": {
+      "nama": "doughsis",
+      "kategori": "kue",
+      "harga": 30000,
+      "deskripsi": "berbagai macam kue yang terbuat dari ubi segar",
+      "toko": "grab"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 54,
+    "fields": {
+      "nama": "roti roll bogor",
+      "kategori": "kue",
+      "harga": 30000,
+      "deskripsi": "roti lembut dengan topping melimpah",
+      "toko": "grab"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 55,
+    "fields": {
+      "nama": "chocomory",
+      "kategori": "kue",
+      "harga": 4000,
+      "deskripsi": "pie berbagai rasa yang lembut",
+      "toko": "gofood"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 56,
+    "fields": {
+      "nama": "cokelat bogor",
+      "kategori": "makanan",
+      "harga": 25000,
+      "deskripsi": "cokelat khas bogor dengan kemasan kreatif sebagai oleh-oleh wisatawan",
+      "toko": "souvenir bogor"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 57,
+    "fields": {
+      "nama": "kue rangin",
+      "kategori": "makanan",
+      "harga": 20000,
+      "deskripsi": "kue tradisional dengan kemasan menarik dan sentuhan kerajinan lokal",
+      "toko": "sentra kerajinan bogor"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 58,
+    "fields": {
+      "nama": "manisan bogor",
+      "kategori": "makanan",
+      "harga": 15000,
+      "deskripsi": "buah lokal bogor yang diawetkan dengan sentuhan kemasan kerajinan",
+      "toko": "pesona kuliner"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 59,
+    "fields": {
+      "nama": "kerajinan anyaman bambu",
+      "kategori": "kerajinan tangan",
+      "harga": 50000,
+      "deskripsi": "keranjang, baki, dan perabotan rumah dari bambu buatan tangan lokal",
+      "toko": "sentra kerajinan sentul"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "pk": 60,
+    "fields": {
+      "nama": "keramik bogor",
+      "kategori": "kerajinan tangan",
+      "harga": 100000,
+      "deskripsi": "produk keramik seperti vas bunga dan piring dekoratif oleh pengrajin lokal",
+      "toko": "perpus teknik"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 61,
+    "fields": {
+       "nama": "ukiran kayu bogor",
+       "kategori": "kerajinan tangan",
+       "harga": 75000,
+       "deskripsi": "ukiran kayu kecil berupa patung dan hiasan dinding, merefleksikan budaya lokal.",
+       "toko": "kerajinan tangan bogor"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "id": 62,
+    "fields": {
+       "nama": "batik bogor",
+       "kategori": "tekstil",
+       "harga": 150000,
+       "deskripsi": "batik khas bogor dengan motif flora dan fauna lokal.",
+       "toko": "pesona kerajinan sentul"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "id": 63,
+    "fields": {
+       "nama": "miniatur kebun raya",
+       "kategori": "souvenir edukatif",
+       "harga": 100000,
+       "deskripsi": "miniatur replika kebun raya bogor sebagai souvenir edukatif.",
+       "toko": "handicraft bogor"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "id": 64,
+    "fields": {
+       "nama": "kerajinan kertas",
+       "kategori": "kerajinan",
+       "harga": 70000,
+       "deskripsi": "kerajinan kertas handmade dengan desain unik dan kreatif",
+       "toko": "tokopedia"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "id": 65,
+    "fields": {
+       "nama": "lesung keramik",
+       "kategori": "kerajinan",
+       "harga": 120000,
+       "deskripsi": "keramik tangan dengan berbagai bentuk seperti mug, vas bunga, mangkuk, dan guci",
+       "toko": "kumparan"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "id": 66,
+    "fields": {
+       "nama": "wayang golek",
+       "kategori": "seni",
+       "harga": 150000,
+       "deskripsi": "wayang golek khas sunda yang merupakan ikon dan ciri khas kota bogor",
+       "toko": "kumparan"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "id": 67,
+    "fields": {
+       "nama": "miniatur bangunan",
+       "kategori": "kerajinan",
+       "harga": 100000,
+       "deskripsi": "miniatur bangunan bersejarah di bogor, membawa aura historis dari bangunan tersebut",
+       "toko": "kumparan"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "id": 68,
+    "fields": {
+       "nama": "batik tulis",
+       "kategori": "pakaian",
+       "harga": 250000,
+       "deskripsi": "batik tulis khas bogor dengan inovasi busana dari desain dan warna yang menarik",
+       "toko": "kumparan"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "id": 69,
+    "fields": {
+       "nama": "kaos unchal",
+       "kategori": "pakaian",
+       "harga": 80000,
+       "deskripsi": "kaos unchal khas bogor dengan desain grafis dan kata-kata lucu yang cocok untuk oleh-oleh",
+       "toko": "kumparan"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "id": 70,
+    "fields": {
+       "nama": "sedotan kayu bambu ll9",
+       "kategori": "peralatan minum",
+       "harga": 1000,
+       "deskripsi": "sedotan kayu bambu yang ramah lingkungan dan cocok digunakan untuk minuman",
+       "toko": "gisacraft"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "id": 71,
+    "fields": {
+       "nama": "gantungan kunci botol gk53c",
+       "kategori": "aksesori",
+       "harga": 1200,
+       "deskripsi": "gantungan kunci berbentuk botol yang terbuat dari bahan plastik dengan desain unik",
+       "toko": "gisacraft"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "id": 72,
+    "fields": {
+       "nama": "gagang kerangka kipas 17an gsc175",
+       "kategori": "aksesori",
+       "harga": 1250,
+       "deskripsi": "kerangka kipas untuk acara 17-an dengan desain klasik",
+       "toko": "gisacraft"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "id": 73,
+    "fields": {
+       "nama": "pembuka botol ll12",
+       "kategori": "peralatan dapur",
+       "harga": 1350,
+       "deskripsi": "pembuka botol yang terbuat dari bahan logam berkualitas",
+       "toko": "gisacraft"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "id": 74,
+    "fields": {
+       "nama": "gantungan kunci kendang medium gk52",
+       "kategori": "aksesori",
+       "harga": 1400,
+       "deskripsi": "gantungan kunci berbentuk kendang dengan ukuran medium",
+       "toko": "gisacraft"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "id": 75,
+    "fields": {
+       "nama": "gagang kerangka kipas tepi kulit hitam 19an gsc174",
+       "kategori": "aksesori",
+       "harga": 1500,
+       "deskripsi": "kerangka kipas dengan tepi kulit hitam yang elegan",
+       "toko": "gisacraft"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "id": 76,
+    "fields": {
+       "nama": "tempat lilin koting kupu ll13",
+       "kategori": "dekorasi",
+       "harga": 1550,
+       "deskripsi": "tempat lilin dengan desain kupu-kupu yang cantik",
+       "toko": "gisacraft"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "id": 77,
+    "fields": {
+       "nama": "gantungan kunci bahan kulit kacang gsc138",
+       "kategori": "aksesori",
+       "harga": 1599,
+       "deskripsi": "gantungan kunci dari bahan kulit kacang berukuran sekitar 2x9 cm",
+       "toko": "gisacraft"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "id": 78,
+    "fields": {
+       "nama": "undangan gulung natural ugl1",
+       "kategori": "undangan",
+       "harga": 1700,
+       "deskripsi": "undangan pernikahan berbentuk gulung dengan desain natural",
+       "toko": "gisacraft"
+    }
+ },
+ {
+    "model": "penyimpanan.katalog",
+    "id": 79,
+    "fields": {
+       "nama": "pulpen kapsul pns4",
+       "kategori": "alat tulis",
+       "harga": 1700,
+       "deskripsi": "pulpen berbentuk kapsul dengan warna-warna menarik",
+       "toko": "gisacraft"
+    }
+ },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 80,
+    "fields": {
+      "nama": "pulpen silver dan emas pns5",
+      "kategori": "alat tulis",
+      "harga": 1700,
+      "deskripsi": "pulpen dengan warna perak dan emas yang elegan",
+      "toko": "gisacraft"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 81,
+    "fields": {
+      "nama": "gantungan kunci dompet mini gk54",
+      "kategori": "aksesori",
+      "harga": 1600,
+      "deskripsi": "gantungan kunci berbentuk dompet mini yang praktis",
+      "toko": "gisacraft"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 82,
+    "fields": {
+      "nama": "pulpen bambu pns3",
+      "kategori": "alat tulis",
+      "harga": 1800,
+      "deskripsi": "pulpen berbahan bambu dengan desain yang ramah lingkungan",
+      "toko": "gisacraft"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 83,
+    "fields": {
+      "nama": "centong plastik maxi gsc182",
+      "kategori": "peralatan dapur",
+      "harga": 1850,
+      "deskripsi": "centong plastik dengan ukuran maxi untuk keperluan dapur",
+      "toko": "gisacraft"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 84,
+    "fields": {
+      "nama": "sisir kayu ll8",
+      "kategori": "peralatan pribadi",
+      "harga": 1900,
+      "deskripsi": "sisir kayu yang cocok digunakan untuk berbagai jenis rambut",
+      "toko": "gisacraft"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 85,
+    "fields": {
+      "nama": "souvenir gelas enamel",
+      "kategori": "peralatan dapur",
+      "harga": 7000,
+      "deskripsi": "gelas enamel berbagai warna dengan gambar di sisinya",
+      "toko": "gisacraft"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 86,
+    "fields": {
+      "nama": "pouch rasfur bunga",
+      "kategori": "kerajinan",
+      "harga": 5000,
+      "deskripsi": "pouch yang terbuat dari rasfur dengan motif bunga",
+      "toko": "gisacraft"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 87,
+    "fields": {
+      "nama": "pouch kanvas motif lapis furing",
+      "kategori": "kerajinan",
+      "harga": 4700,
+      "deskripsi": "pouch yang terbuat dari kanvas dilapisi dengan furing",
+      "toko": "gisacraft"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 88,
+    "fields": {
+      "nama": "kantung goni kecil dpt100",
+      "kategori": "kerajinan",
+      "harga": 3000,
+      "deskripsi": "kantung kecil terbuat dari karung goni untuk menyimpan barang",
+      "toko": "gisacraft"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 89,
+    "fields": {
+      "nama": "dompet anyaman bambu gsc107",
+      "kategori": "kerajinan",
+      "harga": 4500,
+      "deskripsi": "dompet sederhana terbuat dari anyaman bambu",
+      "toko": "gisacraft"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 90,
+    "fields": {
+      "nama": "key holder bahan hosana kancing",
+      "kategori": "aksesori",
+      "harga": 4500,
+      "deskripsi": "aksesori untuk menyimpan kunci terbuat dari hosana dilengkapi dengan kancing",
+      "toko": "gisacraft"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 91,
+    "fields": {
+      "nama": "dompet ulir pisang anyaman mendong",
+      "kategori": "kerajinan",
+      "harga": 6000,
+      "deskripsi": "dompet berbentuk silinder yang terbuat dari anyaman mendong",
+      "toko": "gisacraft"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 92,
+    "fields": {
+      "nama": "dompet batik beranak set 3",
+      "kategori": "kerajinan",
+      "harga": 6400,
+      "deskripsi": "3 dompet dengan motif batik dengan ukuran bervariasi",
+      "toko": "gisacraft"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 93,
+    "fields": {
+      "nama": "keranjang mini anyaman bambu",
+      "kategori": "kerajinan",
+      "harga": 4000,
+      "deskripsi": "keranjang mini terbuat dari anyaman bambu yang bisa menyimpan barang",
+      "toko": "gisacraft"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 94,
+    "fields": {
+      "nama": "magnet kulkas puncak bogor",
+      "kategori": "kerajinan",
+      "harga": 22500,
+      "deskripsi": "hiasan magnet yang dapat ditempelkan pada kulkas",
+      "toko": "tokopedia"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 95,
+    "fields": {
+      "nama": "gantungan kunci relief",
+      "kategori": "kerajinan",
+      "harga": 9500,
+      "deskripsi": "gantungan kunci dengan motif berbentuk ukiran pada kayu",
+      "toko": "tokopedia"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 96,
+    "fields": {
+      "nama": "gantungan kunci tugu kujang",
+      "kategori": "kerajinan",
+      "harga": 5000,
+      "deskripsi": "gantungan kunci yang berbentuk miniatur dari tugu kujang di bogor",
+      "toko": "shopee"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 97,
+    "fields": {
+      "nama": "pot tanaman berbentuk tempat wisata",
+      "kategori": "kerajinan",
+      "harga": 48000,
+      "deskripsi": "pot tanaman berbentuk miniatur tempat-tempat wisata di bogor",
+      "toko": "direktori bogor"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 98,
+    "fields": {
+      "nama": "pin peniti tugu kujang",
+      "kategori": "kerajinan",
+      "harga": 9800,
+      "deskripsi": "pin peniti untuk menyambung kain berbentuk miniatur tugu kujang di bogor",
+      "toko": "bukalapak"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 99,
+    "fields": {
+      "nama": "kaos motif batik kujang",
+      "kategori": "pakaian",
+      "harga": 175000,
+      "deskripsi": "baju kaos dengan motif batik kujang",
+      "toko": "shopee"
+    }
+  },
+  {
+    "model": "penyimpanan.katalog",
+    "id": 100,
+    "fields": {
+      "nama": "kemeja motif batik kujang",
+      "kategori": "pakaian",
+      "harga": 199000,
+      "deskripsi": "baju kemeja dengan motif batik kujang",
+      "toko": "tokopedia"
+    }
+  }
 ]

@@ -4,4 +4,4 @@ from .models import Pembayaran
 class PaymentForm(forms.ModelForm):
     class Meta:
         model = Pembayaran
-        fields = ['product', 'amount', 'status']  
+        fields = ['amount', 'payment_method', 'product'] 

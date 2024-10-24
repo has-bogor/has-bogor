@@ -1,33 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
 <head>
-    <title>Create Payment</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buat Pesanan</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-[#EBE6F6] flex justify-center items-center min-h-screen">
-    <form action="{% url 'create_payment' %}" method="POST" class="bg-white p-8 rounded-3xl shadow-lg max-w-lg w-full">
+    <form action="{% url 'create_payment' %}" method="POST" class="bg-white p-8 rounded-3xl shadow-2xl max-w-lg w-full">
         {% csrf_token %}
-        <h1 class="text-center text-3xl font-serif mb-8">CREATE A NEW PAYMENT</h1>
-        
-        <!-- Produk Select Box -->
+        <h1 class="text-center text-3xl font-serif mb-8">Buat Pesanan</h1>
+
+        <!-- Product Select -->
         <div class="mb-6">
-            <select name="product" id="product" class="w-full py-4 text-center text-[#000000] bg-[#E4DBFF] rounded-full shadow-md focus:outline-none">
-                <option>Pilih Produk</option>
-                {% for produk in produk_list %}
-                    <option value="{{ produk.id }}">{{ produk.name }}</option>
+            <label for="product" class="block text-lg mb-2">Pilih Produk:</label>
+            <select name="product" id="product" class="w-full py-4 text-center bg-[#E4DBFF] text-black rounded-full shadow-md focus:outline-none">
+                <option value="" disabled selected>Pilih Produk</option>
+                {% for item in produk_list %}
+                    <option value="{{ item.id }}">{{ item.nama }} - Rp{{ item.harga }}</option>
                 {% endfor %}
             </select>
         </div>
-        
-        <!-- Input Jumlah -->
-        <div class="mb-6">
-            <input type="number" name="amount" id="amount" placeholder="Jumlah" class="w-full py-4 text-center text-[#000000] bg-[#E4DBFF] rounded-full shadow-md focus:outline-none" required />
+
+        <!-- Quantity Input -->
+        <div class="mb-6 flex justify-between items-center">
+            <label for="amount" class="text-lg">Jumlah:</label>
+            <input type="number" name="amount" id="amount" min="1" placeholder="1" class="w-16 py-2 text-center bg-[#E4DBFF] text-black rounded-full shadow-md focus:outline-none" required />
         </div>
-        
-        <!-- Tombol Buat Pembayaran -->
-        <button type="submit" class="w-full py-4 text-white bg-[#D1C4E9] rounded-full shadow-md hover:bg-[#B39DDB] transition-all">BUAT PEMBAYARAN</button>
+
+        <!-- Total Shopping Summary -->
+        <div class="mb-6 p-4 bg-[#f0f0f0] rounded-xl shadow-inner">
+            <p class="text-gray-500">Ringkasan Belanja:</p>
+            <p class="text-black text-lg">Total Belanja: <span id="total_amount">0</span></p>
+        </div>
+
+        <script>
+            const productPrices = {};
+            {% for item in produk_list %}
+                productPrices["{{ item.id }}"] = {{ item.harga }};
+            {% endfor %}
+
+            document.getElementById('amount').addEventListener('input', function() {
+                const amount = this.value;
+                const product = document.getElementById('product').value;
+                const total = amount * (productPrices[product] || 0);
+                document.getElementById('total_amount').textContent = total;
+            });
+
+            document.getElementById('product').addEventListener('change', function() {
+                document.getElementById('amount').value = 1; // Reset jumlah saat produk dipilih
+                document.getElementById('total_amount').textContent = 0; // Reset total belanja
+            });
+        </script>
+
+        <!-- Payment Method -->
+        <div class="mb-6">
+            <label for="payment_method" class="block text-lg mb-2">Pilih Metode Pembayaran:</label>
+            <select name="payment_method" id="payment_method" class="w-full py-4 text-center bg-[#E4DBFF] text-black rounded-full shadow-md focus:outline-none">
+                <option value="" disabled selected>Pilih Metode Pembayaran</option>
+                <option value="1">Bank Transfer</option>
+                <option value="2">Credit Card</option>
+                <option value="3">E-Wallet</option>
+            </select>
+        </div>
+
+        <button type="submit" class="w-full py-4 text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 rounded-full shadow-lg hover:shadow-xl transition-all hover:bg-gradient-to-r hover:from-purple-600 hover:to-purple-800 mt-4">
+            Bayar
+        </button>
+
         <div class="mt-4 text-center">
             <a href="{% url 'payment_history' %}" class="text-blue-600 hover:underline">Kembali ke Riwayat Pembayaran</a>
         </div>
     </form>
-
 </body>
-</body>
+</html>
