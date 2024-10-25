@@ -1,0 +1,8 @@
+<h1>Your Wishlist</h1>
+<ul>
+    {% for item in wishlist_items %}
+        <li>{{ item.product.name }} - <a href="{% url 'remove_from_wishlist' item.product.id %}">Remove</a></li>
+    {% empty %}
+        <li>No items in your wishlist.</li>
+    {% endfor %}
+</ul>
