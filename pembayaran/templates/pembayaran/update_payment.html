@@ -5,18 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Pembayaran</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    {% load static %}
 </head>
 <body class="bg-[#EBE6F6] flex flex-col justify-center items-center min-h-screen">
-    <div class="text-center">
-        <h1 class="text-4xl font-bold mb-4">PEMBAYARAN BERHASIL</h1>
-        <div class="bg-green-500 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
+    <div class="relative w-full h-screen">
+        <!-- Gambar -->
+        <img src="{% static 'image/update.jpg' %}" alt="Update Pembayaran" class="w-full h-full object-cover absolute top-0 left-0 z-0">
+
+        <!-- Kontainer untuk detail pembayaran -->
+        <div class="flex justify-center items-center h-full">
+            <div class="bg-white shadow-lg rounded-lg p-6 max-w-md w-full z-10 mt-20"> <!-- Tambahkan mt-16 untuk margin top -->
+                <h2 class="text-2xl font-semibold mb-4 text-center">Detail Pembayaran</h2>
+                <p><strong>ID Pembayaran:</strong> {{ payment.id }}</p>
+                <p><strong>Total Pembayaran:</strong> Rp {{ payment.total_payment }}</p>
+                <p><strong>Metode Pembayaran:</strong> {{ payment.payment_method }}</p>
+                <p class="mb-4"><strong>Status Pembayaran:</strong> {{ payment.status }}</p>
+                
+                <div class="flex justify-center space-x-2">
+                    <a href="{% url 'payment_history' %}" class="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-2 px-4 rounded-full shadow-lg transition-all hover:bg-gradient-to-l hover:from-purple-600 hover:to-purple-700">
+                        Riwayat Pembayaran
+                    </a>
+                    <a href="{% url 'create_payment' %}" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-2 px-4 rounded-full shadow-lg transition-all hover:bg-gradient-to-l hover:from-blue-600 hover:to-blue-700">
+                        Buat Pembayaran Baru
+                    </a>
+                </div>
+            </div>
         </div>
-        <a href="{% url 'payment_history' %}" class="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-2 px-4 rounded-full shadow-lg transition-all hover:bg-gradient-to-l hover:from-purple-600 hover:to-purple-700">
-            Lihat details
-        </a>
     </div>
 </body>
 </html>

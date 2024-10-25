@@ -30,9 +30,11 @@
 
         <!-- Total Shopping Summary -->
         <div class="mb-6 p-4 bg-[#f0f0f0] rounded-xl shadow-inner">
-            <p class="text-gray-500">Ringkasan Belanja:</p>
-            <p class="text-black text-lg">Total Belanja: <span id="total_amount">0</span></p>
+            <p class="text-black text-lg">Total Pembayaran: Rp<span id="total_payment"> 0</span></p>
         </div>
+
+        <!-- Hidden Input for Total Payment -->
+        <input type="hidden" name="total_payment" id="hidden_total_payment" />
 
         <script>
             const productPrices = {};
@@ -44,23 +46,41 @@
                 const amount = this.value;
                 const product = document.getElementById('product').value;
                 const total = amount * (productPrices[product] || 0);
-                document.getElementById('total_amount').textContent = total;
+                
+                // Update visible total payment
+                document.getElementById('total_payment').textContent = total;
+
+                // Update hidden input for total payment
+                document.getElementById('hidden_total_payment').value = total; 
+
+                // Log values for debugging
+                console.log("Amount:", amount, "Product ID:", product, "Total:", total);
             });
 
             document.getElementById('product').addEventListener('change', function() {
                 document.getElementById('amount').value = 1; // Reset jumlah saat produk dipilih
-                document.getElementById('total_amount').textContent = 0; // Reset total belanja
+                document.getElementById('total_payment').textContent = 0; // Reset total belanja
+                document.getElementById('hidden_total_payment').value = 0; // Reset total payment
+            });
+
+            // Check total payment before form submission
+            document.querySelector('form').addEventListener('submit', function(event) {
+                const totalPaymentValue = document.getElementById('hidden_total_payment').value;
+                if (!totalPaymentValue) {
+                    alert("Total pembayaran tidak boleh kosong!"); // Alert if total payment is empty
+                    event.preventDefault(); // Prevent form submission
+                }
             });
         </script>
 
         <!-- Payment Method -->
         <div class="mb-6">
             <label for="payment_method" class="block text-lg mb-2">Pilih Metode Pembayaran:</label>
-            <select name="payment_method" id="payment_method" class="w-full py-4 text-center bg-[#E4DBFF] text-black rounded-full shadow-md focus:outline-none">
+            <select name="payment_method" id="payment_method" class="w-full py-4 text-center bg-[#E4DBFF] text-black rounded-full shadow-md focus:outline-none" required>
                 <option value="" disabled selected>Pilih Metode Pembayaran</option>
-                <option value="1">Bank Transfer</option>
-                <option value="2">Credit Card</option>
-                <option value="3">E-Wallet</option>
+                <option value="bank_transfer">Bank Transfer</option>
+                <option value="credit_card">Credit Card</option>
+                <option value="e_wallet">E-Wallet</option>
             </select>
         </div>
 

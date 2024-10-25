@@ -9,12 +9,15 @@ def create_payment(request):
     if request.method == 'POST':
         form = PaymentForm(request.POST)
         if form.is_valid():
-            payment = form.save()
+            payment = form.save(commit=False)  # Simpan tanpa menyimpan ke database
+            payment.total_amount = form.cleaned_data['amount']  # Atur total_amount ke nilai yang diterima
+            payment.save()  # Simpan pembayaran
+
             print(f"Payment created with ID: {payment.id}")
 
             # Simpan product_id dan amount ke dalam sesi
             request.session['product_id'] = payment.product.id
-            request.session['amount'] = float(payment.amount)  # Simpan sebagai float
+            request.session['amount'] = float(payment.total_amount)  # Simpan sebagai float
             
             # Redirect ke halaman update_payment
             return redirect('update_payment', payment_id=payment.id)
@@ -39,8 +42,6 @@ def payment_history(request):
 # Update payment status
 def update_payment(request, payment_id):
     payment = get_object_or_404(Pembayaran, id=payment_id)  # Dapatkan objek pembayaran berdasarkan ID
-    product_id = request.session.get('product_id', payment.product.id)  # Ambil product_id dari sesi atau default dari payment
-    amount = request.session.get('amount', payment.amount)  # Ambil amount dari sesi atau default dari payment
 
     # Pre-fill the form with the data dari pembayaran yang diambil
     form = PaymentForm(instance=payment)
@@ -48,7 +49,9 @@ def update_payment(request, payment_id):
     if request.method == 'POST':
         form = PaymentForm(request.POST, instance=payment)
         if form.is_valid():
-            form.save()
+            # Tambahkan amount baru ke total_amount yang sudah ada
+            payment.total_amount += form.cleaned_data['amount']  # Tambahkan amount baru
+            payment.save()  # Simpan perubahan
             messages.success(request, 'Payment updated successfully.')
             # Clear session data after saving
             request.session.pop('product_id', None)
