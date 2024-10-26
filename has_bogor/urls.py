@@ -24,4 +24,5 @@ urlpatterns = [
     path('authentication/', include('authentication.urls')),
     path('', RedirectView.as_view(url='/authentication/login/', permanent=False)), 
     path('penyimpanan/', include('penyimpanan.urls')),
+    path('wishlist/', include('wishlist.urls')),
 ]
