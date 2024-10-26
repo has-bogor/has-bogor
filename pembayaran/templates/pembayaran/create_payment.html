@@ -1,96 +1,145 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buat Pesanan</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-[#EBE6F6] flex justify-center items-center min-h-screen">
-    <form action="{% url 'create_payment' %}" method="POST" class="bg-white p-8 rounded-3xl shadow-2xl max-w-lg w-full">
-        {% csrf_token %}
-        <h1 class="text-center text-3xl font-serif mb-8">Buat Pesanan</h1>
+<body class="bg-gray-900 min-h-screen flex flex-col">
+    {% include 'navbar.html' %}
 
-        <!-- Product Select -->
-        <div class="mb-6">
-            <label for="product" class="block text-lg mb-2">Pilih Produk:</label>
-            <select name="product" id="product" class="w-full py-4 text-center bg-[#E4DBFF] text-black rounded-full shadow-md focus:outline-none">
-                <option value="" disabled selected>Pilih Produk</option>
-                {% for item in produk_list %}
-                    <option value="{{ item.id }}">{{ item.nama }} - Rp{{ item.harga }}</option>
-                {% endfor %}
-            </select>
-        </div>
+    <div class="flex flex-col items-center justify-center">
+        <h1 class="text-white text-3xl font-bold mb-4 text-center">Welcome to the Home Page</h1>
+        <p class="text-gray-400 mb-4 text-center">Hello, <span class="font-semibold text-blue-300">{{ user_profile.user.username }}</span>! You are logged in.</p>
+    </div>
 
-        <!-- Quantity Input -->
-        <div class="mb-6 flex justify-between items-center">
-            <label for="amount" class="text-lg">Jumlah:</label>
-            <input type="number" name="amount" id="amount" min="1" placeholder="1" class="w-16 py-2 text-center bg-[#E4DBFF] text-black rounded-full shadow-md focus:outline-none" required />
-        </div>
 
-        <!-- Total Shopping Summary -->
-        <div class="mb-6 p-4 bg-[#f0f0f0] rounded-xl shadow-inner">
-            <p class="text-black text-lg">Total Pembayaran: Rp<span id="total_payment"> 0</span></p>
-        </div>
-
-        <!-- Hidden Input for Total Payment -->
-        <input type="hidden" name="total_payment" id="hidden_total_payment" />
-
-        <script>
-            const productPrices = {};
-            {% for item in produk_list %}
-                productPrices["{{ item.id }}"] = {{ item.harga }};
+    <div class="flex-1 p-8">
+        <h2 class="text-2xl text-white font-bold mb-4">Katalog Produk</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% for item in katalog_items %}
+            <div class="bg-gray-800 rounded-lg shadow-lg p-4 relative overflow-hidden">
+                <div class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded">Diskon 32%</div>
+                <img src="{{ item.image_url }}" alt="{{ item.nama }}" class="w-full h-32 object-cover rounded-md mb-2">
+                <h3 class="text-lg text-white font-semibold">{{ item.nama }}</h3>
+                <p class="text-gray-400">Harga: <span class="text-xl font-bold">Rp {{ item.harga }}</span></p>
+                <p class="text-gray-300">{{ item.deskripsi }}</p>
+                <p class="text-gray-500">Kategori: {{ item.kategori }}</p>
+                <p class="text-gray-500">Toko: {{ item.toko }}</p>
+                <button class="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 text-center block openModal" data-id="{{ item.id }}" data-name="{{ item.nama }}" data-price="{{ item.harga }}">Beli Sekarang</button>
+            </div>
+            {% empty %}
+            <p class="text-gray-300">Tidak ada produk yang tersedia.</p>
             {% endfor %}
+        </div>
+    </div>
 
-            document.getElementById('amount').addEventListener('input', function() {
-                const amount = this.value;
-                const product = document.getElementById('product').value;
-                const total = amount * (productPrices[product] || 0);
-                
-                // Update visible total payment
-                document.getElementById('total_payment').textContent = total;
 
-                // Update hidden input for total payment
-                document.getElementById('hidden_total_payment').value = total; 
+    <div id="paymentModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden">
+        <div class="bg-gray-900 p-8 rounded-3xl shadow-2xl max-w-lg w-full">
+            <button id="closeModal" class="absolute top-4 right-4 text-white">X</button>
+            <h1 class="text-center text-3xl font-serif mb-8 text-white">Buat Pesanan</h1>
+            <form id="paymentForm">
+                {% csrf_token %}
+                <div class="mb-6">
+                    <label for="product" class="block text-lg mb-2 text-white">Pilih Produk:</label>
+                    <select name="product" id="product" class="w-full py-4 text-center bg-gray-700 text-white rounded-full shadow-md focus:outline-none" required>
+                        <option value="" disabled selected>Pilih Produk</option>
+                        {% for item in katalog_items %}
+                            <option value="{{ item.id }}">{{ item.nama }} - Rp{{ item.harga }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-                // Log values for debugging
-                console.log("Amount:", amount, "Product ID:", product, "Total:", total);
+                <div class="mb-6 flex justify-between items-center">
+                    <label for="amount" class="text-lg text-white">Jumlah:</label>
+                    <input type="number" name="amount" id="amount" min="1" placeholder="1" class="w-16 py-2 text-center bg-gray-700 text-white rounded-full shadow-md focus:outline-none" required />
+                </div>
+
+                <div class="mb-6 p-4 bg-gray-800 rounded-xl shadow-inner">
+                    <p class="text-white text-lg">Total Pembayaran: Rp<span id="total_payment">0</span></p>
+                </div>
+
+                <input type="hidden" name="total_payment" id="hidden_total_payment" />
+
+                <div class="mb-6">
+                    <label for="payment_method" class="block text-lg mb-2 text-white">Pilih Metode Pembayaran:</label>
+                    <select name="payment_method" id="payment_method" class="w-full py-4 text-center bg-gray-700 text-white rounded-full shadow-md focus:outline-none" required>
+                        <option value="" disabled selected>Pilih Metode Pembayaran</option>
+                        <option value="bank_transfer">Bank Transfer</option>
+                        <option value="credit_card">Kartu Kredit</option>
+                        <option value="e_wallet">E-Wallet</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="w-full py-4 text-white bg-gradient-to-r from-purple-600 via-purple-700 to-purple-800 rounded-full shadow-lg hover:shadow-xl transition-all hover:bg-gradient-to-r hover:from-purple-700 hover:to-purple-900 mt-4">
+                    Bayar
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+     
+        document.querySelectorAll('.openModal').forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-id');
+                const productName = this.getAttribute('data-name');
+                const productPrice = this.getAttribute('data-price');
+
+              
+                document.getElementById('product').value = productId;
+                document.getElementById('amount').value = 1; // Default amount
+                document.getElementById('total_payment').textContent = productPrice; // Set initial total payment
+                document.getElementById('hidden_total_payment').value = productPrice; // Set hidden input
+
+                document.getElementById('paymentModal').classList.remove('hidden'); // Show modal
             });
+        });
 
-            document.getElementById('product').addEventListener('change', function() {
-                document.getElementById('amount').value = 1; // Reset jumlah saat produk dipilih
-                document.getElementById('total_payment').textContent = 0; // Reset total belanja
-                document.getElementById('hidden_total_payment').value = 0; // Reset total payment
-            });
 
-            // Check total payment before form submission
-            document.querySelector('form').addEventListener('submit', function(event) {
-                const totalPaymentValue = document.getElementById('hidden_total_payment').value;
-                if (!totalPaymentValue) {
-                    alert("Total pembayaran tidak boleh kosong!"); // Alert if total payment is empty
-                    event.preventDefault(); // Prevent form submission
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('paymentModal').classList.add('hidden');
+        });
+
+ 
+        document.getElementById('paymentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+
+            fetch("{% url 'pembayaran:create' %}", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}', 
                 }
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); 
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .then(data => {
+                const paymentId = data.payment_id; 
+                window.location.href = "{% url 'pembayaran:update_payment' %}".replace("''", paymentId);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat membuat pesanan.');
             });
-        </script>
+        });
 
-        <!-- Payment Method -->
-        <div class="mb-6">
-            <label for="payment_method" class="block text-lg mb-2">Pilih Metode Pembayaran:</label>
-            <select name="payment_method" id="payment_method" class="w-full py-4 text-center bg-[#E4DBFF] text-black rounded-full shadow-md focus:outline-none" required>
-                <option value="" disabled selected>Pilih Metode Pembayaran</option>
-                <option value="bank_transfer">Bank Transfer</option>
-                <option value="credit_card">Credit Card</option>
-                <option value="e_wallet">E-Wallet</option>
-            </select>
-        </div>
-
-        <button type="submit" class="w-full py-4 text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 rounded-full shadow-lg hover:shadow-xl transition-all hover:bg-gradient-to-r hover:from-purple-600 hover:to-purple-800 mt-4">
-            Bayar
-        </button>
-
-        <div class="mt-4 text-center">
-            <a href="{% url 'payment_history' %}" class="text-blue-600 hover:underline">Kembali ke Riwayat Pembayaran</a>
-        </div>
-    </form>
+        document.getElementById('amount').addEventListener('input', function() {
+            const amount = this.value;
+            const product = document.getElementById('product').value;
+            const total = amount * (document.querySelector(`option[value="${product}"]`).innerText.split('- Rp')[1] || 0);
+            document.getElementById('total_payment').textContent = total; // Update visible total payment
+            document.getElementById('hidden_total_payment').value = total; // Update hidden input
+        });
+    </script>
 </body>
 </html>

@@ -6,11 +6,115 @@
     <title>Home</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-900 flex items-center justify-center min-h-screen">
-    <div class="bg-gray-800 rounded-lg shadow-lg p-8 max-w-sm w-full text-center">
-        <h1 class="text-white text-3xl font-bold mb-4">Welcome to the Home Page</h1>
-        <p class="text-gray-400 mb-4">Hello, {{ user.username }}! You are logged in.</p>
-        <a href="{% url 'authentication:logout' %}" class="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700">Logout</a>
+<body class="bg-gray-900 min-h-screen flex flex-col">
+    {% include 'navbar.html' %}
+
+    <div class="flex flex-col items-center justify-center">
+        <h1 class="text-white text-3xl font-bold mb-4 text-center">Welcome to the Home Page</h1>
+        <p class="text-gray-400 mb-4 text-center">Hello, <span class="font-semibold text-blue-300">{{ user_profile.user.username }}</span>! You are logged in.</p>
     </div>
+
+    <div class="flex-1 p-8">
+        <h2 class="text-2xl text-white font-bold mb-4">Katalog Produk</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% for item in katalog_items %}
+            <div class="bg-gray-800 rounded-lg shadow-lg p-4 relative overflow-hidden">
+                <div class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded">Diskon 32%</div>
+                <img src="{{ item.image_url }}" alt="{{ item.nama }}" class="w-full h-32 object-cover rounded-md mb-2">
+                <h3 class="text-lg text-white font-semibold">{{ item.nama }}</h3>
+                <p class="text-gray-400">Harga: <span class="text-xl font-bold">Rp {{ item.harga }}</span></p>
+                <p class="text-gray-300">{{ item.deskripsi }}</p>
+                <p class="text-gray-500">Kategori: {{ item.kategori }}</p>
+                <p class="text-gray-500">Toko: {{ item.toko }}</p>
+                <button class="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 text-center block openModal" data-id="{{ item.id }}" data-name="{{ item.nama }}" data-price="{{ item.harga }}">Beli Sekarang</button>
+            </div>
+            {% empty %}
+            <p class="text-gray-300">Tidak ada produk yang tersedia.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="paymentModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden">
+        <div class="bg-gray-900 p-8 rounded-3xl shadow-2xl max-w-lg w-full relative">
+            <button id="closeModal" class="absolute top-4 right-4 text-white">X</button>
+            <h1 class="text-center text-3xl font-serif mb-8 text-white">Buat Pesanan</h1>
+            <form id="paymentForm" action="{% url 'pembayaran:create' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" id="product_id" />
+                
+                <div class="mb-6">
+                    <label for="product_name" class="block text-lg mb-2 text-white">Produk:</label>
+                    <p id="product_name" class="text-center text-white text-lg font-semibold"></p>
+                </div>
+
+                <div class="mb-6 flex justify-between items-center">
+                    <label for="amount" class="text-lg text-white">Jumlah:</label>
+                    <input type="number" name="amount" id="amount" min="1" value="1" class="w-16 py-2 text-center bg-gray-700 text-white rounded-full shadow-md focus:outline-none" required />
+                </div>
+
+                <div class="mb-6 p-4 bg-gray-800 rounded-xl shadow-inner">
+                    <p class="text-white text-lg">Total Pembayaran: Rp<span id="total_payment">0</span></p>
+                </div>
+
+                <input type="hidden" name="total_payment" id="hidden_total_payment" />
+
+                <div class="mb-6">
+                    <label for="payment_method" class="block text-lg mb-2 text-white">Pilih Metode Pembayaran:</label>
+                    <select name="payment_method" id="payment_method" class="w-full py-4 text-center bg-gray-700 text-white rounded-full shadow-md focus:outline-none" required>
+                        <option value="" disabled selected>Pilih Metode Pembayaran</option>
+                        <option value="bank_transfer">Bank Transfer</option>
+                        <option value="credit_card">Kartu Kredit</option>
+                        <option value="e_wallet">E-Wallet</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="w-full py-4 text-white bg-gradient-to-r from-purple-600 via-purple-700 to-purple-800 rounded-full shadow-lg hover:shadow-xl transition-all hover:bg-gradient-to-r hover:from-purple-700 hover:to-purple-900 mt-4">
+                    Bayar
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const productPrices = {};
+
+        
+        {% for item in katalog_items %}
+            productPrices["{{ item.id }}"] = {{ item.harga }};
+        {% endfor %}
+
+
+        document.querySelectorAll('.openModal').forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-id');
+                const productName = this.getAttribute('data-name');
+                const productPrice = this.getAttribute('data-price');
+
+                
+                document.getElementById('product_id').value = productId;
+                document.getElementById('product_name').textContent = productName;
+                document.getElementById('total_payment').textContent = productPrice;
+                document.getElementById('hidden_total_payment').value = productPrice;
+
+                document.getElementById('paymentModal').classList.remove('hidden');
+            });
+        });
+
+       
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('paymentModal').classList.add('hidden');
+        });
+
+       
+        document.getElementById('amount').addEventListener('input', function() {
+            const amount = this.value;
+            const productId = document.getElementById('product_id').value;
+            const total = amount * productPrices[productId];
+            
+            document.getElementById('total_payment').textContent = total;
+            document.getElementById('hidden_total_payment').value = total;
+        });
+    </script>
 </body>
 </html>
