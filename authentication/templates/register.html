@@ -1,32 +1,53 @@
-{% extends 'base.html' %}
-
-{% block meta %}
-<title>Register</title>
-{% endblock meta %}
-
-{% block content %}
-
-<div class="login">
-  <h1>Register</h1>
-
-  <form method="POST">
-    {% csrf_token %}
-    <table>
-      {{ form.as_table }}
-      <tr>
-        <td></td>
-        <td><input type="submit" name="submit" value="Daftar" /></td>
-      </tr>
-    </table>
-  </form>
-
-  {% if messages %}
-  <ul>
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-</div>
-
-{% endblock content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    {% load static %}
+</head>
+<body class="bg-gray-900 flex items-center justify-center min-h-screen">
+    <div class="bg-gray-800 rounded-lg shadow-lg p-8 max-w-sm w-full">
+        <div class="flex justify-center mb-6">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" class="h-12 w-12"> <!-- Ganti dengan path logo -->
+        </div>
+        <h2 class="text-white text-2xl font-bold text-center mb-4">Create an Account</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-4">
+                <input type="text" name="username" placeholder="Username" class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500" required>
+            </div>
+            <div class="mb-4">
+                <input type="email" name="email" placeholder="you@yourmail.com" class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500" required>
+            </div>
+            <div class="mb-4">
+                <input type="password" name="password" placeholder="Password" class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500" required>
+            </div>
+            <div class="mb-4">
+                <input type="password" name="confirm_password" placeholder="Confirm Password" class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500" required>
+            </div>
+            <div class="mb-4">
+                <label for="user_type" class="text-white">Select Role:</label>
+                <select name="user_type" id="user_type" class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500" required>
+                    <option value="">Select a role</option>
+                    <option value="admin">Admin</option>
+                    <option value="customer">Customer</option>
+                </select>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200">Register</button>
+        </form>
+        {% if messages %}
+        <ul class="mt-4 text-red-500">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="text-center mt-4">
+            <span class="text-gray-400">Already have an account? </span>
+            <a href="{% url 'authentication:login' %}" class="text-blue-600 hover:underline">Login</a>
+        </div>
+    </div>
+</body>
+</html>
