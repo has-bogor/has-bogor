@@ -10,22 +10,37 @@
 <body class="bg-gray-900 flex items-center justify-center min-h-screen">
     <div class="bg-gray-800 rounded-lg shadow-lg p-8 max-w-sm w-full">
         <div class="flex justify-center mb-6">
-            <img src="{% static 'images/logo.png' %}" alt="Logo" class="h-12 w-12"> <!-- Ganti dengan path logo -->
+            <img src="{% static 'images/logo.png' %}" alt="Logo" class="h-12 w-12">
         </div>
         <h2 class="text-white text-2xl font-bold text-center mb-4">Create an Account</h2>
+
+        {% if messages %}
+        <ul class="mb-4">
+            {% for message in messages %}
+            <li class="text-center text-red-500">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
         <form method="POST">
             {% csrf_token %}
             <div class="mb-4">
                 <input type="text" name="username" placeholder="Username" class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500" required>
+                {% if form.username.errors %}
+                    <p class="text-red-500 text-xs">{{ form.username.errors }}</p>
+                {% endif %}
             </div>
             <div class="mb-4">
-                <input type="email" name="email" placeholder="you@yourmail.com" class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500" required>
+                <input type="password" name="password1" placeholder="Password" class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500" required>
+                {% if form.password1.errors %}
+                    <p class="text-red-500 text-xs">{{ form.password1.errors }}</p>
+                {% endif %}
             </div>
             <div class="mb-4">
-                <input type="password" name="password" placeholder="Password" class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500" required>
-            </div>
-            <div class="mb-4">
-                <input type="password" name="confirm_password" placeholder="Confirm Password" class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500" required>
+                <input type="password" name="password2" placeholder="Confirm Password" class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500" required>
+                {% if form.password2.errors %}
+                    <p class="text-red-500 text-xs">{{ form.password2.errors }}</p>
+                {% endif %}
             </div>
             <div class="mb-4">
                 <label for="user_type" class="text-white">Select Role:</label>
@@ -37,13 +52,7 @@
             </div>
             <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200">Register</button>
         </form>
-        {% if messages %}
-        <ul class="mt-4 text-red-500">
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+
         <div class="text-center mt-4">
             <span class="text-gray-400">Already have an account? </span>
             <a href="{% url 'authentication:login' %}" class="text-blue-600 hover:underline">Login</a>

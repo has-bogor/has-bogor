@@ -10,5 +10,5 @@ urlpatterns = [
     path('logout/', logout, name='logout'),
     path('profile/', profile, name='profile'),
     path('home/', home, name='home'),
-
+    path('home/', HomeView.as_view(), name='home'),
 ]

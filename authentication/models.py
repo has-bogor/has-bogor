@@ -16,6 +16,7 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.user_type}"
+
     
 class HomeView(View):
     def get(self, request):
