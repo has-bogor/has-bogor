@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+{% endblock meta %}
+
+{% block content %}
+<div class="overflow-x-hidden px-4 md:px-8 pb-8 pt-24 min-h-screen bg-gray-100 flex flex-col">
+    <div class="p-2 mb-6 relative">
+        <div class="flex justify-end mb-6">
+            <form method="get" action="." class="py-2 px-4">
+                <label for="filter">Urutkan berdasarkan:</label>
+                <select id="sortPromoSelect">
+                    <option value="tanpa_filter">Tanpa Filter</option>
+                    <option value="potongan">Potongan Tertinggi</option>
+                    <option value="masa_berlaku">Masa Berlaku Terdekat</option>
+                </select>                
+            </form>
+            <a href="{% url 'promo:create_promo' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+                Tambah Promo
+            </a>
+        </div>
+
+        <div id="promo_cards"></div>
+    </div>
+</div>
+
+<!-- Modal Structure -->
+<input type="hidden" id="promoId" value="{{ promo.id }}">
+<div id="storeModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-xl mb-4">Edit Toko Terkait</h2>
+        <input type="text" id="storeName" placeholder="Nama Toko" class="border border-gray-300 p-2 w-full mb-4">
+        <div class="flex justify-end">
+            <button id="addStoreBtn" class="px-4 py-2 bg-green-500 text-white font-semibold rounded-md hover:bg-green-600 transition duration-200">Add</button>
+            <button id="removeStoreBtn" class="px-4 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 transition duration-200 ml-2">Remove</button>
+            <button id="closeModalBtn" class="px-4 py-2 bg-gray-300 text-black font-semibold rounded-md hover:bg-gray-400 transition duration-200 ml-2">Close</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function getPromo(sortBy = 'tanpa_filter'){  
+        const response = await fetch(`/promo/filtered/?sort_by=${sortBy}`);
+        const promoData = await response.json();
+        return promoData;
+    }
+
+    async function refreshPromo(sortBy) {
+        document.getElementById("promo_cards").innerHTML = "";
+        document.getElementById("promo_cards").className = "";
+        const promo = await getPromo(sortBy);
+        let htmlString = "";
+        let classNameString = "";
+
+        if (promo.length === 0) {
+            classNameString = "flex flex-col items-center justify-center min-h-[24rem] p-6";
+            htmlString = `
+                <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
+                    <p class="text-center text-gray-600 mt-4">Belum ada data promo.</p>
+                </div>
+            `;
+        }
+        else {
+            classNameString = "columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 w-full"
+            promo.forEach((item) => {
+                let relatedStores = item.fields.toko_terkait
+                    ? item.fields.toko_terkait.map(toko => `<li>${toko.name}</li>`).join("")
+                    : "<li>No related stores</li>";
+                htmlString += `
+                <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white p-5 m-4">
+  
+                    <!-- Promo Code -->
+                    <div class="bg-gray-100 text-gray-700 px-4 py-2 rounded-md mb-4">
+                        <span class="font-semibold">Kode:</span> <span class="text-gray-900 font-mono">${item.fields.kode}</span>
+                    </div>
+                    
+                    <!-- Discount -->
+                    <p class="text-gray-600 text-base mb-4">
+                        <span class="font-semibold">Diskon:</span> ${item.fields.potongan}%
+                    </p>
+                    
+                    <!-- Validity Period -->
+                    <p class="text-gray-600 text-base mb-4">
+                        <span class="font-semibold">Masa Berlaku:</span> ${item.fields.masa_berlaku} hari
+                    </p>
+                    
+                    <!-- Minimum Transaction -->
+                    <p class="text-gray-600 text-base mb-4">
+                        <span class="font-semibold">Minimal Transaksi:</span> Rp${item.fields.minimal_transaksi}
+                    </p>
+                    
+                    <!-- Related Stores (Toko Terkait) -->
+                    <div class="text-gray-600 text-base mb-4">
+                        <span class="font-semibold">Toko Terkait:</span>
+                        <ul class="list-disc list-inside mt-2">
+                            ${relatedStores}
+                        </ul>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="flex justify-between gap-3 mt-4">
+                        <a href="/promo/edit-promo/${item.pk}">
+                            <button class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition duration-200">
+                            Edit Promo
+                            </button>
+                        </a>
+                        <button id='editTokoButton' data-promo-id="${item.pk}" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition duration-200">
+                        Edit Toko Terkait
+                        </button>
+                        <a href="/promo/delete/${item.pk}">
+                            <button class=" px-4 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 transition duration-200">
+                            Hapus Promo
+                            </button>
+                        </a>
+                    </div>
+                    
+                </div>
+                `;
+            });
+        }
+        document.getElementById("promo_cards").className = classNameString;
+        document.getElementById("promo_cards").innerHTML = htmlString;
+    }
+refreshPromo();
+
+async function addStore(promoId, newStore) {
+    const response = await fetch(`/promo/add_store/${promoId}/`, {
+        method: 'POST',
+        body: JSON.stringify(newStore)
+    });
+    const data = await response.json();
+    if (data.status === 'success') {
+        console.log("Store added:", data.related_stores);
+        refreshPromo();  // Update the UI
+    } else {
+        console.error("Error adding store:", data.message);
+    }
+}
+
+async function removeStore(promoId, storeName) {
+    const response = await fetch(`/promo/remove_store/${promoId}/`, {
+        method: 'POST',
+        body: JSON.stringify({ storeName: storeName })
+    });
+    const data = await response.json();
+    if (data.status === 'success') {
+        console.log("Store removed:", data.related_stores);
+        refreshPromo();  // Update the UI
+    } else {
+        console.error("Error removing store:", data.message);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Attach event listener to promo_cards container
+    document.getElementById("promo_cards").addEventListener("click", function(event) {
+        if (event.target && event.target.id === 'editTokoButton') {
+            const promoId = event.target.getAttribute('data-promo-id'); // Get the promo ID
+            document.getElementById("promoId").value = promoId; // Set the hidden input value
+            document.getElementById("storeModal").classList.remove("hidden"); // Show the modal
+        }
+    });
+
+    // Close the modal
+    document.getElementById("closeModalBtn").addEventListener("click", function() {
+        document.getElementById("storeModal").classList.add("hidden");
+    });
+
+    // Add store functionality
+    document.getElementById("addStoreBtn").addEventListener("click", async function() {
+        const storeName = document.getElementById("storeName").value;
+        const promoId = document.getElementById("promoId").value;
+        const newStore = { name: storeName };
+
+        await addStore(promoId, newStore); 
+        document.getElementById("storeName").value = ""; 
+    });
+
+    // Remove store functionality
+    document.getElementById("removeStoreBtn").addEventListener("click", async function() {
+        const storeName = document.getElementById("storeName").value;
+        const promoId = document.getElementById("promoId").value;
+        await removeStore(promoId, storeName); 
+        document.getElementById("storeName").value = ""; 
+    });
+
+    document.getElementById("sortPromoSelect").addEventListener("change", (event) => {
+    const selectedSort = event.target.value;
+    refreshPromo(selectedSort);
+    });
+});
+
+</script>
+{% endblock content %}
