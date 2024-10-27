@@ -19,9 +19,6 @@
                     <option value="masa_berlaku">Masa Berlaku Terdekat</option>
                 </select>                
             </form>
-            <a href="{% url 'promo:create_promo' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-                Tambah Promo
-            </a>
         </div>
 
         <div id="promo_cards"></div>
@@ -101,22 +98,7 @@
                         </ul>
                     </div>
 
-                    <!-- Button -->
-                    <div class="flex justify-between gap-3 mt-4">
-                        <a href="/promo/edit-promo/${item.pk}">
-                            <button class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition duration-200">
-                            Edit Promo
-                            </button>
-                        </a>
-                        <button id='editTokoButton' data-promo-id="${item.pk}" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition duration-200">
-                        Edit Toko Terkait
-                        </button>
-                        <a href="/promo/delete/${item.pk}">
-                            <button class=" px-4 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 transition duration-200">
-                            Hapus Promo
-                            </button>
-                        </a>
-                    </div>
+                    
                     
                 </div>
                 `;

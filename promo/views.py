@@ -6,10 +6,18 @@ from promo.models import Promo
 from promo.forms import PromoForm
 from django.core import serializers
 import json
+from django.contrib.auth.decorators import login_required
+from authentication.models import UserProfile
 
+@login_required(login_url="authentication:login")
 def show_promo(request):
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
 
-    context = {}
+    context = {"user": user_profile}
+
+    if user_profile.user_type.casefold() == "customer":
+        return render(request, 'customer_promo.html', context)
 
     return render(request, "promo.html", context)
 
