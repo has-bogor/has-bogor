@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'wishlist',
     'promo',
     'ulasan',
+    'category'
 ]
 
 MIDDLEWARE = [

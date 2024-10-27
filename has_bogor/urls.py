@@ -29,3 +29,5 @@ urlpatterns = [
     path('promo/', include('promo.urls')),
     path('ulasan/', include('ulasan.urls')),
 ]
+    path('category/', include('category.urls'))
+]
