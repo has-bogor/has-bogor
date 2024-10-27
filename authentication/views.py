@@ -41,7 +41,6 @@ def login(request):
     return render(request, 'login.html')
 
 
-
 @login_required
 def profile(request):
     user_profile = UserProfile.objects.get(user=request.user)  

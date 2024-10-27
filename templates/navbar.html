@@ -1,14 +1,18 @@
 <nav class="bg-gray-800 shadow-lg">
     <div class="max-w-7xl mx-auto px-4 py-4">
         <div class="flex justify-between items-center">
-            <div class="text-white text-3xl font-bold">Hasbogor</div> <!-- Ukuran teks diperbesar -->
-            <div class="flex items-center space-x-6"> <!-- Ruang antara item menu ditingkatkan -->
+            <div class="text-white text-3xl font-bold">HasBogor</div>
+            <div class="flex items-center space-x-6">
                 <a href="{% url 'authentication:home' %}" class="text-gray-300 hover:text-white transition duration-200">Home</a>
                 <a href="{% url 'ulasan:list_ulasan' %}" class="text-gray-300 hover:text-white transition duration-200">Review</a>
-                <a href="{% url 'wishlist_view' %}" class="text-gray-300 hover:text-white transition duration-200">Wishlist</a>
+                <a href="{% url 'wishlist:wishlist_view' %}" class="text-gray-300 hover:text-white transition duration-200">Wishlist</a>
                 <a href="{% url 'pembayaran:payment_history' %}" class="text-gray-300 hover:text-white transition duration-200">History</a>
                 <a href="{% url 'promo:show_promo' %}" class="text-gray-300 hover:text-white transition duration-200">Promo</a>
-                <a href="{% url 'authentication:logout' %}" class="text-gray-300 hover:text-white transition duration-200">Logout</a>
+                
+                <!-- Logout Button -->
+                <a href="{% url 'authentication:logout' %}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200">
+                    Logout
+                </a>
             </div>
         </div>
     </div>
