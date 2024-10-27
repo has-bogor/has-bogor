@@ -23,6 +23,7 @@ urlpatterns = [
     path('pembayaran/', include('pembayaran.urls')),
     path('wishlist/', include('wishlist.urls')),
     path('authentication/', include('authentication.urls')),
+    path('', RedirectView.as_view(url='authentication/login/', permanent=False)), 
     # path('', RedirectView.as_view(url='/pembayaran/create/', permanent=False)),
 ]
 
