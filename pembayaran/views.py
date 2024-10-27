@@ -1,3 +1,4 @@
+# pembayaran/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Pembayaran
 from penyimpanan.models import Katalog
@@ -10,58 +11,63 @@ def create_payment(request):
     if request.method == 'POST':
         form = PaymentForm(request.POST)
         if form.is_valid():
-            payment = form.save(commit=False) 
-            payment.total_amount = form.cleaned_data['amount'] 
-            payment.save()  
-            print(f"Payment created with ID: {payment.id}") 
+            # Buat instance pembayaran tanpa menyimpan ke database terlebih dahulu
+            payment = form.save(commit=False)
+            # Hitung total_payment sebagai jumlah x harga produk
+            payment.total_payment = form.cleaned_data['amount'] * form.cleaned_data['product'].harga
+            payment.save()  # Simpan pembayaran
 
-            request.session['product_id'] = payment.product.id
-            request.session['amount'] = float(payment.total_amount)
+            print(f"Payment created with ID: {payment.id}")
+            messages.success(request, 'Pembayaran berhasil dibuat.')
 
-            # Redirect dengan menyertakan `payment_id` yang benar
+            # Bersihkan sesi setelah pembuatan
+            request.session.pop('product_id', None)
+            request.session.pop('amount', None)
+
+            # Arahkan ke halaman riwayat pembayaran
             return redirect('pembayaran:update_payment', payment_id=payment.id)
 
         else:
             print("Form is not valid:", form.errors)
-            messages.error(request, 'Please correct the errors below.')
+            messages.error(request, 'Mohon perbaiki kesalahan berikut.')
     else:
         form = PaymentForm()
 
-    produk_list = Katalog.objects.all()  # Ambil dari wishlist
+    # Mengambil daftar produk
+    produk_list = Katalog.objects.all()
     return render(request, 'pembayaran/create_payment.html', {
         'form': form,
         'produk_list': produk_list
     })
 
 def payment_history(request):
-    payments = Pembayaran.objects.all()  
+    payments = Pembayaran.objects.all()
     return render(request, 'pembayaran/payment_history.html', {'payments': payments})
 
 def update_payment(request, payment_id):
-    payment = get_object_or_404(Pembayaran, id=payment_id) 
-
+    payment = get_object_or_404(Pembayaran, id=payment_id)
     form = PaymentForm(instance=payment)
 
     if request.method == 'POST':
         form = PaymentForm(request.POST, instance=payment)
         if form.is_valid():
-           
-            payment.total_amount += form.cleaned_data['amount']
-            payment.save() 
-            messages.success(request, 'Payment updated successfully.')
-    
+            # Update total_payment berdasarkan jumlah terbaru dan harga produk
+            payment.total_payment = form.cleaned_data['amount'] * form.cleaned_data['product'].harga
+            payment.save()
+            messages.success(request, 'Pembayaran berhasil diperbarui.')
+
+            # Bersihkan sesi setelah pembaruan
             request.session.pop('product_id', None)
             request.session.pop('amount', None)
             return redirect('pembayaran:payment_history')
 
     return render(request, 'pembayaran/update_payment.html', {'form': form, 'payment': payment})
 
-
 def delete_payment(request, payment_id):
     payment = get_object_or_404(Pembayaran, id=payment_id)
     if request.method == 'POST':
         payment.delete()
-        messages.success(request, 'Payment deleted successfully.')
+        messages.success(request, 'Pembayaran berhasil dihapus.')
         return redirect('pembayaran:payment_history')
 
     return render(request, 'pembayaran/delete_payment.html', {'payment': payment})

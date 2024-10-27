@@ -17,6 +17,9 @@
                     <th class="py-4 px-6 text-left text-gray-800">Produk</th>
                     <th class="py-4 px-6 text-left text-gray-800">Jumlah</th>
                     <th class="py-4 px-6 text-left text-gray-800">Total Pembayaran</th>
+                    <th class="py-4 px-6 text-left text-gray-800">Metode Pembayaran</th>
+                    <th class="py-4 px-6 text-left text-gray-800">Status</th>
+                    <th class="py-4 px-6 text-left text-gray-800">Tanggal</th>
                     <th class="py-4 px-6 text-left text-gray-800">Aksi</th>
                 </tr>
             </thead>
@@ -26,22 +29,24 @@
                         <td class="py-4 text-center text-white">{{ payment.id }}</td>
                         <td class="py-4 text-center text-white">{{ payment.product }}</td>
                         <td class="py-4 text-center text-white">{{ payment.amount }}</td>
-                        <td class="py-4 text-center text-white">Rp {{ payment.total_payment }}</td> <!-- Pastikan format jumlah dua desimal -->
+                        <td class="py-4 text-center text-white">Rp {{ payment.total_payment|floatformat:2 }}</td>
+                        <td class="py-4 text-center text-white">{{ payment.get_payment_method_display }}</td>
+                        <td class="py-4 text-center text-white">{{ payment.status }}</td>
+                        <td class="py-4 text-center text-white">{{ payment.created_at|date:"d-m-Y" }}</td>
                         <td class="py-4 text-center">
                             <a href="{% url 'pembayaran:delete_payment' payment.id %}" class="text-red-500 hover:underline">Hapus</a>
                         </td>
                     </tr>
                 {% empty %}
                     <tr>
-                        <td colspan="5" class="py-4 text-center text-white">Tidak ada pembayaran yang ditemukan.</td>
+                        <td colspan="8" class="py-4 text-center text-white">Tidak ada pembayaran yang ditemukan.</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-        <a href="{% url 'authentication:home' %}" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-2 px-4 rounded-full shadow-lg transition-all hover:bg-gradient-to-l hover:from-blue-600 hover:to-blue-700">
-            Kembali ke Beranda
-        </a>
-    </div>
+    <a href="{% url 'authentication:home' %}" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-2 px-4 rounded-full shadow-lg transition-all hover:bg-gradient-to-l hover:from-blue-600 hover:to-blue-700">
+        Kembali ke Beranda
+    </a>
 </body>
 </html>

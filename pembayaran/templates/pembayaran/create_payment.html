@@ -39,7 +39,8 @@
         <!-- Payment Method with Live Search -->
         <div class="mb-6 relative">
             <label for="payment_search" class="block text-lg mb-2 text-indigo-200">Pilih Metode Pembayaran:</label>
-            <input type="text" id="payment_search" name="payment_method" placeholder="Ketik metode pembayaran" class="w-full py-4 text-center bg-indigo-100 text-gray-700 rounded-full shadow-md focus:outline-none" autocomplete="off">
+            <input type="text" id="payment_search" placeholder="Ketik metode pembayaran" class="w-full py-4 text-center bg-indigo-100 text-gray-700 rounded-full shadow-md focus:outline-none" autocomplete="off">
+            <input type="hidden" id="payment_method_hidden" name="payment_method">
             <ul id="payment_suggestions" class="absolute left-0 right-0 bg-white text-gray-800 rounded-lg shadow-lg mt-2 max-h-40 overflow-y-auto z-10"></ul>
         </div>
 
@@ -54,38 +55,40 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Define the list of payment methods
+        // Daftar metode pembayaran
         const app = [
-            { name: "Bank Transfer" },
-            { name: "Credit Card" },
-            { name: "E-Wallet" },
-            { name: "OVO" },
-            { name: "GoPay" },
-            { name: "Dana" },
-            { name: "LinkAja" }
+            { name: "Bank Transfer", value: "bank_transfer" },
+            { name: "Credit Card", value: "credit_card" },
+            { name: "E-Wallet", value: "e_wallet" },
+            { name: "OVO", value: "ovo" },
+            { name: "GoPay", value: "gopay" },
+            { name: "Dana", value: "dana" },
+            { name: "LinkAja", value: "linkaja" }
         ];
 
         const paymentSearchInput = document.getElementById('payment_search');
         const suggestionsList = document.getElementById('payment_suggestions');
+        const hiddenPaymentInput = document.getElementById('payment_method_hidden');
 
         paymentSearchInput.addEventListener('input', function () {
             const query = paymentSearchInput.value.toLowerCase();
-            suggestionsList.innerHTML = '';  // Clear previous suggestions
+            suggestionsList.innerHTML = '';  // Hapus saran sebelumnya
 
             if (query.length > 0) {
-                // Filter payment methods that match the query
+                // Filter metode pembayaran sesuai query
                 const filteredMethods = app.filter(item => item.name.toLowerCase().includes(query));
 
-                // Show filtered results
+                // Tampilkan hasil filter
                 filteredMethods.forEach(method => {
                     const listItem = document.createElement('li');
                     listItem.textContent = method.name;
                     listItem.classList.add('p-2', 'cursor-pointer', 'hover:bg-indigo-200');
 
-                    // Set the input value to the selected method name when clicked
+                    // Setel nilai input tersembunyi saat metode dipilih
                     listItem.addEventListener('click', () => {
                         paymentSearchInput.value = method.name;
-                        suggestionsList.innerHTML = '';  // Clear suggestions
+                        hiddenPaymentInput.value = method.value; // Simpan value yang valid
+                        suggestionsList.innerHTML = '';  // Hapus saran
                     });
 
                     suggestionsList.appendChild(listItem);
@@ -93,14 +96,14 @@
             }
         });
 
-        // Close suggestions list when clicking outside
+        // Tutup daftar saran saat klik di luar area input
         document.addEventListener('click', function(event) {
             if (!paymentSearchInput.contains(event.target) && !suggestionsList.contains(event.target)) {
                 suggestionsList.innerHTML = '';
             }
         });
 
-        // Update total payment on product selection and amount input
+        // Perbarui total pembayaran saat produk dan jumlah berubah
         const productSelect = document.getElementById('product');
         const amountInput = document.getElementById('amount');
         const totalPaymentSpan = document.getElementById('total_payment');
@@ -115,8 +118,8 @@
             const amount = parseInt(amountInput.value) || 0;
 
             const total = harga * amount;
-            totalPaymentSpan.textContent = total.toLocaleString(); // Format total with commas
-            hiddenTotalPayment.value = total; // Update hidden input
+            totalPaymentSpan.textContent = total.toLocaleString(); // Format total dengan koma
+            hiddenTotalPayment.value = total; // Update input tersembunyi
         }
     });
     </script>
