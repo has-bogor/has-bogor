@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'authentication',
     'penyimpanan',
     'pembayaran',
+    'category'
 ]
 
 MIDDLEWARE = [
