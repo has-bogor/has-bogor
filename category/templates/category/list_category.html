@@ -6,30 +6,30 @@
     <title>Category Management</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 p-10">
+<body class="bg-gray-900 p-10">
     <div class="max-w-3xl mx-auto">
-        <h1 class="text-2xl font-bold mb-6 text-center">Manage Categories</h1>
+        <div class="bg-gray-800 text-white p-8 rounded-lg shadow-lg mb-8">
+        <h1 class="text-2xl text-white font-bold mb-6 text-center">Manage Categories</h1>
 
         <!-- Sorting Buttons -->
-        <div class="text-center mb-4">
-            <button onclick="fetchCategories('asc')" class="bg-gray-200 py-2 px-4 mr-2 rounded">Sort Ascending</button>
-            <button onclick="fetchCategories('desc')" class="bg-gray-200 py-2 px-4 rounded">Sort Descending</button>
-        </div>
-
-        <input type="text" id="searchBar" placeholder="Search categories" 
-        class="border py-2 px-3 rounded w-full mb-4" oninput="searchCategories()">
+        
 
         <!-- Add Category Form -->
         <div class="mb-6">
             <form id="addCategoryForm" onsubmit="createCategory(event)">
                 <input type="text" id="newCategoryName" placeholder="Enter new category" class="border py-2 px-3 rounded w-full mb-4" required>
-                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded w-full">Add Category</button>
+                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded w-full hover:bg-blue-600">Add Category</button>
             </form>
         </div>
-
+        </div>
         <!-- Response Message -->
         <div id="responseMessage" class="hidden bg-green-100 text-green-700 p-4 rounded mb-4"></div>
-
+        <input type="text" id="searchBar" placeholder="Search categories" 
+        class="border py-2 px-3 rounded w-full mb-4" oninput="searchCategories()">
+        <div class="text-center mb-4">
+            <button onclick="fetchCategories('asc')" class="bg-gray-200 py-2 px-4 mr-2 rounded hover:bg-gray-300">Sort Ascending</button>
+            <button onclick="fetchCategories('desc')" class="bg-gray-200 py-2 px-4 rounded hover:bg-gray-300">Sort Descending</button>
+        </div>
         <!-- Category List -->
         <div id="categoryList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Category items will be populated here -->
