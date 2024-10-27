@@ -33,10 +33,9 @@ class PembayaranViewsTestCase(TestCase):
         self.assertTrue(Pembayaran.objects.filter(amount=1, total_payment=10000).exists())
 
     def test_create_payment_view_post_invalid(self):
-        # Test POST request to create_payment with invalid data
         data = {
             'product': self.katalog_item.id,
-            'amount': '',  # Invalid data
+            'amount': '',
             'payment_method': 'bank_transfer',
             'total_payment': 10000
         }
@@ -46,20 +45,17 @@ class PembayaranViewsTestCase(TestCase):
         self.assertEqual(str(messages[0]), 'Mohon perbaiki kesalahan berikut.')
 
     def test_payment_history_view(self):
-        # Test payment_history view
         response = self.client.get(reverse('pembayaran:payment_history'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'pembayaran/payment_history.html')
         self.assertContains(response, 'Product 1')
 
     def test_update_payment_view_get(self):
-        # Test GET request to update_payment
         response = self.client.get(reverse('pembayaran:update_payment', args=[self.payment.id]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'pembayaran/update_payment.html')
 
     def test_update_payment_view_post(self):
-        # Test POST request to update_payment with valid data
         data = {
             'product': self.katalog_item.id,
             'amount': 3,
@@ -73,7 +69,6 @@ class PembayaranViewsTestCase(TestCase):
         self.assertEqual(updated_payment.total_payment, 30000)
 
     def test_delete_payment_view(self):
-       
         response = self.client.post(reverse('pembayaran:delete_payment', args=[self.payment.id]))
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Pembayaran.objects.filter(id=self.payment.id).exists())
