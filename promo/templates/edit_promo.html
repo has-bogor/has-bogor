@@ -1,0 +1,15 @@
+
+<h1>Edit Promo</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Edit Promo"/>
+            </td>
+        </tr>
+    </table>
+</form>
