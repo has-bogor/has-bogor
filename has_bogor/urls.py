@@ -20,8 +20,9 @@ from django.shortcuts import redirect
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('authentication.urls')),
     path('pembayaran/', include('pembayaran.urls')),
-    path('', include('penyimpanan.urls')),
-    path('ulasan/', include('ulasan.urls', namespace='ulasan')),
+    path('penyimpanan/', include('penyimpanan.urls')),
+    path('ulasan/', include('ulasan.urls'))
     # path('', lambda request: redirect('ulasan:list_ulasan')), 
 ]
