@@ -16,13 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.shortcuts import redirect
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('authentication.urls')),
     path('pembayaran/', include('pembayaran.urls')),
+    path('authentication/', include('authentication.urls')),
+    path('', RedirectView.as_view(url='/authentication/login/', permanent=False)), 
     path('penyimpanan/', include('penyimpanan.urls')),
-    path('ulasan/', include('ulasan.urls'))
-    # path('', lambda request: redirect('ulasan:list_ulasan')), 
+    path('wishlist/', include('wishlist.urls')),
+    path('promo/', include('promo.urls')),
+    path('ulasan/', include('ulasan.urls')),
 ]
