@@ -2,6 +2,7 @@
 
 from django.shortcuts import render
 from .models import Katalog  # Perbarui import untuk menggunakan model Katalog
+from django.http import JsonResponse
 
 def explore_katalog(request):
     search_query = request.GET.get('search', '')
@@ -11,3 +12,7 @@ def explore_katalog(request):
         katalog_items = Katalog.objects.all()
     
     return render(request, 'penyimpanan/explore_katalog.html', {'katalog_items': katalog_items})
+
+def katalog_list(request):
+    katalog = list(Katalog.objects.values('id', 'nama', 'harga', 'kategori', 'deskripsi', 'toko'))
+    return JsonResponse(katalog, safe=False)

@@ -14,10 +14,10 @@
         <!-- Product Select -->
         <div class="mb-6">
             <label for="product" class="block text-lg mb-2 text-indigo-200">Pilih Produk:</label>
-            <select name="product" id="product" class="w-full py-4 text-center bg-indigo-100 text-gray-700 rounded-full shadow-md focus:outline-none">
+            <select name="product" id="product" class="w-full py-4 text-center bg-indigo-100 text-gray-700 rounded-full shadow-md focus:outline-none" required>
                 <option value="" disabled selected>Pilih Produk</option>
                 {% for item in produk_list %}
-                    <option value="{{ item.id }}">{{ item.nama }} - Rp{{ item.harga }}</option>
+                    <option value="{{ item.id }}" data-harga="{{ item.harga }}">{{ item.nama }} - Rp{{ item.harga }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -30,51 +30,17 @@
 
         <!-- Total Shopping Summary -->
         <div class="mb-6 p-4 bg-gray-700 rounded-xl shadow-inner">
-            <p class="text-indigo-200 text-lg">Total Pembayaran: Rp<span id="total_payment"> 0</span></p>
+            <p class="text-indigo-200 text-lg">Total Pembayaran: Rp<span id="total_payment">0</span></p>
         </div>
 
         <!-- Hidden Input for Total Payment -->
         <input type="hidden" name="total_payment" id="hidden_total_payment" />
 
-        <script>
-            const productPrices = {};
-            {% for item in produk_list %}
-                productPrices["{{ item.id }}"] = {{ item.harga }};
-            {% endfor %}
-
-            document.getElementById('amount').addEventListener('input', function() {
-                const amount = this.value;
-                const product = document.getElementById('product').value;
-                const total = amount * (productPrices[product] || 0);
-                
-                document.getElementById('total_payment').textContent = total;
-                document.getElementById('hidden_total_payment').value = total; 
-            });
-
-            document.getElementById('product').addEventListener('change', function() {
-                document.getElementById('amount').value = 1;
-                document.getElementById('total_payment').textContent = 0;
-                document.getElementById('hidden_total_payment').value = 0;
-            });
-
-            document.querySelector('form').addEventListener('submit', function(event) {
-                const totalPaymentValue = document.getElementById('hidden_total_payment').value;
-                if (!totalPaymentValue) {
-                    alert("Total pembayaran tidak boleh kosong!");
-                    event.preventDefault();
-                }
-            });
-        </script>
-
-        <!-- Payment Method -->
-        <div class="mb-6">
-            <label for="payment_method" class="block text-lg mb-2 text-indigo-200">Pilih Metode Pembayaran:</label>
-            <select name="payment_method" id="payment_method" class="w-full py-4 text-center bg-indigo-100 text-gray-700 rounded-full shadow-md focus:outline-none" required>
-                <option value="" disabled selected>Pilih Metode Pembayaran</option>
-                <option value="bank_transfer">Bank Transfer</option>
-                <option value="credit_card">Credit Card</option>
-                <option value="e_wallet">E-Wallet</option>
-            </select>
+        <!-- Payment Method with Live Search -->
+        <div class="mb-6 relative">
+            <label for="payment_search" class="block text-lg mb-2 text-indigo-200">Pilih Metode Pembayaran:</label>
+            <input type="text" id="payment_search" name="payment_method" placeholder="Ketik metode pembayaran" class="w-full py-4 text-center bg-indigo-100 text-gray-700 rounded-full shadow-md focus:outline-none" autocomplete="off">
+            <ul id="payment_suggestions" class="absolute left-0 right-0 bg-white text-gray-800 rounded-lg shadow-lg mt-2 max-h-40 overflow-y-auto z-10"></ul>
         </div>
 
         <button type="submit" class="w-full py-4 text-white bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full shadow-lg hover:shadow-xl transition-all hover:bg-gradient-to-l mt-4">
@@ -85,5 +51,74 @@
             <a href="{% url 'pembayaran:payment_history' %}" class="text-indigo-300 hover:underline">Kembali ke Riwayat Pembayaran</a>
         </div>
     </form>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Define the list of payment methods
+        const app = [
+            { name: "Bank Transfer" },
+            { name: "Credit Card" },
+            { name: "E-Wallet" },
+            { name: "OVO" },
+            { name: "GoPay" },
+            { name: "Dana" },
+            { name: "LinkAja" }
+        ];
+
+        const paymentSearchInput = document.getElementById('payment_search');
+        const suggestionsList = document.getElementById('payment_suggestions');
+
+        paymentSearchInput.addEventListener('input', function () {
+            const query = paymentSearchInput.value.toLowerCase();
+            suggestionsList.innerHTML = '';  // Clear previous suggestions
+
+            if (query.length > 0) {
+                // Filter payment methods that match the query
+                const filteredMethods = app.filter(item => item.name.toLowerCase().includes(query));
+
+                // Show filtered results
+                filteredMethods.forEach(method => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = method.name;
+                    listItem.classList.add('p-2', 'cursor-pointer', 'hover:bg-indigo-200');
+
+                    // Set the input value to the selected method name when clicked
+                    listItem.addEventListener('click', () => {
+                        paymentSearchInput.value = method.name;
+                        suggestionsList.innerHTML = '';  // Clear suggestions
+                    });
+
+                    suggestionsList.appendChild(listItem);
+                });
+            }
+        });
+
+        // Close suggestions list when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!paymentSearchInput.contains(event.target) && !suggestionsList.contains(event.target)) {
+                suggestionsList.innerHTML = '';
+            }
+        });
+
+        // Update total payment on product selection and amount input
+        const productSelect = document.getElementById('product');
+        const amountInput = document.getElementById('amount');
+        const totalPaymentSpan = document.getElementById('total_payment');
+        const hiddenTotalPayment = document.getElementById('hidden_total_payment');
+
+        productSelect.addEventListener('change', updateTotal);
+        amountInput.addEventListener('input', updateTotal);
+
+        function updateTotal() {
+            const selectedOption = productSelect.options[productSelect.selectedIndex];
+            const harga = selectedOption ? parseInt(selectedOption.getAttribute('data-harga')) : 0;
+            const amount = parseInt(amountInput.value) || 0;
+
+            const total = harga * amount;
+            totalPaymentSpan.textContent = total.toLocaleString(); // Format total with commas
+            hiddenTotalPayment.value = total; // Update hidden input
+        }
+    });
+    </script>
 </body>
 </html>

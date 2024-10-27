@@ -3,6 +3,8 @@ from .models import Pembayaran
 from penyimpanan.models import Katalog
 from .forms import PaymentForm
 from django.contrib import messages
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 def create_payment(request):
     if request.method == 'POST':
@@ -50,7 +52,7 @@ def update_payment(request, payment_id):
     
             request.session.pop('product_id', None)
             request.session.pop('amount', None)
-            return redirect('payment_history')
+            return redirect('pembayaran:payment_history')
 
     return render(request, 'pembayaran/update_payment.html', {'form': form, 'payment': payment})
 
