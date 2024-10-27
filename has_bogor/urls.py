@@ -23,11 +23,10 @@ urlpatterns = [
     path('', include('authentication.urls')),
     path('pembayaran/', include('pembayaran.urls')),
     path('authentication/', include('authentication.urls')),
-    path('', RedirectView.as_view(url='/authentication/login/', permanent=False)), 
+    path('', RedirectView.as_view(url='/authentication/login/', permanent=False)),
     path('penyimpanan/', include('penyimpanan.urls')),
     path('wishlist/', include('wishlist.urls')),
     path('promo/', include('promo.urls')),
     path('ulasan/', include('ulasan.urls')),
-]
     path('category/', include('category.urls'))
 ]
