@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'pembayaran',
     'authentication',
     'wishlist',
+    'promo',
+    'ulasan',
 ]
 
 MIDDLEWARE = [

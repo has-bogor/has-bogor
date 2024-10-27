@@ -1,34 +1,15 @@
 <nav class="bg-gray-800 shadow-lg">
     <div class="max-w-7xl mx-auto px-4 py-4">
         <div class="flex justify-between items-center">
-            <div class="text-white text-xl font-bold">Hasbogor</div>
-            <div class="flex items-center space-x-4">
-                <a href="{% url 'authentication:home' %}" class="text-gray-300 hover:text-white">Home</a>
-                <a href="{% url 'pembayaran:create' %}" class="text-gray-300 hover:text-white">Payment</a>
-                <a href="{% url 'wishlist_view' %}"  class="text-gray-300 hover:text-white">My Wishlist</a>
-                <a href="{% url 'authentication:logout' %}" class="text-gray-300 hover:text-white">Logout</a>
+            <div class="text-white text-3xl font-bold">Hasbogor</div> <!-- Ukuran teks diperbesar -->
+            <div class="flex items-center space-x-6"> <!-- Ruang antara item menu ditingkatkan -->
+                <a href="{% url 'authentication:home' %}" class="text-gray-300 hover:text-white transition duration-200">Home</a>
+                <a href="{% url 'ulasan:list_ulasan' %}" class="text-gray-300 hover:text-white transition duration-200">Review</a>
+                <a href="{% url 'wishlist_view' %}" class="text-gray-300 hover:text-white transition duration-200">Wishlist</a>
+                <a href="{% url 'pembayaran:payment_history' %}" class="text-gray-300 hover:text-white transition duration-200">History</a>
+                <a href="{% url 'promo:show_promo' %}" class="text-gray-300 hover:text-white transition duration-200">Promo</a>
+                <a href="{% url 'authentication:logout' %}" class="text-gray-300 hover:text-white transition duration-200">Logout</a>
             </div>
         </div>
-       
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Tambahkan jQuery -->
-<script>
-    $(document).ready(function() {
-        $('#search-button').on('click', function(event) {
-            event.preventDefault(); // Mencegah pengiriman form tradisional
-            let query = $('#search-bar').val(); // Ambil nilai dari search bar
-            $.ajax({
-                url: '{% url "penyimpanan:explore" %}', // Ganti dengan URL yang sesuai untuk view pencarian
-                data: {
-                    'search': query // Kirimkan parameter pencarian
-                },
-                success: function(data) {
-                    $('#katalog-container').html(data); // Update kontainer dengan hasil pencarian
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error occurred: " + error); // Menangani error
-                }
-            });
-        });
-    });
-</script>
+    </div>
+</nav>

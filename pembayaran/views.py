@@ -1,4 +1,3 @@
-# pembayaran/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Pembayaran
 from penyimpanan.models import Katalog
@@ -6,25 +5,19 @@ from .forms import PaymentForm
 from django.contrib import messages
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from promo.models import Promo
 
 def create_payment(request):
     if request.method == 'POST':
         form = PaymentForm(request.POST)
         if form.is_valid():
-            # Buat instance pembayaran tanpa menyimpan ke database terlebih dahulu
             payment = form.save(commit=False)
-            # Hitung total_payment sebagai jumlah x harga produk
             payment.total_payment = form.cleaned_data['amount'] * form.cleaned_data['product'].harga
-            payment.save()  # Simpan pembayaran
-
+            payment.save() 
             print(f"Payment created with ID: {payment.id}")
             messages.success(request, 'Pembayaran berhasil dibuat.')
-
-            # Bersihkan sesi setelah pembuatan
             request.session.pop('product_id', None)
             request.session.pop('amount', None)
-
-            # Arahkan ke halaman riwayat pembayaran
             return redirect('pembayaran:update_payment', payment_id=payment.id)
 
         else:
@@ -33,7 +26,6 @@ def create_payment(request):
     else:
         form = PaymentForm()
 
-    # Mengambil daftar produk
     produk_list = Katalog.objects.all()
     return render(request, 'pembayaran/create_payment.html', {
         'form': form,
@@ -51,12 +43,9 @@ def update_payment(request, payment_id):
     if request.method == 'POST':
         form = PaymentForm(request.POST, instance=payment)
         if form.is_valid():
-            # Update total_payment berdasarkan jumlah terbaru dan harga produk
             payment.total_payment = form.cleaned_data['amount'] * form.cleaned_data['product'].harga
             payment.save()
             messages.success(request, 'Pembayaran berhasil diperbarui.')
-
-            # Bersihkan sesi setelah pembaruan
             request.session.pop('product_id', None)
             request.session.pop('amount', None)
             return redirect('pembayaran:payment_history')
