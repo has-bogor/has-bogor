@@ -80,6 +80,9 @@ def list_categories_ordered(request):
     # Combine initial dataset with database categories
     all_categories = initial_categories + db_categories
 
+    # Sort the combined list based on the 'nama_category'
+    all_categories.sort(key=lambda x: x['nama_category'], reverse=(order == 'desc'))
+
     return JsonResponse({
         "success": True,
         "categories": all_categories
