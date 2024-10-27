@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.core import serializers
+from penyimpanan.forms import AddItemForm
 
 # @login_required(login_url="authentication:login")
 def show_katalog(request):
@@ -43,24 +44,18 @@ def get_item_by_id(request, id):
 
 def update_item(request, id):
     item = Katalog.objects.get(pk=id)
-    if request.method == "POST":
-        new_nama = request.POST.get("nama")
-        new_kategori = request.POST.get("kategori")
-        new_harga = request.POST.get("harga")
-        new_deskripsi = request.POST.get("deskripsi")
-        new_toko = request.POST.get("toko")
-        item.nama = new_nama
-        item.kategori = new_kategori
-        item.harga = new_harga
-        item.deskripsi = new_deskripsi
-        item.toko = new_toko
-        item.save()
-        return HttpResponse(b"UPDATED", status=200)
+    form = AddItemForm(request.POST or None, instance=item)
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return HttpResponseRedirect(reverse('penyimpanan:show_katalog'))
+
+    context = {'form': form}
+    return render(request, "update_item.html", context)
     
 def delete_item(request, id):
     item = Katalog.objects.get(pk=id)
     item.delete()
-    return HttpResponseRedirect(reverse('katalog:show_katalog'))
+    return HttpResponseRedirect(reverse('penyimpanan:show_katalog'))
 
 def explore_katalog(request):
     search_query = request.GET.get('search', '')

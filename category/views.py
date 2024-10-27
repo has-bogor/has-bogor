@@ -5,6 +5,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from .models import Category
 import json
+from django.shortcuts import render
+
 
 @csrf_exempt
 @require_POST
@@ -55,17 +57,25 @@ def list_categories_ordered(request):
     order = request.GET.get('order', 'asc')
     search_query = request.GET.get('search', '').strip()
 
+    # Fetch categories from the database with ordering and search
     if order == 'desc':
         categories = Category.objects.order_by('-nama_category')
     else:
         categories = Category.objects.order_by('nama_category')
 
-    # Apply search filter if search query is provided
     if search_query:
         categories = categories.filter(nama_category__icontains=search_query)
     
-    categories_data = [{"id": category.id, "nama_category": category.nama_category} for category in categories]
+    # Format database categories as a list of dictionaries
+    db_categories = [{"id": category.id, "nama_category": category.nama_category} for category in categories]
+
+    # Combine initial dataset with database categories
+    all_categories = initial_categories + db_categories
+
     return JsonResponse({
         "success": True,
-        "categories": categories_data
+        "categories": all_categories
     })
+
+def category_management(request):
+    return render(request, 'category/list_category.html')
