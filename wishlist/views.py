@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 def add_to_wishlist(request, katalog_id):
     katalog = get_object_or_404(Katalog, id=katalog_id)
-    wishlist_item, created = Wishlist.objects.get_or_create(product=katalog)
+    wishlist_item, created = Wishlist.objects.get_or_create(user=request.user, product=katalog)
 
     if created:
         messages.success(request, f"{katalog.nama} has been added to your wishlist.")
