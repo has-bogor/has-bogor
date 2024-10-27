@@ -80,3 +80,15 @@ def remove_related_store(request, id):
         return JsonResponse({'status': 'success', 'related_stores': promo.toko_terkait})
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+def show_filtered_promo(request):
+    sort_by = request.GET.get("sort_by", "tanpa_filter")
+
+    if sort_by == "tanpa_filter":
+        promos = Promo.objects.all()
+    elif sort_by == "masa_berlaku":
+        promos = Promo.objects.all().order_by("masa_berlaku")  # Ascending order for expiration date
+    elif sort_by == "potongan":
+        promos = Promo.objects.all().order_by("-potongan")  # Descending order for discount
+
+    return HttpResponse(serializers.serialize("json", promos), content_type="application/json")

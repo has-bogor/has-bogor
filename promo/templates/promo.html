@@ -11,6 +11,14 @@
 <div class="overflow-x-hidden px-4 md:px-8 pb-8 pt-24 min-h-screen bg-gray-100 flex flex-col">
     <div class="p-2 mb-6 relative">
         <div class="flex justify-end mb-6">
+            <form method="get" action="." class="py-2 px-4">
+                <label for="filter">Urutkan berdasarkan:</label>
+                <select id="sortPromoSelect">
+                    <option value="tanpa_filter">Tanpa Filter</option>
+                    <option value="potongan">Potongan Tertinggi</option>
+                    <option value="masa_berlaku">Masa Berlaku Terdekat</option>
+                </select>                
+            </form>
             <a href="{% url 'promo:create_promo' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
                 Tambah Promo
             </a>
@@ -35,14 +43,22 @@
 </div>
 
 <script>
-    async function getPromo(){  
-        return fetch("{% url 'promo:show_json' %}").then((res) => res.json())
+    async function getPromo(sortBy = 'tanpa_filter'){  
+        const response = await fetch(`/promo/filtered/?sort_by=${sortBy}`);
+        const promoData = await response.json();
+        return promoData;
     }
 
-    async function refreshPromo() {
+    async function refreshPromo(sortBy) {
         document.getElementById("promo_cards").innerHTML = "";
         document.getElementById("promo_cards").className = "";
-        const promo = await getPromo();
+        const promo = await getPromo(sortBy);
+        if (!Array.isArray(promo)) {
+            console.error("Expected promo data to be an array:", promo);
+            return;
+        }else{
+            console.log('aman');
+        }
         let htmlString = "";
         let classNameString = "";
 
@@ -75,7 +91,7 @@
                     
                     <!-- Validity Period -->
                     <p class="text-gray-600 text-base mb-4">
-                        <span class="font-semibold">Berlaku:</span> ${item.fields.masa_berlaku}
+                        <span class="font-semibold">Masa Berlaku:</span> ${item.fields.masa_berlaku} hari
                     </p>
                     
                     <!-- Minimum Transaction -->
@@ -176,6 +192,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const promoId = document.getElementById("promoId").value;
         await removeStore(promoId, storeName); 
         document.getElementById("storeName").value = ""; 
+    });
+
+    document.getElementById("sortPromoSelect").addEventListener("change", (event) => {
+    const selectedSort = event.target.value;
+    refreshPromo(selectedSort);
     });
 });
 
