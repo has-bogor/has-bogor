@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'DM Sans', sans-serif; /* Set DM Sans as the default font */
+        }
+    </style>
+
+</head>
+<body class="bg-gray-900 p-10">
+    <div class="">
+        <div class="max-w-3xl mx-auto bg-gray-800 text-white p-8 rounded-lg shadow-2xl mb-8">
+            <h1 class="text-2xl text-white font-bold mb-6 text-center">Manage Categories</h1>
+
+            <!-- Add Category Form -->
+            <div class="mb-6">
+                <form id="addCategoryForm" onsubmit="createCategory(event)">
+                    {% csrf_token %}
+                    <input type="text" id="newCategoryName" placeholder="Enter new category" class=" py-2 px-3 rounded-full w-full mb-4 text-white bg-gray-700" required>
+                    <button type="submit" class="bg-blue-500 text-white py-2 px-4  w-full hover:bg-blue-600 rounded-full font-bold">Add Category</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Response Message -->
+        <div id="responseMessage" class="hidden bg-green-100 text-green-700 p-4 rounded mb-4"></div>
+
+        <!-- Search Bar and Sorting Buttons -->
+        <div class="max-w-3xl mx-auto mb-8">
+            <h1 class="text-base text-white font-bold mb-3 text-left">Search Categories</h1>
+            <input type="text" id="searchBar" placeholder="Search categories" class="py-2 px-3 rounded-full w-full mb-4 bg-gray-700 text-white" oninput="searchCategories()">
+            <div class="text-center mb-4">
+                <button onclick="fetchCategories('asc')" class="bg-gray-200 py-2 px-4 mr-2 rounded hover:bg-gray-300 font-bold">Sort Ascending</button>
+                <button onclick="fetchCategories('desc')" class="bg-gray-200 py-2 px-4 rounded hover:bg-gray-300 font-bold">Sort Descending</button>
+            </div>
+        </div>
+
+        <!-- Category List -->
+        <div id="categoryList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"">
+            <!-- Category items will be populated here -->
+        </div>
+    </div>
+
+    <script>
+        
+        function searchCategories() {
+            const query = document.getElementById("searchBar").value;
+            fetchCategories('asc', query);
+        }
+
+        function fetchCategories(order = 'asc', search = '') {
+            fetch(`/category/categories/?order=${order}&search=${search}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    renderCategories(data.categories);
+                } else {
+                    alert("Error fetching categories.");
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+
+        // Display categories in the DOM
+        function renderCategories(categories) {
+            const categoryList = document.getElementById('categoryList');
+            categoryList.innerHTML = ''; // Clear current list
+
+            categories.forEach(category => {
+                const categoryItem = document.createElement('div');
+                categoryItem.classList.add('category-item', 
+                    'bg-gradient-to-r', 
+                    'from-blue-500', 
+                    'to-purple-500', 
+                    'text-white', 
+                    'p-4', 
+                    'rounded-lg', 
+                    'shadow-lg', 
+                    'hover:shadow-xl', 
+                    'transition-shadow', 
+                    'transform', 
+                    'hover:scale-105',
+                    'duration-200'
+                );
+                categoryItem.setAttribute('data-id', category.id);
+                categoryItem.innerHTML = `
+                    <h3 class="category-name text-lg text-center font-semibold ">${category.nama_category}</h3>
+                    <div class="mt-2 flex justify-between">
+                        <button onclick="editCategory('${category.id}', '${category.nama_category}')" class="text-blue-300 hover:text-blue-400">
+                            <i class="fas fa-edit"></i> <!-- Edit icon -->
+                        </button>
+                        <button onclick="deleteCategory('${category.id}')" class="text-red-400 hover:text-red-500">
+                            <i class="fas fa-trash"></i> <!-- Delete icon -->
+                        </button>
+                    </div>
+                `;
+
+                categoryList.appendChild(categoryItem);
+            });
+            }
+
+
+        // Fetch categories on page load
+        document.addEventListener("DOMContentLoaded", function() {
+            // Render the initial categories
+            fetchCategories('asc');
+        });
+
+        // Create a new category via AJAX
+        function createCategory(event) {
+            event.preventDefault();
+            const categoryName = document.getElementById("newCategoryName").value.trim();
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            fetch('/category/categories/create/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({ nama_category: categoryName })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showMessage(data.message);
+                    fetchCategories('asc');
+                    document.getElementById("newCategoryName").value = "";
+                } else {
+                    showMessage(data.message, true);
+                }
+            })
+            .catch(error => {
+                console.error('Error creating category:', error);
+                showMessage("Error creating category.", true);
+            });
+        }
+
+        // Edit an existing category
+        // Edit an existing category
+        function editCategory(id, currentName) {
+            const newName = prompt("Enter new name for the category:", currentName);
+            if (newName && newName.trim() !== currentName) {
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                fetch(`/category/categories/update/${id}/`, {  // Add 'category' prefix here
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: JSON.stringify({ nama_category: newName.trim() })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showMessage(data.message);
+                        fetchCategories('asc');
+                    } else {
+                        showMessage(data.message, true);
+                    }
+                });
+            }
+        }
+
+        // Delete a category
+        function deleteCategory(id) {
+            if (confirm("Are you sure you want to delete this category?")) {
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                fetch(`/category/categories/delete/${id}/`, {  // Add 'category' prefix here
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRFToken': csrfToken
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showMessage(data.message);
+                        fetchCategories('asc');
+                    } else {
+                        showMessage("Error deleting category.", true);
+                    }
+                });
+            }
+        }
+
+
+        // Display response messages
+        function showMessage(message, isError = false) {
+            const responseMessage = document.getElementById("responseMessage");
+            responseMessage.textContent = message;
+            responseMessage.classList.remove("hidden");
+            responseMessage.classList.toggle("bg-green-100", !isError);
+            responseMessage.classList.toggle("bg-red-100", isError);
+            responseMessage.classList.toggle("text-green-700", !isError);
+            responseMessage.classList.toggle("text-red-700", isError);
+        }
+    </script>
+</body>
+</html>
