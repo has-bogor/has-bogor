@@ -7,6 +7,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.core import serializers
 from penyimpanan.forms import AddItemForm
+from django.contrib import messages
+
 
 # @login_required(login_url="authentication:login")
 def show_katalog(request):
@@ -31,7 +33,7 @@ def add_item(request):
 
         new_item = Katalog(nama=nama, kategori=kategori, harga=harga, deskripsi=deskripsi, toko=toko)
         new_item.save()
-        return HttpResponse(b"CREATED", status=201)
+        return redirect('penyimpanan:show_katalog')
     return HttpResponseNotFound()
 
 def get_item(request):
@@ -42,16 +44,21 @@ def get_item_by_id(request, id):
     data = Katalog.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
-def update_item(request, id):
-    item = Katalog.objects.get(pk=id)
-    form = AddItemForm(request.POST or None, instance=item)
-    if form.is_valid() and request.method == "POST":
-        form.save()
-        return HttpResponseRedirect(reverse('penyimpanan:show_katalog'))
+def update_item(request, item_id):
+    item = get_object_or_404(AddItemForm, id=item_id)  # Pastikan model yang benar digunakan di sini
 
-    context = {'form': form}
-    return render(request, "update_item.html", context)
-    
+    if request.method == 'POST':
+        form = AddItemForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Item updated successfully!')
+            return redirect('penyimpanan:show_katalog')  # Redirect hanya jika berhasil
+    else:
+        form = AddItemForm(instance=item)
+
+    # Jika request GET atau form tidak valid, tampilkan halaman form edit
+    return render(request, 'penyimpanan/edit_item.html', {'form': form, 'item': item})
+
 def delete_item(request, id):
     item = Katalog.objects.get(pk=id)
     item.delete()
