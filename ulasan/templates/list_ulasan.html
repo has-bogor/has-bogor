@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Ulasan</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+
+<div class="container mx-auto p-6">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-semibold text-gray-800">Daftar Ulasan</h1>
+        <div>
+            <a href="{% url 'ulasan:create_ulasan' %}" class="bg-green-500 text-white px-4 py-2 rounded mr-2">Tambah Ulasan Biasa</a>
+            <button onclick="showCreateModal()" class="bg-blue-500 text-white px-4 py-2 rounded">Tambah Ulasan dengan AJAX</button>
+        </div>
+    </div>
+
+    <!-- Tabel Ulasan -->
+    <table class="min-w-full bg-white rounded shadow-md">
+        <thead>
+            <tr>
+                <th class="py-2 px-4 bg-gray-200 font-semibold text-gray-600">Nama Makanan/Souvenir</th>
+                <th class="py-2 px-4 bg-gray-200 font-semibold text-gray-600">Rating</th>
+                <th class="py-2 px-4 bg-gray-200 font-semibold text-gray-600">Ulasan</th>
+                <th class="py-2 px-4 bg-gray-200 font-semibold text-gray-600">Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="ulasan-list">
+            {% for ulasan in ulasans %}
+            <tr id="ulasan-row-{{ ulasan.id }}">
+                <td class="py-2 px-4 border-b">{{ ulasan.ulasan_makanan_souvenir.nama }}</td>
+                <td class="py-2 px-4 border-b">{{ ulasan.rating }}</td>
+                <td class="py-2 px-4 border-b">{{ ulasan.pesan_ulasan }}</td>
+                <td class="py-2 px-4 border-b">
+                    <a href="{% url 'ulasan:edit_ulasan' ulasan.id %}" class="text-blue-500 hover:text-blue-700">Edit</a>
+                    <button onclick="deleteUlasan({{ ulasan.id }})" class="text-red-500 hover:text-red-700 ml-2">Hapus</button>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="py-2 px-4 text-center text-gray-500">Belum ada ulasan</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal Tambah/Edit Ulasan -->
+<div id="ulasanModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white p-6 rounded shadow-lg w-1/3">
+        <h2 id="modalTitle" class="text-xl font-semibold mb-4">Tambah/Edit Ulasan</h2>
+        <input type="hidden" id="ulasanId">
+        
+        <div class="mb-4">
+            <label class="block font-semibold">Nama Makanan/Souvenir</label>
+            <select id="ulasanNama" class="w-full p-2 border rounded">
+                <!-- Data makanan/souvenir akan dimuat di sini oleh JavaScript -->
+            </select>
+        </div>
+        
+        <div class="mb-4">
+            <label class="block font-semibold">Rating</label>
+            <input type="number" id="ulasanRating" class="w-full p-2 border rounded" min="1" max="5">
+        </div>
+        
+        <div class="mb-4">
+            <label class="block font-semibold">Ulasan</label>
+            <textarea id="ulasanPesan" class="w-full p-2 border rounded"></textarea>
+        </div>
+        
+        <button onclick="saveUlasan()" class="bg-blue-500 text-white px-4 py-2 rounded">Simpan</button>
+        <button onclick="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded ml-2">Batal</button>
+    </div>
+</div>
+
+<script>
+    // menampilkan modal Tambah Ulasan dan memuat data katalog
+    function showCreateModal() {
+        document.getElementById("ulasanId").value = "";
+        document.getElementById("ulasanRating").value = "";
+        document.getElementById("ulasanPesan").value = "";
+        document.getElementById("modalTitle").textContent = "Tambah Ulasan";
+
+
+        fetch('/ulasan/get_katalog_items/')  
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById("ulasanNama");
+                select.innerHTML = '';  
+                data.forEach(item => {
+                    const option = document.createElement("option");
+                    option.value = item.id;
+                    option.textContent = item.nama;
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+
+        document.getElementById("ulasanModal").classList.remove("hidden");
+    }
+
+  l
+    function closeModal() {
+        document.getElementById("ulasanModal").classList.add("hidden");
+    }
+
+    // menyimpan atau mengupdate ulasan menggunakan AJAX
+    function saveUlasan() {
+        const ulasanId = document.getElementById("ulasanId").value;
+        const ulasanMakananId = document.getElementById("ulasanNama").value;
+        const rating = document.getElementById("ulasanRating").value;
+        const pesan = document.getElementById("ulasanPesan").value;
+
+        const url = ulasanId ? `/ulasan/edit_ulasan/${ulasanId}/` : '/ulasan/create_ulasan/';
+        const method = ulasanId ? 'PUT' : 'POST';
+
+        fetch(url, {
+            method: method,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ulasan_makanan_souvenir: ulasanMakananId, rating, pesan_ulasan: pesan })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert(data.message);
+                location.reload(); 
+            } else {
+                alert(data.message || 'Gagal menyimpan ulasan');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    // menghapus ulasan menggunakan AJAX
+    function deleteUlasan(pk) {
+        fetch(`/ulasan/delete_ulasan/${pk}/`, {
+        method: 'DELETE',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Gagal menghapus ulasan");
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.status === 'success') {
+            document.getElementById(`ulasan-row-${pk}`).remove();
+            alert(data.message);
+        } else {
+            alert(data.message || 'Gagal menghapus ulasan');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+    }
+</script>
+
+</body>
+</html>

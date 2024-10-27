@@ -270,7 +270,7 @@
       "nama": "Toge Goreng",
       "kategori": "Makanan",
       "harga": 15000,
-      "deskripsi": "Hpkangan khas Bogor dengan toge, mi, dan kuah kacang",
+      "deskripsi": "Hidangan khas Bogor dengan toge, mi, dan kuah kacang",
       "toko": "Detik"
     }
   },
@@ -314,7 +314,7 @@
       "nama": "Coto Makassar",
       "kategori": "Makanan",
       "harga": 40000,
-      "deskripsi": "Hpkangan berkuah yang kaya rempah dan rasa",
+      "deskripsi": "Hidangan berkuah yang kaya rempah dan rasa",
       "toko": "Bobobox"
     }
   },

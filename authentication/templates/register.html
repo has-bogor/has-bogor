@@ -52,14 +52,6 @@
                     <p class="text-red-500 text-xs">{{ form.password2.errors }}</p>
                 {% endif %}
             </div>
-            <div class="space-y-1">
-                <label for="user_type" class="text-gray-500 text-sm">Select Role</label>
-                <select name="user_type" id="user_type" class="w-full bg-gray-700 text-white rounded-full px-4 py-2 border border-gray-600 focus:outline-none focus:ring focus:ring-blue-500" required>
-                    <option value="">Select a role</option>
-                    <option value="admin">Admin</option>
-                    <option value="customer">Customer</option>
-                </select>
-            </div>
             <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-2 rounded-full hover:bg-blue-700 transition duration-200 shadow-md">
                 Register
             </button>
