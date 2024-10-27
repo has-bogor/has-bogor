@@ -1,197 +1,49 @@
-{% load static %}
+from django.test import TestCase
+from django.urls import reverse
+from .models import Pembayaran
+from penyimpanan.models import Katalog
+from .forms import PaymentForm
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="{% static 'promo/style.css' %}">
-    <title>Promo Management</title>
-</head>
-<body class="bg-gray-900 flex flex-col min-h-screen overflow-x-hidden">
+class PembayaranViewTests(TestCase):
 
-    <!-- Navbar Include -->
-    {% include 'navbar.html' %}
-
-    <div class="px-4 md:px-8 pb-8 pt-24 flex-grow">
-        <div class="p-2 mb-6 relative">
-            <div class="flex justify-end mb-6">
-                <form method="get" action="." class="py-2 px-4">
-                    <label for="filter" class="text-white">Urutkan berdasarkan:</label>
-                    <select id="sortPromoSelect" class="bg-gray-700 text-white border border-gray-600 rounded px-2 py-1 ml-2" name="sort_by">
-                        <option value="tanpa_filter">Tanpa Filter</option>
-                        <option value="potongan">Potongan Tertinggi</option>
-                        <option value="masa_berlaku">Masa Berlaku Terdekat</option>
-                    </select>                
-                </form>
-                <a href="{% url 'promo:create_promo' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-                    Tambah Promo
-                </a>
-            </div>
-
-            <div id="promo_cards"></div>
-        </div>
-    </div>
-
-    <!-- Modal Structure -->
-    <input type="hidden" id="promoId" value="{{ promo.id }}">
-    <div id="storeModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
-        <div class="bg-gray-800 rounded-lg shadow-lg p-6">
-            <h2 class="text-xl mb-4 text-white">Edit Toko Terkait</h2>
-            <input type="text" id="storeName" placeholder="Nama Toko" class="border border-gray-600 bg-gray-700 text-white p-2 w-full mb-4">
-            <div class="flex justify-end">
-                <button id="addStoreBtn" class="px-4 py-2 bg-green-500 text-white font-semibold rounded-md hover:bg-green-600 transition duration-200">Add</button>
-                <button id="removeStoreBtn" class="px-4 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 transition duration-200 ml-2">Remove</button>
-                <button id="closeModalBtn" class="px-4 py-2 bg-gray-600 text-white font-semibold rounded-md hover:bg-gray-700 transition duration-200 ml-2">Close</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        async function getPromo(sortBy = 'tanpa_filter'){  
-            const response = await fetch(`/promo/filtered/?sort_by=${sortBy}`);
-            const promoData = await response.json();
-            return promoData;
+    def setUp(self):
+        # Siapkan data awal yang diperlukan untuk tes
+        self.product = Katalog.objects.create(nama='Produk 1', harga=10000)
+        self.payment_data = {
+            'amount': 2,  # Misalnya, jumlah yang ingin dibayar
+            'product': self.product.id,
         }
 
-        async function refreshPromo(sortBy) {
-            document.getElementById("promo_cards").innerHTML = "";
-            document.getElementById("promo_cards").className = "";
-            const promo = await getPromo(sortBy);
-            let htmlString = "";
-            let classNameString = "";
+    def test_create_payment_view(self):
+        # Tes untuk membuat pembayaran
+        response = self.client.post(reverse('pembayaran:create_payment'), self.payment_data)
+        self.assertEqual(response.status_code, 302)  # Pastikan redirect setelah sukses
+        self.assertEqual(Pembayaran.objects.count(), 1)  # Pastikan pembayaran telah dibuat
 
-            if (promo.length === 0) {
-                classNameString = "flex flex-col items-center justify-center min-h-[24rem] p-6";
-                htmlString = `
-                    <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
-                        <p class="text-center text-gray-400 mt-4">Belum ada data promo.</p>
-                    </div>
-                `;
-            } else {
-                classNameString = "columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 w-full";
-                promo.forEach((item) => {
-                    let relatedStores = item.fields.toko_terkait
-                        ? item.fields.toko_terkait.map(toko => `<li>${toko.name}</li>`).join("")
-                        : "<li>No related stores</li>";
-                    htmlString += `
-                    <div class="max-w-sm rounded overflow-hidden shadow-lg bg-gray-800 text-white p-5 m-4">
-                        <div class="bg-gray-700 text-gray-300 px-4 py-2 rounded-md mb-4">
-                            <span class="font-semibold">Kode:</span> <span class="text-white font-mono">${item.fields.kode}</span>
-                        </div>
-                        <p class="text-gray-400 text-base mb-4">
-                            <span class="font-semibold">Diskon:</span> ${item.fields.potongan}%
-                        </p>
-                        <p class="text-gray-400 text-base mb-4">
-                            <span class="font-semibold">Masa Berlaku:</span> ${item.fields.masa_berlaku} hari
-                        </p>
-                        <p class="text-gray-400 text-base mb-4">
-                            <span class="font-semibold">Minimal Transaksi:</span> Rp${item.fields.minimal_transaksi}
-                        </p>
-                        <div class="text-gray-400 text-base mb-4">
-                            <span class="font-semibold">Toko Terkait:</span>
-                            <ul class="list-disc list-inside mt-2">
-                                ${relatedStores}
-                            </ul>
-                        </div>
-                        <div class="flex justify-between gap-3 mt-4">
-                            <a href="/promo/edit-promo/${item.pk}">
-                                <button class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition duration-200">
-                                Edit Promo
-                                </button>
-                            </a>
-                            <button id='editTokoButton' data-promo-id="${item.pk}" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition duration-200">
-                            Edit Toko Terkait
-                            </button>
-                            <a href="/promo/delete/${item.pk}">
-                                <button class="px-4 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 transition duration-200">
-                                Hapus Promo
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                    `;
-                });
-            }
-            document.getElementById("promo_cards").className = classNameString;
-            document.getElementById("promo_cards").innerHTML = htmlString;
+    def test_payment_history_view(self):
+        # Tes untuk melihat riwayat pembayaran
+        self.client.post(reverse('pembayaran:create_payment'), self.payment_data)
+        response = self.client.get(reverse('pembayaran:payment_history'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'pembayaran/payment_history.html')  # Pastikan template yang benar digunakan
+        self.assertContains(response, 'Produk 1')  # Pastikan produk muncul di halaman riwayat pembayaran
+
+    def test_update_payment_view(self):
+        # Tes untuk memperbarui pembayaran
+        payment = Pembayaran.objects.create(total_payment=20000, product=self.product)  # Membuat pembayaran awal
+        updated_data = {
+            'amount': 3,
+            'product': self.product.id,
         }
-        refreshPromo();
+        response = self.client.post(reverse('pembayaran:update_payment', args=[payment.id]), updated_data)
+        self.assertEqual(response.status_code, 302)  # Pastikan redirect setelah sukses
+        payment.refresh_from_db()  # Memperbarui objek dari database
+        self.assertEqual(payment.total_payment, 30000)  # Memastikan total pembayaran telah diperbarui
 
-        async function addStore(promoId, newStore) {
-            const response = await fetch(`/promo/add_store/${promoId}/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(newStore)
-            });
-            const data = await response.json();
-            if (data.status === 'success') {
-                console.log("Store added:", data.related_stores);
-                refreshPromo();  // Update the UI
-            } else {
-                console.error("Error adding store:", data.message);
-            }
-        }
+    def test_delete_payment_view(self):
+        # Tes untuk menghapus pembayaran
+        payment = Pembayaran.objects.create(total_payment=20000, product=self.product)  # Membuat pembayaran
+        response = self.client.post(reverse('pembayaran:delete_payment', args=[payment.id]))
+        self.assertEqual(response.status_code, 302)  # Pastikan redirect setelah sukses
+        self.assertEqual(Pembayaran.objects.count(), 0)  # Pastikan tidak ada pembayaran tersisa
 
-        async function removeStore(promoId, storeName) {
-            const response = await fetch(`/promo/remove_store/${promoId}/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ storeName: storeName })
-            });
-            const data = await response.json();
-            if (data.status === 'success') {
-                console.log("Store removed:", data.related_stores);
-                refreshPromo();  // Update the UI
-            } else {
-                console.error("Error removing store:", data.message);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // Attach event listener to promo_cards container
-            document.getElementById("promo_cards").addEventListener("click", function(event) {
-                if (event.target && event.target.id === 'editTokoButton') {
-                    const promoId = event.target.getAttribute('data-promo-id'); // Get the promo ID
-                    document.getElementById("promoId").value = promoId; // Set the hidden input value
-                    document.getElementById("storeModal").classList.remove("hidden"); // Show the modal
-                }
-            });
-
-            // Close the modal
-            document.getElementById("closeModalBtn").addEventListener("click", function() {
-                document.getElementById("storeModal").classList.add("hidden");
-            });
-
-            // Add store functionality
-            document.getElementById("addStoreBtn").addEventListener("click", async function() {
-                const storeName = document.getElementById("storeName").value;
-                const promoId = document.getElementById("promoId").value;
-                const newStore = { name: storeName };
-
-                await addStore(promoId, newStore); 
-                document.getElementById("storeName").value = ""; 
-            });
-
-            // Remove store functionality
-            document.getElementById("removeStoreBtn").addEventListener("click", async function() {
-                const storeName = document.getElementById("storeName").value;
-                const promoId = document.getElementById("promoId").value;
-                await removeStore(promoId, storeName); 
-                document.getElementById("storeName").value = ""; 
-            });
-
-            document.getElementById("sortPromoSelect").addEventListener("change", (event) => {
-                const selectedSort = event.target.value;
-                refreshPromo(selectedSort);
-            });
-        });
-    </script>
-
-</body>
-</html>
