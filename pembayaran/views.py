@@ -14,9 +14,9 @@ def create_payment(request):
             print(f"Payment created with ID: {payment.id}") 
 
             request.session['product_id'] = payment.product.id
-            request.session['amount'] = float(payment.total_amount)  # Simpan sebagai float
-            
-           
+            request.session['amount'] = float(payment.total_amount)
+
+            # Redirect dengan menyertakan `payment_id` yang benar
             return redirect('pembayaran:update_payment', payment_id=payment.id)
 
         else:
@@ -25,12 +25,11 @@ def create_payment(request):
     else:
         form = PaymentForm()
 
-    produk_list = Katalog.objects.all() #ambil dari wishlist
+    produk_list = Katalog.objects.all()  # Ambil dari wishlist
     return render(request, 'pembayaran/create_payment.html', {
         'form': form,
         'produk_list': produk_list
     })
-
 
 def payment_history(request):
     payments = Pembayaran.objects.all()  
