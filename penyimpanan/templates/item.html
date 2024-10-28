@@ -69,7 +69,7 @@
       </button>
     </div>
     <div class="px-6 py-4 space-y-6 form-style">
-      <form id="crudForm" method="post" action="/api/items/add">  <!-- Default action for adding items -->
+      <form id="crudForm" method="post" action="{% url 'penyimpanan:add_item' %}">  <!-- Default action for adding items -->
         {% csrf_token %}
         <input type="hidden" id="item_id" name="item_id">
         <div class="mb-4">
@@ -108,8 +108,13 @@ const showModal = (button = null) => {
 
   if (button) {
     // Edit Mode
-    modalTitle.innerText = "Edit Item"; 
-    form.action = "/api/items/edit";  
+    modalTitle.innerText = "Edit Item";
+
+    const itemID = button.dataset.id;
+
+    if (itemID) {
+      form.action = `/penyimpanan/items/${itemID}/update/`;
+    }
 
     // Populate the form with data from the button's data attributes
     document.getElementById("item_id").value = button.dataset.id;
@@ -121,7 +126,7 @@ const showModal = (button = null) => {
   } else {
     // Add Mode
     modalTitle.innerText = "Add New Item";
-    form.action = "penyimpanan:show_katalog";  // Replace with your actual add URL
+    form.action = "{% url 'penyimpanan:add_item' %}";  // Replace with your actual add URL
     form.reset();
   }
 

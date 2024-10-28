@@ -44,8 +44,8 @@ def get_item_by_id(request, id):
     data = Katalog.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
-def update_item(request, item_id):
-    item = get_object_or_404(AddItemForm, id=item_id)  # Pastikan model yang benar digunakan di sini
+def update_item(request, id):
+    item = get_object_or_404(Katalog, pk=id)
 
     if request.method == 'POST':
         form = AddItemForm(request.POST, instance=item)
