@@ -13,7 +13,7 @@
           <h1 class="text-3xl font-bold text-center mb-8 text-black">Edit Ulasan</h1>
         
           <div class="bg-white rounded-lg p-6 form-style">
-            <form action="{% url 'ulasan:edit_ulasan' ulasan.id %}" method="POST" class="space-y-6">
+            <form action="{% url 'ulasan:edit_ulasan' pk=ulasan.pk %}" method="POST" class="space-y-6">
                 {% csrf_token %}
                 
                 <!-- Nama Makanan/Souvenir -->
