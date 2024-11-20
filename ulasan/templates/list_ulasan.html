@@ -7,157 +7,152 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    <div class="container mx-auto p-6">
+        <h1 class="text-4xl font-bold text-center text-gray-800 mb-6">Daftar Ulasan</h1>
 
-<div class="container mx-auto p-6">
-    <h1 class="text-4xl font-bold text-center text-gray-800 mb-6">Daftar Ulasan</h1>
+        <div class="overflow-x-auto">
+            <table class="table-auto w-full bg-white rounded-lg shadow-lg">
+                <thead>
+                    <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                        <th class="py-3 px-6 text-left">Nama Makanan/Souvenir</th>
+                        <th class="py-3 px-6 text-left">Rating</th>
+                        <th class="py-3 px-6 text-left">Pesan Ulasan</th>
+                        <th class="py-3 px-6 text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="ulasan_entry_cards">
+                    {% for ulasan in ulasan_list %}
+                    <tr class="border-b border-gray-200 hover:bg-gray-100">
+                        <td class="py-3 px-6 text-left">{{ ulasan.ulasan_makanan_souvenir__nama }}</td>
+                        <td class="py-3 px-6 text-left">{{ ulasan.rating }}/5</td>
+                        <td class="py-3 px-6 text-left">{{ ulasan.pesan_ulasan }}</td>
+                        <td class="py-3 px-6 text-center">
+                            <a href="{% url 'ulasan:edit_ulasan' ulasan.id %}" class="bg-yellow-500 hover:bg-yellow-600 text-white rounded-full p-2">Edit</a>
+                            <button onclick="showDeleteModal({{ ulasan.id }})" class="bg-red-500 hover:bg-red-600 text-white rounded-full p-2">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-    <!-- Tabel Ulasan -->
-    <div class="overflow-x-auto">
-        <table class="table-auto w-full bg-white rounded-lg shadow-lg">
-            <thead>
-                <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                    <th class="py-3 px-6 text-left">Nama Makanan/Souvenir</th>
-                    <th class="py-3 px-6 text-left">Rating</th>
-                    <th class="py-3 px-6 text-left">Pesan Ulasan</th>
-                    <th class="py-3 px-6 text-center">Aksi</th>
-                </tr>
-            </thead>
-            <tbody id="ulasan_entry_cards">
-                {% for ulasan in ulasan_list %}
-                <tr class="border-b border-gray-200 hover:bg-gray-100">
-                    <td class="py-3 px-6 text-left">{{ ulasan.ulasan_makanan_souvenir.nama }}</td>
-                    <td class="py-3 px-6 text-left">{{ ulasan.rating }}/5</td>
-                    <td class="py-3 px-6 text-left">{{ ulasan.pesan_ulasan }}</td>
-                    <td class="py-3 px-6 text-center">
-                        <a href="{% url 'ulasan:edit_ulasan' ulasan.id %}" class="bg-yellow-500 hover:bg-yellow-600 text-white rounded-full p-2">Edit</a>
-                        <a href="{% url 'ulasan:delete_ulasan' ulasan.id %}" class="bg-red-500 hover:bg-red-600 text-white rounded-full p-2">Delete</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+        <div class="mt-8 text-center space-x-4">
+            <button onclick="showModal()" class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg">
+                Tambah Ulasan by AJAX
+            </button>
+        </div>
 
-    <!-- Tombol Tambah Ulasan -->
-    <div class="mt-8 text-center">
-        <!-- Button to add review without AJAX -->
-        <a href="{% url 'ulasan:create_ulasan' %}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 mx-4">
-            Tambah Ulasan
-        </a>
-
-        <!-- Button to add review with AJAX (opens modal) -->
-        <button data-modal-target="crudModal" data-modal-toggle="crudModal" class="btn bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" onclick="showModal();">
-            Tambah Ulasan by AJAX
-        </button>
-    </div>
-
-    <!-- Modal Tambah Ulasan -->
-    <div id="crudModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out">
-        <div id="crudModalContent" class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out">
-            <!-- Modal header -->
-            <div class="flex items-center justify-between p-4 border-b rounded-t">
-                <h3 class="text-xl font-semibold text-gray-900">Tambah Ulasan Baru</h3>
-                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" id="closeModalBtn">
-                    <span class="sr-only">Close modal</span>
-                </button>
-            </div>
-            <!-- Modal body -->
-            <div class="px-6 py-4 space-y-6">
+        <!-- Add Review Modal -->
+        <div id="crudModal" class="hidden fixed inset-0 z-50 overflow-auto bg-gray-800 bg-opacity-50">
+            <div id="crudModalContent" class="relative bg-white w-11/12 md:w-2/3 lg:w-1/2 mx-auto my-16 rounded-lg shadow-lg p-6">
+                <h3 class="text-xl font-semibold mb-4">Tambah Ulasan Baru</h3>
                 <form id="ulasanEntryForm">
                     <div class="mb-4">
-                        <label for="ulasan_makanan_souvenir" class="block text-sm font-medium text-gray-700">Pilih Makanan/Souvenir</label>
-                        <select id="ulasan_makanan_souvenir" name="ulasan_makanan_souvenir" class="w-full p-2 border rounded" required></select>
-                            <!-- Option data dari katalog -->
+                        <label class="block text-sm font-medium text-gray-700">Pilih Makanan/Souvenir</label>
+                        <select name="ulasan_makanan_souvenir" class="w-full p-2 border rounded" required>
+                            {% for item in katalog_items %}
+                            <option value="{{ item.id }}">{{ item.nama }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="mb-4">
-                        <label for="rating" class="block text-sm font-medium text-gray-700">Rating</label>
-                        <input type="number" id="rating" name="rating" min="1" max="5" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>
+                        <label class="block text-sm font-medium text-gray-700">Rating</label>
+                        <input type="number" name="rating" min="1" max="5" class="w-full p-2 border rounded" required>
                     </div>
                     <div class="mb-4">
-                        <label for="pesan_ulasan" class="block text-sm font-medium text-gray-700">Pesan Ulasan</label>
-                        <textarea id="pesan_ulasan" name="pesan_ulasan" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required></textarea>
+                        <label class="block text-sm font-medium text-gray-700">Pesan Ulasan</label>
+                        <textarea name="pesan_ulasan" rows="3" class="w-full p-2 border rounded" required></textarea>
+                    </div>
+                    <div class="flex justify-end space-x-2">
+                        <button type="button" onclick="hideModal()" class="bg-gray-500 text-white px-4 py-2 rounded">Batal</button>
+                        <button type="submit" class="bg-indigo-700 text-white px-4 py-2 rounded">Simpan</button>
                     </div>
                 </form>
             </div>
-            <!-- Modal footer -->
-            <div class="flex justify-end p-6 border-t border-gray-200 rounded-b">
-                <button type="button" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg" id="cancelButton">Batal</button>
-                <button type="submit" id="submitUlasanEntry" form="ulasanEntryForm" class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg">Simpan</button>
+        </div>
+
+        <!-- Delete Confirmation Modal -->
+        <div id="deleteModal" class="hidden fixed inset-0 z-50 overflow-auto bg-gray-800 bg-opacity-50">
+            <div class="relative bg-white w-96 mx-auto my-16 rounded-lg shadow-lg p-6">
+                <h3 class="text-xl font-semibold mb-4">Konfirmasi Hapus</h3>
+                <p>Apakah Anda yakin ingin menghapus ulasan ini?</p>
+                <div class="flex justify-end space-x-2 mt-4">
+                    <button onclick="hideDeleteModal()" class="bg-gray-500 text-white px-4 py-2 rounded">Batal</button>
+                    <button id="confirmDelete" class="bg-red-500 text-white px-4 py-2 rounded">Hapus</button>
+                </div>
             </div>
         </div>
+
+        <script>
+            let deleteId = null;
+
+            async function addUlasanEntry(event) {
+                event.preventDefault();
+                const form = event.target;
+                const formData = new FormData(form);
+                
+                try {
+                    await fetch("{% url 'ulasan:add_ulasan_ajax' %}", {
+                        method: "POST",
+                        body: formData
+                    });
+                    await refreshUlasanEntries();
+                    hideModal();
+                    form.reset();
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+
+            function showModal() {
+                document.getElementById('crudModal').classList.remove('hidden');
+            }
+
+            function hideModal() {
+                document.getElementById('crudModal').classList.add('hidden');
+            }
+
+            function showDeleteModal(id) {
+                deleteId = id;
+                document.getElementById('deleteModal').classList.remove('hidden');
+            }
+
+            function hideDeleteModal() {
+                deleteId = null;
+                document.getElementById('deleteModal').classList.add('hidden');
+            }
+
+            function handleDelete() {
+                if (deleteId) {
+                    window.location.href = `/ulasan/delete/${deleteId}/`;
+                }
+            }
+
+            async function getUlasanEntries() {
+                const response = await fetch("{% url 'ulasan:show_json' %}");
+                return response.json();
+            }
+
+            async function refreshUlasanEntries() {
+                const ulasans = await getUlasanEntries();
+                const tbody = document.getElementById('ulasan_entry_cards');
+                tbody.innerHTML = ulasans.map(ulasan => `
+                    <tr class="border-b border-gray-200 hover:bg-gray-100">
+                        <td class="py-3 px-6 text-left">${ulasan.ulasan_makanan_souvenir__nama}</td>
+                        <td class="py-3 px-6 text-left">${ulasan.rating}/5</td>
+                        <td class="py-3 px-6 text-left">${ulasan.pesan_ulasan}</td>
+                        <td class="py-3 px-6 text-center">
+                            <a href="/ulasan/edit-ulasan/${ulasan.id}/" class="bg-yellow-500 hover:bg-yellow-600 text-white rounded-full p-2">Edit</a>
+                            <button onclick="showDeleteModal(${ulasan.id})" class="bg-red-500 hover:bg-red-600 text-white rounded-full p-2">Delete</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            document.getElementById('ulasanEntryForm').addEventListener('submit', addUlasanEntry);
+            document.getElementById('confirmDelete').addEventListener('click', handleDelete);
+            refreshUlasanEntries();
+        </script>
     </div>
-
-    <script>
-        // Function to add a review using AJAX
-        function addUlasanEntry() {
-            fetch("{% url 'ulasan:add_ulasan_ajax' %}", {
-                method: "POST",
-                body: new FormData(document.querySelector('#ulasanEntryForm')),
-                headers: { 'X-CSRFToken': '{{ csrf_token }}' }
-            })
-            .then(response => refreshUlasanEntries())
-            .then(() => hideModal())
-            .catch(error => console.error('Error:', error));
-
-            document.getElementById("ulasanEntryForm").reset();
-            return false;
-        }
-
-        // Show/hide modal functions
-        function showModal() {
-            document.getElementById('crudModal').classList.remove('hidden');
-            setTimeout(() => document.getElementById('crudModalContent').classList.remove('opacity-0', 'scale-95'), 50);
-        }
-
-        function hideModal() {
-            document.getElementById('crudModalContent').classList.add('opacity-0', 'scale-95');
-            setTimeout(() => document.getElementById('crudModal').classList.add('hidden'), 150);
-        }
-
-        document.getElementById("cancelButton").addEventListener("click", hideModal);
-        document.getElementById("closeModalBtn").addEventListener("click", hideModal);
-        document.getElementById("ulasanEntryForm").addEventListener("submit", (e) => {
-            e.preventDefault();
-            addUlasanEntry();
-        });
-
-        // Fetch and display reviews
-        async function getUlasanEntries() {
-    return fetch("{% url 'ulasan:show_json' %}").then((res) => res.json());
-}
-
-async function refreshUlasanEntries() {
-    const ulasanContainer = document.getElementById("ulasan_entry_cards");
-    ulasanContainer.innerHTML = "";
-
-    const ulasanEntries = await getUlasanEntries();
-    let htmlString = "";
-
-    ulasanEntries.forEach((item) => {
-        htmlString += `
-        <tr class="border-b border-gray-200 hover:bg-gray-100">
-            <td class="py-3 px-6 text-left">${item.ulasan_makanan_souvenir__nama}</td>
-            <td class="py-3 px-6 text-left">${item.rating}/5</td>
-            <td class="py-3 px-6 text-left">${item.pesan_ulasan}</td>
-            <td class="py-3 px-6 text-center">
-                <a href="/edit-ulasan/${item.id}" class="bg-yellow-500 hover:bg-yellow-600 text-white rounded-full p-2">Edit</a>
-                <a href="/delete-ulasan/${item.id}" class="bg-red-500 hover:bg-red-600 text-white rounded-full p-2">Delete</a>
-            </td>
-        </tr>
-        `;
-    });
-
-    ulasanContainer.innerHTML = htmlString;
-}
-
-// Initial fetch for reviews
-refreshUlasanEntries();
-
-        // Initial fetch for reviews
-        refreshUlasanEntries();
-    </script>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
 </body>
 </html>
