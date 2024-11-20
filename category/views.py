@@ -54,14 +54,6 @@ def delete_category(request, id):
 
 @require_GET
 def list_categories_ordered(request):
-    # Define the initial dataset
-    initial_categories = [
-        {"id": -1, "nama_category": "Makanan"},
-        {"id": -2, "nama_category": "Minuman"},
-        {"id": -3, "nama_category": "Makanan Ringan"},
-        {"id": -4, "nama_category": "Kue"},
-    ]
-
     order = request.GET.get('order', 'asc')
     search_query = request.GET.get('search', '').strip()
 

@@ -1,0 +1,70 @@
+<!-- list_ulasan.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Ulasan</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+
+    <div class="container mx-auto p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-semibold text-gray-800">Daftar Ulasan</h1>
+            <button onclick="showTambahUlasanForm()" 
+                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 font-semibold">
+                Tambah Ulasan
+            </button>
+        </div>
+        
+        <div class="space-y-4">
+            {% for ulasan in ulasans %}
+            <div class="bg-white p-4 rounded shadow-md">
+                <h3 class="text-lg font-semibold text-gray-800">{{ ulasan.ulasan_makanan_souvenir.nama }}</h3>
+                <p class="text-yellow-500">Rating: {{ ulasan.rating }} ⭐</p>
+                <p class="text-gray-700 mt-2">{{ ulasan.pesan_ulasan }}</p>
+                <small class="text-gray-500 block mt-4">
+                    Ditulis oleh: <strong>{{ ulasan.user.username }}</strong>
+                </small>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Modal Form Tambah Ulasan -->
+    <div id="tambahUlasanModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white w-96 p-6 rounded shadow-md">
+            <h2 class="text-xl font-semibold mb-4">Tambah Ulasan</h2>
+            <form action="{% url 'ulasan:create_ulasan' %}" method="post" id="ulasanForm">
+                {% csrf_token %}
+                <label for="katalog" class="block font-semibold">Pilih Makanan/Souvenir:</label>
+                <select id="katalog" name="ulasan_makanan_souvenir" class="block w-full mt-1 mb-4 p-2 border rounded">
+                    {% for item in katalog_items %}
+                        <option value="{{ item.pk }}">{{ item.nama }} - {{ item.kategori }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="rating" class="block font-semibold">Rating:</label>
+                <input type="number" id="rating" name="rating" min="1" max="5" class="block w-full mt-1 mb-4 p-2 border rounded">
+
+                <label for="pesan" class="block font-semibold">Pesan Ulasan:</label>
+                <textarea id="pesan" name="pesan_ulasan" rows="4" class="block w-full mt-1 mb-4 p-2 border rounded"></textarea>
+
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Tambah</button>
+                <button type="button" onclick="closeTambahUlasanForm()" class="ml-2 bg-gray-300 px-4 py-2 rounded">Batal</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showTambahUlasanForm() {
+            document.getElementById('tambahUlasanModal').classList.remove('hidden');
+        }
+
+        function closeTambahUlasanForm() {
+            document.getElementById('tambahUlasanModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
