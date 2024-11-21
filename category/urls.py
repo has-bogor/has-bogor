@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 app_name = 'category'
 
+app_name = 'category'
+
 urlpatterns = [
     path('', views.category_management, name='category_management'),  # This is the main view
     path('categories/', views.list_categories_ordered, name='list_categories_ordered'),
