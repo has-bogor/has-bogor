@@ -10,10 +10,9 @@ from penyimpanan.models import Katalog
 def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
-        user_type = request.POST.get('user_type')  
         if form.is_valid():
             user = form.save()  
-            UserProfile.objects.create(user=user, user_type=user_type)
+            UserProfile.objects.create(user=user)
             messages.success(request, 'Your account has been successfully created!')
             return redirect('authentication:login')
         else:
@@ -39,7 +38,6 @@ def login(request):
             messages.error(request, 'Please fill out all fields.')
 
     return render(request, 'login.html')
-
 
 
 @login_required

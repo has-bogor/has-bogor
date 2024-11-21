@@ -42,14 +42,6 @@
                     <p class="text-red-500 text-xs">{{ form.password2.errors }}</p>
                 {% endif %}
             </div>
-            <div class="mb-4">
-                <label for="user_type" class="text-white">Select Role:</label>
-                <select name="user_type" id="user_type" class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500" required>
-                    <option value="">Select a role</option>
-                    <option value="admin">Admin</option>
-                    <option value="customer">Customer</option>
-                </select>
-            </div>
             <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200">Register</button>
         </form>
 
