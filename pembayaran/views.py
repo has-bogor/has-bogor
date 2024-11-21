@@ -8,29 +8,63 @@ from django.views.decorators.csrf import csrf_exempt
 from promo.models import Promo
 
 def create_payment(request):
-    if request.method == 'POST':
+    # Tangani GET request untuk menampilkan halaman create_payment dengan produk yang dipilih
+    if request.method == 'GET':
+        product_id = request.GET.get('product_id')  # Ambil product_id dari query parameter
+        
+        # Debugging: Cek apakah product_id diterima
+        print(f"Received product_id: {product_id}")
+
+        if not product_id:
+            messages.error(request, 'Produk tidak valid. Silakan pilih produk dari katalog.')
+            return redirect('authentication:home')
+
+        # Ambil produk dari database
+        product = get_object_or_404(Katalog, id=product_id)
+
+        # Render halaman create_payment dengan produk yang dipilih
+        return render(request, 'pembayaran/create_payment.html', {'product': product})
+    
+    # Tangani POST request untuk memproses pembayaran
+    elif request.method == 'POST':
+        product_id = request.POST.get('product_id')  # Ambil product_id dari POST data
+        
+        # Debugging: Cek apakah product_id diterima
+        print(f"Product ID: {product_id}")
+
+        if not product_id:
+            messages.error(request, 'Produk tidak valid. Silakan pilih produk dari katalog.')
+            return redirect('authentication:home')
+
+        # Ambil produk dari database
+        product = get_object_or_404(Katalog, id=product_id)
+
+        # Buat form dengan data POST
         form = PaymentForm(request.POST)
         if form.is_valid():
+            # Simpan pembayaran tanpa komitmen dulu
             payment = form.save(commit=False)
-            payment.total_payment = form.cleaned_data['amount'] * form.cleaned_data['product'].harga
-            payment.save() 
-            print(f"Payment created with ID: {payment.id}")
+            payment.product = product  # Tentukan produk yang dipilih
+            payment.total_payment = form.cleaned_data['amount'] * product.harga  # Hitung total pembayaran
+            payment.save()
+
+            # Tampilkan pesan sukses
             messages.success(request, 'Pembayaran berhasil dibuat.')
-            request.session.pop('product_id', None)
-            request.session.pop('amount', None)
+
+            # Redirect ke halaman update_payment dengan ID pembayaran
             return redirect('pembayaran:update_payment', payment_id=payment.id)
-
+        
         else:
-            print("Form is not valid:", form.errors)
-            messages.error(request, 'Mohon perbaiki kesalahan berikut.')
-    else:
-        form = PaymentForm()
+            # Jika form tidak valid, tampilkan pesan error dan debug form
+            print(f"Form Errors: {form.errors}")
+            messages.error(request, 'Form tidak valid. Silakan periksa kembali.')
+            return render(request, 'pembayaran/create_payment.html', {'form': form, 'product': product})
 
-    produk_list = Katalog.objects.all()
-    return render(request, 'pembayaran/create_payment.html', {
-        'form': form,
-        'produk_list': produk_list
-    })
+    else:
+        # Jika bukan POST atau GET request, redirect ke homepage
+        messages.error(request, 'Akses tidak valid.')
+        return redirect('authentication:home')
+
 
 def payment_history(request):
     payments = Pembayaran.objects.all()
