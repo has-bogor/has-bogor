@@ -29,6 +29,4 @@ class RegisterForm(UserCreationForm):
                 user=user,
                 full_name=self.cleaned_data["full_name"]
             )
-            
         return user
-    

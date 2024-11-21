@@ -16,10 +16,10 @@ def show_promo(request):
 
     context = {"user": user_profile}
 
-    if user_profile.user_type.casefold() == "customer":
-        return render(request, 'customer_promo.html', context)
+    if request.user.is_superuser:
+        return render(request, "promo.html", context)
 
-    return render(request, "promo.html", context)
+    return render(request, 'customer_promo.html', context)
 
 def create_promo(request):
     form = PromoForm(request.POST or None)
