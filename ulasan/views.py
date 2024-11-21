@@ -1,221 +1,95 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse, HttpResponseNotAllowed
+from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
+from django.core import serializers
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from django.utils.html import strip_tags
 from .models import Ulasan
 from .forms import UlasanForm
-# from django.contrib.auth.decorators import login_required
-from penyimpanan.models import Katalog
+from penyimpanan.models import Katalog  # Ensure your Katalog model is imported
 
-
-# def list_ulasan(request):
-#     ulasans = Ulasan.objects.all()
-#     katalog_items = Katalog.objects.all()  
-#     form = UlasanForm()
-#     return render(request, 'list_ulasan.html', {
-#         'ulasans': ulasans,
-#         'form': form,
-#         'katalog_items': katalog_items
-#     })
-
-
-# views.py
-# def list_ulasan(request):
-#     ulasans = Ulasan.objects.all()
-#     # Data dummy untuk testing tanpa migrasi
-#     katalog_items = [
-#         {"pk": 1, "nama": "Asinan Bogor", "kategori": "Makanan"},
-#         {"pk": 2, "nama": "Roti Unyil Venus", "kategori": "Makanan"},
-#         {"pk": 3, "nama": "Talas Bogor", "kategori": "Makanan"}
-#     ]
-#     form = UlasanForm()
-#     return render(request, 'list_ulasan.html', {
-#         'ulasans': ulasans,
-#         'form': form,
-#         'katalog_items': katalog_items
-#     })
-
-# def list_ulasan(request):
-#     ulasans = Ulasan.objects.all()
-#     katalog_items = Katalog.objects.all()  
-#     return render(request, 'list_ulasan.html', {
-#         'ulasans': ulasans,
-#         'katalog_items': katalog_items,
-#     })
-
-
-# def list_ulasan(request):
-#     ulasans = Ulasan.objects.select_related('ulasan_makanan_souvenir').all()
-#     return render(request, "list_ulasan.html", {"ulasans": ulasans})
-
-def list_ulasan(request):
-    ulasans = Ulasan.objects.select_related('ulasan_makanan_souvenir').all()
-    
-    return render(request, 'list_ulasan.html', {
-        'ulasans': ulasans,
-    })
-
-# @login_required
-# def create_ulasan(request):
-#     if request.method == "POST":
-#         form = UlasanForm(request.POST)
-#         if form.is_valid():
-#             ulasan = form.save(commit=False)
-#             ulasan.user = request.user
-#             ulasan.save()
-#             return JsonResponse({"status": "success", "message": "Ulasan berhasil ditambahkan"})
-#         else:
-#             return JsonResponse({"status": "error", "errors": form.errors})
-#     return JsonResponse({"status": "error", "message": "Invalid request"})
-
-# @login_required
-# def create_ulasan(request):
-#     if request.method == "POST":
-#         form = UlasanForm(request.POST)
-#         if form.is_valid():
-#             ulasan = form.save(commit=False)
-#             ulasan.user = request.user
-#             ulasan.save()
-#             return JsonResponse({
-#                 "status": "success",
-#                 "message": "Ulasan berhasil ditambahkan",
-#                 "ulasan": {
-#                     "user": ulasan.user.username,
-#                     "rating": ulasan.rating,
-#                     "pesan_ulasan": ulasan.pesan_ulasan,
-#                     "nama": ulasan.ulasan_makanan_souvenir.nama,
-#                 }
-#             })
-#         else:
-#             print("Form errors:", form.errors)  
-#             return JsonResponse({"status": "error", "errors": form.errors}, status=400)
-#     print("Non-POST request received") 
-#     return JsonResponse({"status": "error", "message": "Invalid request"}, status=400)
-
-# def create_ulasan(request):
-#     if request.method == "POST":
-#         form = UlasanForm(request.POST)
-#         if form.is_valid():
-#             ulasan = form.save(commit=False)
-#             ulasan.user = request.user  
-#             ulasan.save()
-#             return redirect('ulasan:list_ulasan')  
-#         else:
-#             print("Form errors:", form.errors)  
-#             return render(request, 'create_ulasan.html', {'form': form, 'errors': form.errors})
-#     else:
-#         form = UlasanForm()
-#     return render(request, 'create_ulasan.html', {'form': form})
-
-# def create_ulasan(request):
-#     if request.method == "POST":
-#         form = UlasanForm(request.POST)
-#         if form.is_valid():
-#             ulasan = form.save(commit=False)
-#             ulasan.user = request.user
-#             ulasan.save()
-#             return redirect('ulasan:list_ulasan')
-#     else:
-#         form = UlasanForm()
-        
-#     katalog_items = [
-#         {"pk": 1, "nama": "Asinan Bogor", "kategori": "Makanan"},
-#         {"pk": 2, "nama": "Roti Unyil Venus", "kategori": "Makanan"},
-#         {"pk": 3, "nama": "Talas Bogor", "kategori": "Makanan"}
-#     ]
-    
-#     return render(request, 'create_ulasan.html', {
-#         'form': form,
-#         'katalog_items': katalog_items
-#     })
-
-
-# def create_ulasan(request):
-#     if request.method == 'POST':
-#         form = UlasanForm(request.POST)
-#         if form.is_valid():
-#             ulasan = form.save(commit=False)
-#             ulasan.user = request.user  # Pastikan ini di-set jika diperlukan
-#             ulasan.save()
-#             return redirect('ulasan:list_ulasan')
-#     else:
-#         form = UlasanForm()
-#     return render(request, 'create_ulasan.html', {'form': form})
+@login_required(login_url='/login')
+def show_ulasan(request):
+    ulasan = Ulasan.objects.all()
+    ulasan_list = list(ulasan.values('id', 'ulasan_makanan_souvenir__nama', 'rating', 'pesan_ulasan'))
+    katalog_items = Katalog.objects.all()  # Add this line
+    context = {
+        'ulasan_list': ulasan_list,
+        'katalog_items': katalog_items,  # Add this line
+    }
+    return render(request, 'list_ulasan.html', context)
 
 def create_ulasan(request):
-    if request.method == "POST":
-        ulasan_makanan_souvenir_id = request.POST.get("ulasan_makanan_souvenir")
-        rating = request.POST.get("rating")
-        pesan_ulasan = request.POST.get("pesan_ulasan")
-        
-        user = User.objects.first()  
-
-        try:
-            ulasan_makanan_souvenir = Katalog.objects.get(pk=ulasan_makanan_souvenir_id)
-        except Katalog.DoesNotExist:
-            return redirect("ulasan:create_ulasan")
-
-        Ulasan.objects.create(
-            user=user,
-            ulasan_makanan_souvenir=ulasan_makanan_souvenir,
-            rating=rating,
-            pesan_ulasan=pesan_ulasan,
-        )
-
-        return redirect("ulasan:list_ulasan")
+    form = UlasanForm(request.POST or None)
+    print(request.POST.get("ulasan_makanan_souvenir"))
     
+    if form.is_valid() and request.method == "POST":
+        ulasan = form.save(commit=False)
+        ulasan.user = request.user
+        ulasan.save()
+        return redirect('ulasan:show_ulasan')
+
+    katalog_items = Katalog.objects.all()  # Fetch katalog items if needed in form
+    context = {
+        'form': form,
+        'katalog_items': katalog_items,
+    }
+    return render(request, "create_ulasan.html", context)
+
+
+def edit_ulasan(request, id):
+    ulasan = get_object_or_404(Ulasan, pk=id)
+    form = UlasanForm(request.POST or None, instance=ulasan)
+    
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return HttpResponseRedirect(reverse('ulasan:show_ulasan'))
+
     katalog_items = Katalog.objects.all()
-    return render(request, "create_ulasan.html", {"katalog_items": katalog_items})
+    context = {
+        'form': form,
+        'ulasan': ulasan,
+        'katalog_items': katalog_items,
+    }
+    return render(request, "edit_ulasan.html", context)
 
+def delete_ulasan(request, id):
+    ulasan = Ulasan.objects.get(id=id)
+    ulasan.delete()
+    return HttpResponseRedirect(reverse('ulasan:show_ulasan'))
+
+@csrf_exempt
 @require_POST
-def delete_ulasan(request, pk):
-        if request.method == "DELETE":
-            ulasan = get_object_or_404(Ulasan, pk=pk)
-            ulasan.delete()
-            return JsonResponse({'status': 'success', 'message': 'Ulasan berhasil dihapus!'})
-        else:
-            return HttpResponseNotAllowed(['DELETE'])
+def add_ulasan_ajax(request):
+    ulasan_makanan_souvenir_id = request.POST.get("ulasan_makanan_souvenir")
+    rating = request.POST.get("rating")
+    pesan_ulasan = request.POST.get("pesan_ulasan")
+    user = request.user
 
-def edit_ulasan(request, pk):
-    ulasan = get_object_or_404(Ulasan, pk=pk)
-    katalog_items = Katalog.objects.all()  
+    katalog = get_object_or_404(Katalog, pk=ulasan_makanan_souvenir_id)
+    new_ulasan = Ulasan(
+        ulasan_makanan_souvenir=katalog,
+        rating=rating,
+        pesan_ulasan=pesan_ulasan,
+        user=user
+    )
+    new_ulasan.save()
 
-    if request.method == "POST":
-        form = UlasanForm(request.POST, instance=ulasan)
-        if form.is_valid():
-            form.save()
-            return redirect("ulasan:list_ulasan")
-    else:
-        form = UlasanForm(instance=ulasan)
+    response_data = {
+        'id': new_ulasan.id,
+        'ulasan_makanan_souvenir__nama': katalog.nama,
+        'rating': rating,
+        'pesan_ulasan': pesan_ulasan
+    }
 
-    return render(request, "edit_ulasan.html", {
-        "form": form,
-        "ulasan": ulasan,
-        "katalog_items": katalog_items,  
-    })
+    return JsonResponse(response_data, status=201)
+
 
 def show_json(request):
-    ulasans = Ulasan.objects.all().values('pk', 'user_username', 'rating', 'pesan_ulasan')
-    ulasan_list = list(ulasans)  
+    ulasan = Ulasan.objects.all()
+    ulasan_list = list(ulasan.values('id', 'ulasan_makanan_souvenir__nama', 'rating', 'pesan_ulasan'))
     return JsonResponse(ulasan_list, safe=False)
-
-# def list_ulasan_json(request):
-#     ulasans = Ulasan.objects.all().values('ulasan_makanan_souvenir__nama', 'rating', 'pesan_ulasan')
-#     ulasan_list = list(ulasans)  
-#     return JsonResponse(ulasan_list, safe=False)
-
-
-def list_ulasan_json(request):
-    ulasans = Ulasan.objects.select_related('ulasan_makanan_souvenir').all()
-    ulasan_data = [
-        {
-            'ulasan_makanan_souvenir__nama': ulasan.ulasan_makanan_souvenir.nama,
-            'rating': ulasan.rating,
-            'pesan_ulasan': ulasan.pesan_ulasan,
-        } for ulasan in ulasans
-    ]
-    print("Ulasan data:", ulasan_data)  
-    return JsonResponse(ulasan_data, safe=False)
-
-def get_katalog_items(request):
-    katalog_items = Katalog.objects.all().values('id', 'nama')
-    return JsonResponse(list(katalog_items), safe=False)
