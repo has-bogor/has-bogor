@@ -1,13 +1,13 @@
 from django import forms
 from .models import Pembayaran
 
-class PembayaranForm(forms.ModelForm):
+class PaymentForm(forms.ModelForm):
     class Meta:
         model = Pembayaran
-        fields = ['user', 'amount', 'payment_method', 'status']
+        # Hanya ambil 'amount', 'payment_method', dan 'total_payment' dari form
+        fields = ['amount', 'payment_method', 'total_payment']  
+
         widgets = {
-            'user': forms.Select(attrs={'class': 'form-control'}),
-            'amount': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Amount'}),
-            'payment_method': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Payment Method'}),
-            'status': forms.Select(attrs={'class': 'form-control'}),
+            'amount': forms.NumberInput(attrs={'placeholder': 'Masukkan Jumlah'}),
+            'payment_method': forms.Select(attrs={'class': 'form-select'}),
         }

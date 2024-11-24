@@ -12,13 +12,12 @@ from authentication.models import UserProfile
 @login_required(login_url="authentication:login")
 def show_promo(request):
     user = request.user
-
     context = {"user": user}
 
-    if user.is_superuser:
-        return render(request, 'promo.html', context)
+    if request.user.is_superuser:
+        return render(request, "promo.html", context)
 
-    return render(request, "customer_promo.html", context)
+    return render(request, 'customer_promo.html', context)
 
 def create_promo(request):
     form = PromoForm(request.POST or None)

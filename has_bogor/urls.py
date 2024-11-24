@@ -21,6 +21,11 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('pembayaran/', include('pembayaran.urls')),
-    path('promo/', include('promo.urls')),
     path('authentication/', include('authentication.urls')),
+    path('', RedirectView.as_view(url='/authentication/login/', permanent=False)),
+    path('penyimpanan/', include('penyimpanan.urls')),
+    path('wishlist/', include('wishlist.urls')),
+    path('promo/', include('promo.urls')),
+    path('ulasan/', include('ulasan.urls')),
+    path('category/', include('category.urls'))
 ]

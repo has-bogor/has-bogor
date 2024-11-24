@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buat Pesanan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 flex justify-center items-center min-h-screen">
+    <form action="{% url 'pembayaran:create' %}" method="POST" class="bg-gray-800 p-8 rounded-3xl shadow-2xl max-w-lg w-full">
+        {% csrf_token %}
+        <h1 class="text-center text-3xl font-serif mb-8 text-indigo-200">Buat Pesanan</h1>
+    
+        <!-- Informasi Produk -->
+        <div class="mb-6 p-4 bg-gray-700 rounded-xl shadow-inner">
+            <h2 class="text-xl text-indigo-200">Produk: {{ product.nama }}</h2>
+            <p class="text-lg text-indigo-200">Harga: Rp{{ product.harga }}</p>
+        </div>
+    
+        <!-- Input Jumlah Produk -->
+        <div class="mb-6 flex justify-between items-center">
+            <label for="amount" class="text-lg text-indigo-200">Jumlah:</label>
+            <input type="number" name="amount" id="amount" min="1" value="1" class="w-16 py-2 text-center bg-gray-700 text-white rounded-full shadow-md focus:outline-none" required>
+        </div>
+    
+        <!-- Input Hidden untuk Product ID -->
+        <input type="hidden" name="product_id" id="product_id" value="{{ product.id }}">
+    
+        <!-- Total Pembayaran -->
+        <div class="mb-6 p-4 bg-gray-700 rounded-xl shadow-inner">
+            <p class="text-indigo-200 text-lg">Total Pembayaran: Rp<span id="total_payment">{{ product.harga }}</span></p>
+        </div>
+    
+        <!-- Input Tersembunyi untuk Harga dan Total -->
+        <input type="hidden" id="product_price" value="{{ product.harga }}">
+        <input type="hidden" name="total_payment" id="hidden_total_payment" value="{{ product.harga }}">
+    
+        <!-- Payment Method with Live Search -->
+        <div class="mb-6 relative">
+            <label for="payment_search" class="block text-lg mb-2 text-indigo-200">Pilih Metode Pembayaran:</label>
+            <input type="text" id="payment_search" placeholder="Ketik metode pembayaran" class="w-full py-4 text-center bg-indigo-100 text-gray-700 rounded-full shadow-md focus:outline-none" autocomplete="off">
+            <input type="hidden" id="payment_method_hidden" name="payment_method">
+            <ul id="payment_suggestions" class="absolute left-0 right-0 bg-white text-gray-800 rounded-lg shadow-lg mt-2 max-h-40 overflow-y-auto z-10"></ul>
+        </div>
+    
+        <button type="submit" class="w-full py-4 text-white bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full shadow-lg hover:shadow-xl transition-all hover:bg-gradient-to-l mt-4">
+            Bayar
+        </button>
+    
+        <div class="mt-4 text-center">
+            <a href="{% url 'pembayaran:payment_history' %}" class="text-indigo-300 hover:underline">Kembali ke Riwayat Pembayaran</a>
+        </div>
+    </form>
+    
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Daftar metode pembayaran
+            const app = [
+                { name: "Bank Transfer", value: "bank_transfer" },
+                { name: "Credit Card", value: "credit_card" },
+                { name: "E-Wallet", value: "e_wallet" },
+                { name: "OVO", value: "ovo" },
+                { name: "GoPay", value: "gopay" },
+                { name: "Dana", value: "dana" },
+                { name: "LinkAja", value: "linkaja" }
+            ];
+        
+            const paymentSearchInput = document.getElementById('payment_search');
+            const suggestionsList = document.getElementById('payment_suggestions');
+            const hiddenPaymentInput = document.getElementById('payment_method_hidden');
+            const productPriceInput = document.getElementById('product_price');
+            const amountInput = document.getElementById('amount');
+            const totalPaymentSpan = document.getElementById('total_payment');
+            const hiddenTotalPayment = document.getElementById('hidden_total_payment');
+        
+            // Fungsi untuk memperbarui total pembayaran
+            function updateTotal() {
+                const amount = parseInt(amountInput.value) || 1;  // Default ke 1 jika kosong
+                const price = parseInt(productPriceInput.value);
+                const total = price * amount;
+                totalPaymentSpan.textContent = total.toLocaleString(); // Format dengan koma
+                hiddenTotalPayment.value = total; // Update input tersembunyi
+            }
+        
+            // Update total ketika jumlah produk berubah
+            amountInput.addEventListener('input', updateTotal);
+        
+            // Live Search untuk memilih metode pembayaran
+            paymentSearchInput.addEventListener('input', function () {
+                const query = paymentSearchInput.value.toLowerCase();
+                suggestionsList.innerHTML = '';  // Hapus saran sebelumnya
+        
+                if (query.length > 0) {
+                    const filteredMethods = app.filter(item => item.name.toLowerCase().includes(query));
+                    filteredMethods.forEach(method => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = method.name;
+                        listItem.classList.add('p-2', 'cursor-pointer', 'hover:bg-indigo-200');
+        
+                        // Setel nilai input tersembunyi saat metode dipilih
+                        listItem.addEventListener('click', () => {
+                            paymentSearchInput.value = method.name;
+                            hiddenPaymentInput.value = method.value; // Simpan value yang valid
+                            suggestionsList.innerHTML = '';  // Hapus saran
+                        });
+        
+                        suggestionsList.appendChild(listItem);
+                    });
+                }
+            });
+        
+            // Tutup daftar saran saat klik di luar area input
+            document.addEventListener('click', function(event) {
+                if (!paymentSearchInput.contains(event.target) && !suggestionsList.contains(event.target)) {
+                    suggestionsList.innerHTML = '';
+                }
+            });
+        
+            // Inisialisasi total pembayaran
+            updateTotal();  // Memastikan total pembayaran terhitung saat form pertama kali dimuat
+        });
+        </script>
+        
+       
+</body>
+</html>
