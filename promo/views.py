@@ -12,9 +12,7 @@ from authentication.models import UserProfile
 @login_required(login_url="authentication:login")
 def show_promo(request):
     user = request.user
-    user_profile = UserProfile.objects.get(user=user)
-
-    context = {"user": user_profile}
+    context = {"user": user}
 
     if request.user.is_superuser:
         return render(request, "promo.html", context)
