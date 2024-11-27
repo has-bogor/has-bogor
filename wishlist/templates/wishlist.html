@@ -1,45 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Wishlist</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.1/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100">
+{% extends 'base.html' %}       
+{% load static %}
 
-<div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold text-center mb-6">My Wishlist</h1>
+{% block head %}
+    <!-- Set the title for the tab -->
+    <title>Wishlist</title>
+    
+    <!-- Load DM Sans font -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Apply DM Sans font globally */
+        body {
+            font-family: 'DM Sans', sans-serif;
+        }
+    </style>
+{% endblock %}
 
-    {% if messages %}
-        <div class="mb-4">
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-2" role="alert">
-                    {{ message }}
-                </div>
-            {% endfor %}
+{% block content %}
+<div class="container mx-auto mt-12 px-4 pb-12">
+    <h2 class="text-3xl font-bold text-white text-center mb-8">My Wishlist</h2>
+    
+    {% if not wishlist_items %}
+        <p class="text-gray-300 text-center mb-8">Your wishlist is empty.</p>
+        <div class="text-center">
+            <a href="{% url 'authentication:home' %}" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition duration-300">
+                Explore Products
+            </a>
         </div>
-    {% endif %}
-
-    {% if wishlist_items %}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% else %}
+        <!-- Responsive Grid Layout -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for item in wishlist_items %}
-                <div class="bg-white rounded-lg shadow p-4">
-                    <h2 class="text-xl font-semibold mt-4">{{ item.product.name }}</h2>
-                    <p class="mt-2">{{ item.product.description }}</p>
-                    <form action="{% url 'remove_from_wishlist' item.product.id %}" method="post" class="mt-4">
+            <div class="bg-gray-800 rounded-lg shadow-md p-4 transition-transform transform hover:scale-105 duration-300">
+                <!-- Product Image -->
+                <div class="relative">
+                    <img src="{% static 'images/foto.jpeg' %}" alt="{{ item.product.nama }}" class="w-full h-52 object-cover rounded-md mb-4">
+                    <span class="absolute top-2 right-2 bg-yellow-500 text-gray-800 text-xs font-semibold px-2 py-1 rounded">Added on: {{ item.added_at|date:"d M Y" }}</span>
+                </div>
+
+                <!-- Product Details -->
+                <h3 class="text-xl text-white font-semibold mb-2">{{ item.product.nama }}</h3>
+                <p class="text-gray-400 mb-4">{{ item.product.deskripsi|truncatewords:15 }}</p>
+
+                <!-- Action Buttons -->
+                <div class="flex justify-between items-center mt-4 space-x-4">
+                   <!-- Buy Now Button -->
+                    <a href="{% url 'pembayaran:create' %}?product_id={{ item.product.id }}" class="bg-green-500 text-white w-full px-4 py-2 rounded-full hover:bg-green-600 transition duration-300 text-center">
+                        Beli Sekarang
+                    </a>
+
+                    <!-- Remove Button -->
+                    <form action="{% url 'wishlist:remove_from_wishlist' item.product.id %}" method="POST">
                         {% csrf_token %}
-                        <button type="submit" class="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600">
-                            Remove from Wishlist
+                        <button type="submit" class="bg-red-500 text-white w-32 px-4 py-2 rounded-full hover:bg-red-600 transition duration-300">
+                            Remove
                         </button>
                     </form>
                 </div>
+            </div>
             {% endfor %}
         </div>
-    {% else %}
-        <p class="text-center text-gray-600">Your wishlist is empty.</p>
     {% endif %}
 </div>
-
-</body>
-</html>
+{% endblock %}

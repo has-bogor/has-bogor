@@ -1,0 +1,9 @@
+.container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+}
+
+.item {
+    width: 100%; /* Each item takes the full width */
+    margin-bottom: 10px; /* Optional: space between items */
+}

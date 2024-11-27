@@ -1,0 +1,19 @@
+[
+    {"model": "category.category", "pk": 1, "fields": {"nama_category": "Makanan"}},
+    {"model": "category.category", "pk": 2, "fields": {"nama_category": "Minuman"}},
+    {"model": "category.category", "pk": 3, "fields": {"nama_category": "Makanan Ringan"}},
+    {"model": "category.category", "pk": 4, "fields": {"nama_category": "Kue"}},
+    {"model": "category.category", "pk": 5, "fields": {"nama_category": "Kerajinan Tangan"}},
+    {"model": "category.category", "pk": 6, "fields": {"nama_category": "Tekstil"}},
+    {"model": "category.category", "pk": 7, "fields": {"nama_category": "Souvenir Edukatif"}},
+    {"model": "category.category", "pk": 8, "fields": {"nama_category": "Kerajinan"}},
+    {"model": "category.category", "pk": 9, "fields": {"nama_category": "Seni"}},
+    {"model": "category.category", "pk": 10, "fields": {"nama_category": "Pakaian"}},
+    {"model": "category.category", "pk": 11, "fields": {"nama_category": "Peralatan Minum"}},
+    {"model": "category.category", "pk": 12, "fields": {"nama_category": "Aksesori"}},
+    {"model": "category.category", "pk": 13, "fields": {"nama_category": "Peralatan Dapur"}},
+    {"model": "category.category", "pk": 14, "fields": {"nama_category": "Dekorasi"}},
+    {"model": "category.category", "pk": 15, "fields": {"nama_category": "Undangan"}},
+    {"model": "category.category", "pk": 16, "fields": {"nama_category": "Alat Tulis"}},
+    {"model": "category.category", "pk": 17, "fields": {"nama_category": "Peralatan Pribadi"}}
+]
