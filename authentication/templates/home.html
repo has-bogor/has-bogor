@@ -44,7 +44,12 @@
                     <input type="hidden" name="total_payment" value="{{ item.harga }}">
                     <input type="number" name="amount" min="1" value="1" class="w-16 py-2 text-center bg-gray-700 text-white rounded-full shadow-md focus:outline-none" required />
                     <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 text-center block">Beli Sekarang</button>
+                    <div class="flex space-x-2 mt-2"> <!-- Added flex container for buttons -->
+                        <button type="submit" class="flex-1 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 text-center">Beli Sekarang</button>
+                        <a href="{% url 'ulasan:show_ulasan' %}" class="flex-1 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-center">Review</a>
+                    </div>
                 </form>
+
             </div>
             {% empty %}
             <p class="text-gray-300">Tidak ada produk yang tersedia.</p>
