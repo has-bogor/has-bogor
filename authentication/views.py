@@ -5,6 +5,9 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from .models import UserProfile
 from django.contrib.auth.decorators import login_required
 from penyimpanan.models import Katalog  
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 
 def register(request):
@@ -21,7 +24,6 @@ def register(request):
         form = UserCreationForm()
     context = {'form': form}
     return render(request, 'register.html', context)
-
 
 def login(request):
     if request.method == 'POST':
@@ -62,3 +64,30 @@ def logout(request):
     auth_logout(request)
     messages.success(request, 'You have been logged out!')
     return redirect('authentication:login')
+
+@csrf_exempt
+def api_login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            auth_login(request, user)
+            # Status login sukses.
+            return JsonResponse({
+                "username": user.username,
+                "status": True,
+                "message": "Login sukses!"
+                # Tambahkan data lainnya jika ingin mengirim data ke Flutter.
+            }, status=200)
+        else:
+            return JsonResponse({
+                "status": False,
+                "message": "Login gagal, akun dinonaktifkan."
+            }, status=401)
+
+    else:
+        return JsonResponse({
+            "status": False,
+            "message": "Login gagal, periksa kembali email atau kata sandi."
+        }, status=401)

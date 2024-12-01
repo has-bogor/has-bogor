@@ -11,4 +11,5 @@ urlpatterns = [
     path('profile/', profile, name='profile'),
     path('home/', home, name='home'),
     path('home/', HomeView.as_view(), name='home'),
+    path('api/login/', login, name='api_login'),
 ]
