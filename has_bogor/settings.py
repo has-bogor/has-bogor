@@ -103,7 +103,6 @@ TEMPLATES = [
 ]
 
 
-
 WSGI_APPLICATION = 'has_bogor.wsgi.application'
 
 
