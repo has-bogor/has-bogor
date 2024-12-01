@@ -11,5 +11,6 @@ urlpatterns = [
     path('profile/', profile, name='profile'),
     path('home/', home, name='home'),
     path('home/', HomeView.as_view(), name='home'),
-    path('api/login/', login, name='api_login'),
+    path('api/login/', api_login, name='api_login'),
+    path('api/register/', api_register, name='api_register'),
 ]

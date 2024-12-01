@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,56 +16,62 @@
 <body class="bg-gray-900 min-h-screen flex flex-col">
     {% include 'navbar.html' %}
 
-    <div class="flex flex-col items-center justify-center my-8">
-        <h1 class="text-white text-3xl font-bold mb-4 text-center">Welcome to Has Bogor!</h1>
-        <p class="text-gray-400 mb-4 text-center font-semibold">Hello, <span class="font-semibold text-blue-300">{{ user_profile.user.username }}</span>! You are logged in.</p>
-        <p class="text-gray-300 text-center mb-8 max-w-xl">Temukan berbagai produk menarik yang kami tawarkan. Nikmati pengalaman berbelanja yang menyenangkan dengan penawaran spesial setiap hari!</p>
+    <!-- Hero Section -->
+    <div class="flex flex-col items-center justify-center my-8 px-4 text-center">
+        <h1 class="text-white text-4xl font-extrabold mb-6 animate-bounce">Welcome to Has Bogor!</h1>
+        <p class="text-gray-400 font-semibold text-lg">Hello, <span class="text-blue-300 font-bold">{{ user_profile.user.username }}</span>! You are logged in.</p>
+        <p class="text-gray-300 mt-2 max-w-2xl">
+            Temukan berbagai produk menarik yang kami tawarkan. Nikmati pengalaman berbelanja dengan penawaran spesial setiap hari!
+        </p>
     </div>
 
     <!-- Promo Section -->
-    <div class="bg-gray-800 p-4 rounded-lg shadow-lg mx-auto mb-8 max-w-md md:max-w-lg lg:max-w-xl">
-        <h2 class="text-xl text-white font-bold mb-4 text-center">Promo Spesial!</h2>
-        <p class="text-gray-400 mb-4 text-center">Dapatkan penawaran menarik setiap hari!</p>
-        <img src="{% static 'images/promo.jpeg' %}" alt="Promo Image" class="w-full h-48 object-cover rounded-md mb-4"> 
-        <a href="{% url 'promo:show_promo' %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 block text-center">Lihat Promo</a>
+    <div class="bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 p-6 rounded-lg shadow-lg mx-auto mb-8 max-w-4xl text-center">
+        <h2 class="text-2xl text-white font-extrabold mb-4">Promo Spesial!</h2>
+        <p class="text-gray-400 mb-4">Dapatkan penawaran menarik setiap hari!</p>
+        <img src="{% static 'images/promo.jpeg' %}" alt="Promo Image" class="w-full h-64 object-cover rounded-lg shadow-lg mb-4 transition-transform hover:scale-105 duration-300">
+        <a href="{% url 'promo:show_promo' %}" class="bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 transition-all duration-200">Lihat Promo</a>
     </div>
 
     <!-- Product Catalog Section -->
     <div class="flex-1 p-8">
-        <h2 class="text-2xl text-white font-bold mb-4">Katalog Produk</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <h2 class="text-3xl text-white font-extrabold mb-6">Katalog Produk</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for item in katalog_items %}
-            <div class="bg-gray-800 rounded-lg shadow-lg p-4 transition-transform transform hover:scale-105 duration-300">
-                <!-- Product Image -->
+            <div class="bg-gray-800 rounded-xl shadow-xl p-6 hover:shadow-2xl transition-shadow duration-300">
                 <div class="relative">
-                    <img src="{% static 'images/foto.jpeg' %}" alt="{{ item.nama }}" class="w-full h-40 object-cover rounded-md mb-2">
-                    <span class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded">Diskon 32%</span>
+                    <img src="{% static 'images/foto.jpeg' %}" alt="{{ item.nama }}" class="w-full h-48 object-cover rounded-lg mb-4 transition-transform hover:scale-105 duration-300">
+                    <span class="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow">Diskon 32%</span>
                 </div>
-
-                <!-- Product Details -->
-                <h3 class="text-lg text-white font-semibold mb-1">{{ item.nama }}</h3>
-                <p class="text-gray-400">Harga: <span class="text-xl font-bold">Rp {{ item.harga }}</span></p>
+                <h3 class="text-xl text-white font-bold mb-2">{{ item.nama }}</h3>
+                <p class="text-gray-400">Harga: <span class="text-xl text-green-400 font-bold">Rp {{ item.harga }}</span></p>
                 <p class="text-gray-300 mb-2">{{ item.deskripsi }}</p>
                 <p class="text-gray-500">Kategori: {{ item.kategori }}</p>
                 <p class="text-gray-500">Toko: {{ item.toko }}</p>
 
-                <!-- Purchase Form -->
                 <form action="{% url 'pembayaran:create' %}" method="POST" class="mt-4">
                     {% csrf_token %}
                     <input type="hidden" name="product_id" value="{{ item.id }}">
                     <input type="hidden" name="total_payment" value="{{ item.harga }}">
-                    <input type="number" name="amount" min="1" value="1" class="w-16 py-2 text-center bg-gray-700 text-white rounded-full shadow-md focus:outline-none mb-2" required />
-                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full">Beli Sekarang</button>
+                    <input type="number" name="amount" min="1" value="1" class="w-20 py-2 text-center bg-gray-700 text-white rounded-full focus:ring-2 focus:ring-blue-500 mb-3" required />
+                    <button type="submit" class="bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 w-full transition-colors">Beli Sekarang</button>
                 </form>
 
-                <!-- Add to Wishlist Button -->
-                <form action="{% url 'wishlist:add_to_wishlist' item.id %}" method="POST" class="mt-2">
+                <!-- <form action="{% url 'wishlist:add_to_wishlist' item.id %}" method="POST" class="mt-2">
                     {% csrf_token %}
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full">Add to Wishlist</button>
-                </form>
+                    <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 w-full transition-colors">Add to Wishlist</button>
+                </form> -->
 
-    
+                    <!-- AJAX Add to Wishlist Button -->
+                    <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
+                    <button type="button" id="add-to-wishlist-{{ item.id }}" data-product-id="{{ item.id }}" class="mt-2 block bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 w-full transition-colors">
+                        Add to Wishlist (AJAX)
+                    </button>
+                    
+                <a href="{% url 'ulasan:show_ulasan' %}" class="mt-2 block bg-purple-500 text-white px-6 py-2 rounded-full hover:bg-purple-600 text-center transition-colors">Review</a>
             </div>
+
+            
             {% empty %}
             <p class="text-gray-300">Tidak ada produk yang tersedia.</p>
             {% endfor %}
@@ -75,3 +81,35 @@
     {% include 'footer.html' %}
 </body>
 </html>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const csrfToken = document.getElementById('csrf-token').value;
+    
+        document.querySelectorAll('button[id^="add-to-wishlist-"]').forEach(button => {
+            button.addEventListener('click', function () {
+                const productId = this.dataset.productId;
+                fetch("{% url 'wishlist:add_to_wishlist_ajax' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": csrfToken
+                    },
+                    body: JSON.stringify({ "product_id": productId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message + "!");
+                        // Optionally update the UI to reflect the wishlist addition
+                    } else {
+                        alert("Failed to add item to wishlist.");
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+    });
+    </script>
+    
