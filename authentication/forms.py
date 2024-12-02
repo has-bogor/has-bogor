@@ -8,6 +8,7 @@ class RegisterForm(UserCreationForm):
     email = forms.EmailField(label="Email", required=True)
     full_name = forms.CharField(label="Name", required=True)
 
+
     class Meta:
         model = User
         fields = ("username", "full_name", "email", "password1", "password2")
