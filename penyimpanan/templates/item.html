@@ -34,27 +34,25 @@
         Nama Toko: {{ item.toko }}
       </div>
     </div>
-    {% if user.is_superuser %}
-      <div class="flex justify-center space-x-2 mb-4">
-        <button 
-          onclick="showModal(this);" 
-          data-id="{{ item.id }}" 
-          data-nama="{{ item.nama }}" 
-          data-harga="{{ item.harga }}" 
-          data-kategori="{{ item.kategori }}" 
-          data-deskripsi="{{ item.deskripsi }}" 
-          data-toko="{{ item.toko }}"
-          class="btn bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-          Edit
+    <div class="flex justify-center space-x-2 mb-4">
+      <button 
+        onclick="showModal(this);" 
+        data-id="{{ item.id }}" 
+        data-nama="{{ item.nama }}" 
+        data-harga="{{ item.harga }}" 
+        data-kategori="{{ item.kategori }}" 
+        data-deskripsi="{{ item.deskripsi }}" 
+        data-toko="{{ item.toko }}"
+        class="btn bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+        Edit
+      </button>
+      <form action="{% url 'penyimpanan:delete_item' item.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn bg-red-700 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+          Delete
         </button>
-        <form action="{% url 'penyimpanan:delete_item' item.id %}" method="post">
-          {% csrf_token %}
-          <button type="submit" class="btn bg-red-700 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-            Delete
-          </button>
-        </form>
-      </div>
-    {% endif %}
+      </form>
+    </div>
   </div>
   {% empty %}
   <p class="text-gray-500">No items found.</p>
