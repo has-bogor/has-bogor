@@ -9,7 +9,6 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 
-
 def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
@@ -48,7 +47,7 @@ def profile(request):
     context = {'user_profile': user_profile}
     return render(request, 'profile.html', context)
 
-@login_required
+@login_required 
 def home(request):
     #user_profile = UserProfile.objects.get(user=request.user)  
     katalog_items = Katalog.objects.all()  

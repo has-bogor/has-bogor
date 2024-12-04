@@ -7,7 +7,6 @@ from .models import Category
 import json
 from django.shortcuts import render
 
-
 @csrf_exempt
 @require_POST
 def create_category(request):
