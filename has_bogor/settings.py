@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'wishlist',
     'promo',
     'ulasan',
-    'category'
+    'category',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -58,6 +59,27 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = 'None'
+
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1:8000', 
+    'http://127.0.0.1:49274',  
+    'http://127.0.0.1:65429', 
+]
+
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1:49274', 
+    'http://127.0.0.1:65429', 
+    'http://127.0.0.1:8000',   
 ]
 
 ROOT_URLCONF = 'has_bogor.urls'

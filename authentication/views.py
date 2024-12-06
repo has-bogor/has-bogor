@@ -48,8 +48,8 @@ def profile(request):
 
 @login_required
 def home(request):
-    user_profile = UserProfile.objects.get(user=request.user)  
-    katalog_items = Katalog.objects.all()  
+    user_profile = UserProfile.objects.get(user=request.user)
+    katalog_items = Katalog.objects.all()
 
     context = {
         'user_profile': user_profile,
