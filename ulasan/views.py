@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.core import serializers
@@ -91,5 +92,76 @@ def add_ulasan_ajax(request):
 
 def show_json(request):
     ulasan = Ulasan.objects.all()
-    ulasan_list = list(ulasan.values('id', 'ulasan_makanan_souvenir__nama', 'rating', 'pesan_ulasan'))
+    ulasan_list = list(ulasan.values('id', 'ulasan_makanan_souvenir__nama','ulasan_makanan_souvenir__id', 'rating', 'pesan_ulasan'))
     return JsonResponse(ulasan_list, safe=False)
+
+def show_katalogs(request):
+    katalogs = Katalog.objects.all()
+    katalog_list = list(katalogs.values('id', 'nama'))
+    return JsonResponse(katalog_list, safe=False)
+
+@csrf_exempt
+def delete_ulasan_flutter(request):
+    if request.method == "POST":
+        try:
+            # Parse the JSON data
+            data = json.loads(request.body)
+
+            # Get the 'id' from the parsed data
+            ulasan_id = data.get("id")
+
+            if not ulasan_id:
+                return JsonResponse({'message': 'ID is required'}, status=400)
+
+            # Get the ulasan object and delete it
+            ulasan = Ulasan.objects.get(id=ulasan_id)
+            ulasan.delete()
+
+            return JsonResponse({'message': 'success'}, status=200)
+
+        except Ulasan.DoesNotExist:
+            return JsonResponse({'message': 'Ulasan not found'}, status=404)
+
+        except Exception as e:
+            return JsonResponse({'message': f'Error: {str(e)}'}, status=500)
+    else:
+        return JsonResponse({'message': 'Invalid method'}, status=405)
+
+@csrf_exempt
+def create_ulasan_flutter(request):
+    if request.method == 'POST':
+
+        data = json.loads(request.body)
+        new_ulasan = Ulasan.objects.create(
+            user=request.user,
+            ulasan_makanan_souvenir = Katalog.objects.get(pk = int(data['ulasan_makanan_souvenir'])),
+            rating = int(data['rating']),
+            pesan_ulasan = data['pesan_ulasan'],
+        )
+
+        new_ulasan.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
+@csrf_exempt
+def edit_ulasan_flutter(request, id):
+    if request.method == 'POST':
+
+        data = json.loads(request.body)
+
+        # Get the existing ulasan item
+        ulasan = Ulasan.objects.get(pk=id)
+
+        # Update the fields directly on the instance
+        ulasan.ulasan_makanan_souvenir = Katalog.objects.get(pk=int(data['ulasan_makanan_souvenir']))
+        ulasan.rating = int(data['rating'])
+        ulasan.pesan_ulasan = data['pesan_ulasan']
+
+        # Save the updated instance
+        ulasan.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
