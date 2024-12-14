@@ -8,7 +8,6 @@ from django.shortcuts import render
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-
 class HomeView(View):
     def get(self, request):
         return render(request, 'home.html')
