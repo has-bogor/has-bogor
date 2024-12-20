@@ -38,8 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'main',
-    #'authentication',
     'penyimpanan',
     'pembayaran',
     'authentication',
@@ -47,8 +45,7 @@ INSTALLED_APPS = [
     'promo',
     'ulasan',
     'category',
-    'whitenoise',
-    'corsheaders',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -60,27 +57,24 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
+...
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
-CSRF_COOKIE_SECURE = False
-SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SAMESITE = 'None'
 
-CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:8000', 
-    'http://127.0.0.1:49274',  
-    'http://127.0.0.1:65429', 
-]
 
 
 CSRF_TRUSTED_ORIGINS = [
-    'http://127.0.0.1:49274', 
-    'http://127.0.0.1:65429', 
-    'http://127.0.0.1:8000',   
+    'http://localhost',
+    'http://127.0.0.1',
+    'http://10.0.2.2',
+    'https://michael-ignasius-hasbogor.pbp.cs.ui.ac.id'
 ]
 
 

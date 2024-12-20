@@ -10,4 +10,10 @@ urlpatterns = [
     path('edit-ulasan/<int:id>/', edit_ulasan, name='edit_ulasan'),
     path('json/', show_json, name='show_json'),  
     path('list-ulasan-ajax', add_ulasan_ajax, name='add_ulasan_ajax'),
+    path('show-katalogs/', show_katalogs, name='show_katalogs'),
+    path('delete/flutter/', delete_ulasan_flutter, name="delete_ulasan_flutter"),
+    path('create/flutter/', create_ulasan_flutter, name='create_ulasan_flutter'),
+    path('edit/flutter/<int:id>/', edit_ulasan_flutter, name='edit_ulasan_flutter'),
 ]
+
+

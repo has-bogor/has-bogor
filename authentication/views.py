@@ -27,7 +27,7 @@ def register(request):
 
 def login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')  
+        username = request.POST.get('username')
         password = request.POST.get('password')
         if username and password:
             user = authenticate(request, username=username, password=password)  
@@ -50,8 +50,8 @@ def profile(request):
 
 @login_required 
 def home(request):
-    #user_profile = UserProfile.objects.get(user=request.user)  
-    katalog_items = Katalog.objects.all()  
+    user_profile = UserProfile.objects.get(user=request.user)
+    katalog_items = Katalog.objects.all()
 
     context = {
         #'user_profile': user_profile,
@@ -89,7 +89,7 @@ def api_login(request):
     else:
         return JsonResponse({
             "status": False,
-            "message": "Login gagal, periksa kembali email atau kata sandi."
+            "message": "Login gagal, periksa kembali username atau kata sandi."
         }, status=401)
     
 
