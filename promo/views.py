@@ -98,3 +98,46 @@ def show_filtered_promo(request):
         promos = Promo.objects.all().order_by("-potongan")  # Descending order for discount
 
     return HttpResponse(serializers.serialize("json", promos), content_type="application/json")
+
+@csrf_exempt
+def create_promo_flutter(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            new_promo = Promo.objects.create(
+                kode=data["kode"],  # String
+                potongan=float(data["potongan"]),  # Float
+                masa_berlaku=int(data["masa_berlaku"]),  # Integer
+                minimal_transaksi=float(data["minimal_transaksi"]),  # Float
+                toko_terkait=[]  # Empty list for JSONField
+            )
+
+            new_promo.save()
+
+            return JsonResponse({"status": "success"}, status=200)
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+    else:
+        return JsonResponse({"status": "error", "message": "Invalid method"}, status=401)
+
+@csrf_exempt
+def edit_promo_flutter(request, id):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            promo = Promo.objects.get(pk=id)
+            
+            promo.kode = data["kode"]
+            promo.potongan = float(data["potongan"])
+            promo.masa_berlaku = int(data["masa_berlaku"])
+            promo.minimal_transaksi = float(data["minimal_transaksi"])
+            
+            promo.save()
+
+            return JsonResponse({"status": "success"}, status=200)
+        except Promo.DoesNotExist:
+            return JsonResponse({"status": "error", "message": "Promo not found"}, status=404)
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+    else:
+        return JsonResponse({"status": "error", "message": "Invalid method"}, status=401)
