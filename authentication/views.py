@@ -54,7 +54,7 @@ def home(request):
     katalog_items = Katalog.objects.all()
 
     context = {
-        #'user_profile': user_profile,
+        'user_profile': user_profile,
         'katalog_items': katalog_items, 
     }
     
