@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-^n3t)rfp4h5u)@j)p03nax)%@i3r#vl@c9g7dqm!l((u!bd=_+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "michael-ignasius-hasbogor.pbp.cs.ui.ac.id"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "michael-ignasius-hasbogor.pbp.cs.ui.ac.id", "10.0.2.2"]
 
 
 # Application definition
@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main',
+    # 'main',
     #'authentication',
     'penyimpanan',
     'pembayaran',
@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'promo',
     'ulasan',
     'category',
-    'whitenoise'
+    'whitenoise',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +60,29 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = 'None'
+
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1:8000', 
+    'http://127.0.0.1:49274',  
+    'http://127.0.0.1:65429', 
+]
+
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1:49274', 
+    'http://127.0.0.1:65429', 
+    'http://127.0.0.1:8000',   
+]
+
 
 ROOT_URLCONF = 'has_bogor.urls'
 
@@ -78,6 +101,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'has_bogor.wsgi.application'
 

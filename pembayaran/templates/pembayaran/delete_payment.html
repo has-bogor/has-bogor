@@ -6,7 +6,6 @@
     <div class="bg-gray-900 p-8 rounded-3xl shadow-lg max-w-lg w-full">
         <h1 class="text-center text-3xl font-serif mb-8 text-white">HAPUS PEMBAYARAN</h1>
         <p class="text-center mb-6 text-white">Apakah Anda yakin ingin menghapus pembayaran ini?</p>
-        
         <form action="{% url 'pembayaran:delete_payment' payment.id %}" method="POST">
             {% csrf_token %}
             <div class="flex justify-between">
