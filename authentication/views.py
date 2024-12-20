@@ -94,6 +94,12 @@ def api_login(request):
     
 
 @csrf_exempt
+def katalog_list(request):
+    katalogs = Katalog.objects.all()
+    katalog_list = list(katalogs.values('nama', 'kategori', 'harga', 'deskripsi', 'toko'))
+    return JsonResponse(katalog_list, safe=False)
+
+@csrf_exempt
 def api_register(request):
     if request.method == 'POST':
         data = json.loads(request.body)
