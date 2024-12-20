@@ -50,7 +50,10 @@ def profile(request):
 
 @login_required 
 def home(request):
-    user_profile = UserProfile.objects.get(user=request.user)
+    try:
+        user_profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        user_profile = UserProfile.objects.create(user=request.user)
     katalog_items = Katalog.objects.all()
 
     context = {
