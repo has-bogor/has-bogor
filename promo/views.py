@@ -141,3 +141,18 @@ def edit_promo_flutter(request, id):
             return JsonResponse({"status": "error", "message": str(e)}, status=400)
     else:
         return JsonResponse({"status": "error", "message": "Invalid method"}, status=401)
+
+@csrf_exempt
+def delete_promo_flutter(request, id):
+   if request.method == 'POST':
+       try:
+           promo = Promo.objects.get(pk=id)
+           promo.delete()
+
+           return JsonResponse({"status": "success"}, status=200)
+       except Promo.DoesNotExist:
+           return JsonResponse({"status": "error", "message": "Promo not found"}, status=404)
+       except Exception as e:
+           return JsonResponse({"status": "error", "message": str(e)}, status=400)
+   else:
+       return JsonResponse({"status": "error", "message": "Invalid method"}, status=401)

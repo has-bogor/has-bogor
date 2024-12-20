@@ -13,4 +13,5 @@ urlpatterns = [
     path('filtered/', show_filtered_promo, name='show_filtered_promo'),
     path('create-promo-flutter/', create_promo_flutter, name='create_promo_flutter'),
     path('edit-promo-flutter/<uuid:id>/', edit_promo_flutter, name='edit_promo_flutter'),
+    path('delete-flutter/<uuid:id>', delete_promo_flutter, name='delete_promo_flutter'),
 ]
