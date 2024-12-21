@@ -9,7 +9,7 @@ import json
 from django.contrib.auth.decorators import login_required
 from authentication.models import UserProfile
 
-# @login_required(login_url="authentication:login")
+@login_required(login_url="authentication:login")
 def show_promo(request):
     user = request.user
     context = {"user": user}
@@ -211,3 +211,10 @@ def remove_store_flutter(request, id):
             return JsonResponse({"status": "error", "message": str(e)}, status=400)
     else:
         return JsonResponse({"status": "error", "message": "Invalid method"}, status=401)
+    
+def check_superuser(request):
+    return JsonResponse({
+        "status": True,
+        "is_superuser": request.user.is_superuser,
+        "username": request.user.username,
+    })
