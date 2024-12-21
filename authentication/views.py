@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+
+from category.models import Category
 from .models import UserProfile
 from django.contrib.auth.decorators import login_required
 from penyimpanan.models import Katalog  
@@ -55,6 +57,14 @@ def home(request):
     except UserProfile.DoesNotExist:
         user_profile = UserProfile.objects.create(user=request.user)
     katalog_items = Katalog.objects.all()
+    for item in katalog_items:
+        item.category_name = item.kategori  # Default to the category ID
+        try:
+            category = Category.objects.get(id=item.kategori)
+            item.category_name = category.nama_category  # Fetch category name
+        except Category.DoesNotExist:
+            item.category_name = 'Category not found'
+
 
     context = {
         'user_profile': user_profile,
@@ -99,8 +109,27 @@ def api_login(request):
 @csrf_exempt
 def katalog_list(request):
     katalogs = Katalog.objects.all()
-    katalog_list = list(katalogs.values('nama', 'kategori', 'harga', 'deskripsi', 'toko'))
-    return JsonResponse(katalog_list, safe=False)
+    katalog_data = []
+    
+    for katalog in katalogs:
+        item_data = {
+            'id': katalog.id,
+            'nama': katalog.nama,
+            'kategori': katalog.kategori,
+            'harga': katalog.harga,
+            'deskripsi': katalog.deskripsi,
+            'toko': katalog.toko,
+        }
+        
+        try:
+            category = Category.objects.get(id=katalog.kategori)
+            item_data['category_name'] = category.nama_category
+        except Category.DoesNotExist:
+            item_data['category_name'] = 'Category not found'
+            
+        katalog_data.append(item_data)
+    
+    return JsonResponse(katalog_data, safe=False)
 
 @csrf_exempt
 def api_register(request):

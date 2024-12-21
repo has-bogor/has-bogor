@@ -10,18 +10,28 @@ from django.shortcuts import render
 @csrf_exempt
 @require_POST
 def create_category(request):
-    data = json.loads(request.body)
-    category_name = data.get("nama_category", "").strip()
-    
-    if not category_name:
-        return JsonResponse({"success": False, "message": "Category name is required."})
-    
-    category = Category.objects.create(nama_category=category_name)
-    return JsonResponse({
-        "success": True,
-        "message": "Category created successfully!",
-        "category": {"id": category.id, "nama_category": category.nama_category}
-    })
+    try:
+        data = json.loads(request.body)
+        print(f'Received data: {data}')  # Debug statement
+        category_name = data.get("nama_category", "").strip()
+
+        if not category_name:
+            print('Category name is missing.')  # Debug statement
+            return JsonResponse({"success": False, "message": "Category name is required."}, status=400)
+
+        category = Category.objects.create(nama_category=category_name)
+        print(f'Created category: {category.nama_category} with ID: {category.id}')  # Debug statement
+        return JsonResponse({
+            "success": True,
+            "message": "Category created successfully!",
+            "category": {"id": category.id, "nama_category": category.nama_category}
+        }, status=201)
+    except json.JSONDecodeError:
+        print('Invalid JSON input.')  # Debug statement
+        return JsonResponse({"success": False, "message": "Invalid JSON input."}, status=400)
+    except Exception as e:
+        print(f'Error creating category: {e}')  # Debug statement
+        return JsonResponse({"success": False, "message": str(e)}, status=500)
 
 @csrf_exempt
 @require_http_methods(["PUT"])
