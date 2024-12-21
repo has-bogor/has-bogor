@@ -117,3 +117,39 @@ def add_api(request):
             return JsonResponse({"error": str(e)}, status=500)
 
     return JsonResponse({"error": "Invalid request method."}, status=405)
+
+@csrf_exempt
+def update_api(request, id):
+    try:
+        # Retrieve the item to be updated
+        item = Katalog.objects.get(pk=id)
+    except Katalog.DoesNotExist:
+        return JsonResponse({"error": "Item not found"}, status=404)
+
+    if request.method == "POST":
+        try:
+            # Parse the JSON body
+            data = json.loads(request.body)
+
+            # Update item fields
+            item.nama = data.get("nama", item.nama)
+            item.harga = data.get("harga", item.harga)
+            item.kategori = data.get("kategori", item.kategori)
+            item.deskripsi = data.get("deskripsi", item.deskripsi)
+            item.toko = data.get("toko", item.toko)
+
+            # Save the updated item
+            item.save()
+            return JsonResponse({"message": "Item updated successfully!"}, status=200)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
+
+    return JsonResponse({"error": "Invalid HTTP method"}, status=405)
+
+@csrf_exempt
+def delete_api(request, id):
+    if request.method == 'POST':  # Use DELETE HTTP method for deletions
+        item = get_object_or_404(Katalog, pk=id)
+        item.delete()
+        return JsonResponse({"message": "Item deleted successfully"}, status=200)
+    return JsonResponse({"error": "Invalid request method"}, status=400)
