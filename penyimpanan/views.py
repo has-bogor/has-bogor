@@ -9,7 +9,6 @@ from django.core import serializers
 from penyimpanan.forms import AddItemForm
 from django.contrib import messages
 
-
 # @login_required(login_url="authentication:login")
 def show_katalog(request):
     user = request.user

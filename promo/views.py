@@ -9,7 +9,7 @@ import json
 from django.contrib.auth.decorators import login_required
 from authentication.models import UserProfile
 
-@login_required(login_url="authentication:login")
+# @login_required(login_url="authentication:login")
 def show_promo(request):
     user = request.user
     context = {"user": user}
@@ -98,3 +98,116 @@ def show_filtered_promo(request):
         promos = Promo.objects.all().order_by("-potongan")  # Descending order for discount
 
     return HttpResponse(serializers.serialize("json", promos), content_type="application/json")
+
+@csrf_exempt
+def create_promo_flutter(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            new_promo = Promo.objects.create(
+                kode=data["kode"],  # String
+                potongan=float(data["potongan"]),  # Float
+                masa_berlaku=int(data["masa_berlaku"]),  # Integer
+                minimal_transaksi=float(data["minimal_transaksi"]),  # Float
+                toko_terkait=[]  # Empty list for JSONField
+            )
+
+            new_promo.save()
+
+            return JsonResponse({"status": "success"}, status=200)
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+    else:
+        return JsonResponse({"status": "error", "message": "Invalid method"}, status=401)
+
+@csrf_exempt
+def edit_promo_flutter(request, id):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            promo = Promo.objects.get(pk=id)
+            
+            promo.kode = data["kode"]
+            promo.potongan = float(data["potongan"])
+            promo.masa_berlaku = int(data["masa_berlaku"])
+            promo.minimal_transaksi = float(data["minimal_transaksi"])
+            
+            promo.save()
+
+            return JsonResponse({"status": "success"}, status=200)
+        except Promo.DoesNotExist:
+            return JsonResponse({"status": "error", "message": "Promo not found"}, status=404)
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+    else:
+        return JsonResponse({"status": "error", "message": "Invalid method"}, status=401)
+
+@csrf_exempt
+def delete_promo_flutter(request, id):
+   if request.method == 'POST':
+       try:
+           promo = Promo.objects.get(pk=id)
+           promo.delete()
+
+           return JsonResponse({"status": "success"}, status=200)
+       except Promo.DoesNotExist:
+           return JsonResponse({"status": "error", "message": "Promo not found"}, status=404)
+       except Exception as e:
+           return JsonResponse({"status": "error", "message": str(e)}, status=400)
+   else:
+       return JsonResponse({"status": "error", "message": "Invalid method"}, status=401)
+   
+@csrf_exempt
+def add_store_flutter(request, id):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            promo = Promo.objects.get(pk=id)
+            
+            store_name = data.get('nama')
+            
+            if store_name:
+                # Get current toko_terkait (it's a JSONField)
+                if promo.toko_terkait is None:  # Handle jika None
+                    promo.toko_terkait = []
+                    
+                # Append new store name to list
+                promo.toko_terkait.append(store_name)
+                promo.save()
+
+                return JsonResponse({"status": "success"}, status=200)
+            else:
+                return JsonResponse({"status": "error", "message": "Store name is required"}, status=400)
+                
+        except Exception as e:
+            print('Error:', str(e))  # Print error untuk debugging
+            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+    else:
+        return JsonResponse({"status": "error", "message": "Invalid method"}, status=401)
+
+@csrf_exempt
+def remove_store_flutter(request, id):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            promo = Promo.objects.get(pk=id)
+            
+            store_name = data.get('storeName')
+            if not store_name:
+                return JsonResponse({"status": "error", "message": "Store name is required"}, status=400)
+            
+            if promo.toko_terkait is None:
+                promo.toko_terkait = []
+            else:
+                # Remove store with matching name
+                promo.toko_terkait = [store for store in promo.toko_terkait if store.get('name') != store_name]
+                promo.save()
+
+            return JsonResponse({"status": "success"}, status=200)
+        except ValueError:  # Handle kasus jika store tidak ditemukan
+            return JsonResponse({"status": "error", "message": "Store not found"}, status=404)
+        except Exception as e:
+            print('Error:', str(e))  # Print error untuk debugging
+            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+    else:
+        return JsonResponse({"status": "error", "message": "Invalid method"}, status=401)

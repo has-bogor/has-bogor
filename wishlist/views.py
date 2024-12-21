@@ -5,6 +5,7 @@ from penyimpanan.models import Katalog
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.http import HttpRequest, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 def add_to_wishlist(request, katalog_id):
     katalog = get_object_or_404(Katalog, id=katalog_id)
@@ -48,9 +49,6 @@ def add_to_wishlist_ajax(request: HttpRequest):
     # print("Request not as expected")  # For non-AJAX or non-POST cases
     return JsonResponse({"success": False, "message": "Invalid request"}, status=400)
 
-
-
-
 def wishlist_view(request):
     print("Wishlist view accessed")  # This should appear in your server logs
     wishlist_items = Wishlist.objects.filter(user=request.user)
@@ -78,3 +76,72 @@ def remove_from_wishlist(request, katalog_id):
         messages.warning(request, f"{katalog.nama} was not found in your wishlist.")
 
     return redirect('wishlist:wishlist_view')
+
+def fetch_wishlist(request):
+    if request.method == 'GET':
+        if not request.user.is_authenticated:
+            return JsonResponse({'status': 'error', 'message': 'User tidak terautentikasi.'}, status=401)
+
+        wishlist_items = Wishlist.objects.filter(user=request.user).select_related('product')
+        wishlist_data = [
+            {
+                'id': item.product.id,
+                'name' : item.product.nama,
+                'desc' : item.product.deskripsi,
+                'added_at': item.added_at.strftime('%Y-%m-%d %H:%M:%S')
+
+            }
+            for item in wishlist_items
+        ]
+        return JsonResponse({'data': wishlist_data}, status=200)
+    
+    return JsonResponse({'status': 'error', 'message': 'Metode tidak diizinkan.'}, status=405)
+
+
+@csrf_exempt
+def add_wishlist_flutter(request, katalog_id):
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return JsonResponse({'status': 'error', 'message': 'User tidak terautentikasi.'}, status=401)
+
+        try:
+            product = Katalog.objects.filter(id=katalog_id).first()
+            if not product:
+                return JsonResponse({'status': 'error', 'message': 'Produk tidak ditemukan.'}, status=404)
+
+            # Cek apakah sudah ada di wishlist
+            if Wishlist.objects.filter(user=request.user, product=product).exists():
+                return JsonResponse({'status': 'info', 'message': 'Produk sudah ada di wishlist.'}, status=200)
+
+            # Tambahkan ke wishlist jika belum ada
+            Wishlist.objects.create(user=request.user, product=product)
+
+            return JsonResponse({'status': 'success', 'message': 'Produk berhasil ditambahkan ke wishlist.'}, status=201)
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+    return JsonResponse({'status': 'error', 'message': 'Metode tidak diizinkan.'}, status=405)
+
+@csrf_exempt
+def delete_wishlist_flutter(request, katalog_id):
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return JsonResponse({'status': 'error', 'message': 'User tidak terautentikasi.'}, status=401)
+
+        try:
+            product = Katalog.objects.filter(id=katalog_id).first()
+            if not product:
+                return JsonResponse({'status': 'error', 'message': 'Produk tidak ditemukan.'}, status=404)
+
+            # Cek apakah produk ada di wishlist user
+            wishlist_item = Wishlist.objects.filter(user=request.user, product=product)
+            if wishlist_item.exists():
+                wishlist_item.delete()
+                return JsonResponse({'status': 'success', 'message': 'Produk berhasil dihapus dari wishlist.'}, status=200)
+            else:
+                return JsonResponse({'status': 'error', 'message': 'Produk tidak ditemukan di wishlist.'}, status=404)
+
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+    return JsonResponse({'status': 'error', 'message': 'Metode tidak diizinkan.'}, status=405)
