@@ -6,9 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.core import serializers
+from django.core.serializers.json import DjangoJSONEncoder
 from penyimpanan.forms import AddItemForm
 from django.contrib import messages
-
 
 # @login_required(login_url="authentication:login")
 def show_katalog(request):
@@ -75,4 +75,81 @@ def explore_katalog(request):
 
 def katalog_list(request):
     katalog = list(Katalog.objects.values('id', 'nama', 'harga', 'kategori', 'deskripsi', 'toko'))
+    for item in katalog:
+        item['harga'] = float(item['harga'])
     return JsonResponse(katalog, safe=False)
+
+@csrf_exempt
+def add_api(request):
+    if request.method == "POST":
+        try:
+            # Parse JSON payload
+            data = json.loads(request.body)
+
+            # Extract fields
+            nama = data.get("nama")
+            kategori = data.get("kategori")
+            harga = data.get("harga")
+            deskripsi = data.get("deskripsi")
+            toko = data.get("toko")
+
+            # Validate fields
+            if not all([nama, kategori, harga, deskripsi, toko]):
+                return JsonResponse({"error": "All fields are required."}, status=400)
+
+            # Save new item
+            new_item = Katalog(
+                nama=nama,
+                kategori=kategori,
+                harga=harga,
+                deskripsi=deskripsi,
+                toko=toko,
+            )
+            new_item.save()
+            print(nama, kategori, harga, deskripsi, toko)
+
+            # Return success response
+            return JsonResponse({"message": "Item added successfully!"}, status=201)
+
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON payload."}, status=400)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse({"error": "Invalid request method."}, status=405)
+
+@csrf_exempt
+def update_api(request, id):
+    try:
+        # Retrieve the item to be updated
+        item = Katalog.objects.get(pk=id)
+    except Katalog.DoesNotExist:
+        return JsonResponse({"error": "Item not found"}, status=404)
+
+    if request.method == "POST":
+        try:
+            # Parse the JSON body
+            data = json.loads(request.body)
+
+            # Update item fields
+            item.nama = data.get("nama", item.nama)
+            item.harga = data.get("harga", item.harga)
+            item.kategori = data.get("kategori", item.kategori)
+            item.deskripsi = data.get("deskripsi", item.deskripsi)
+            item.toko = data.get("toko", item.toko)
+
+            # Save the updated item
+            item.save()
+            return JsonResponse({"message": "Item updated successfully!"}, status=200)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
+
+    return JsonResponse({"error": "Invalid HTTP method"}, status=405)
+
+@csrf_exempt
+def delete_api(request, id):
+    if request.method == 'POST':  # Use DELETE HTTP method for deletions
+        item = get_object_or_404(Katalog, pk=id)
+        item.delete()
+        return JsonResponse({"message": "Item deleted successfully"}, status=200)
+    return JsonResponse({"error": "Invalid request method"}, status=400)

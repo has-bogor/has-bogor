@@ -191,6 +191,7 @@ def delete_ulasan_flutter(request):
                 return JsonResponse({'message': 'You are not allowed to delete this review'}, status=403)
 
             # Delete the ulasan
+
             ulasan.delete()
 
             return JsonResponse({'message': 'success'}, status=200)
@@ -202,7 +203,6 @@ def delete_ulasan_flutter(request):
             return JsonResponse({'message': f'Error: {str(e)}'}, status=500)
     else:
         return JsonResponse({'message': 'Invalid method'}, status=405)
-
 
 @csrf_exempt
 def create_ulasan_flutter(request):

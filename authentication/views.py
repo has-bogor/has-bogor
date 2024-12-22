@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+
+from category.models import Category
 from .models import UserProfile
 from django.contrib.auth.decorators import login_required
 from penyimpanan.models import Katalog  
@@ -27,7 +29,7 @@ def register(request):
 
 def login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')  
+        username = request.POST.get('username')
         password = request.POST.get('password')
         if username and password:
             user = authenticate(request, username=username, password=password)  
@@ -50,11 +52,22 @@ def profile(request):
 
 @login_required
 def home(request):
-    #user_profile = UserProfile.objects.get(user=request.user)  
-    katalog_items = Katalog.objects.all()  
+    try:
+        user_profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        user_profile = UserProfile.objects.create(user=request.user)
+    katalog_items = Katalog.objects.all()
+    for item in katalog_items:
+        item.category_name = item.kategori  # Default to the category ID
+        try:
+            category = Category.objects.get(id=item.kategori)
+            item.category_name = category.nama_category  # Fetch category name
+        except Category.DoesNotExist:
+            item.category_name = 'Category not found'
+
 
     context = {
-        #'user_profile': user_profile,
+        'user_profile': user_profile,
         'katalog_items': katalog_items, 
     }
     
@@ -77,7 +90,8 @@ def api_login(request):
             return JsonResponse({
                 "username": user.username,
                 "status": True,
-                "message": "Login sukses!"
+                "message": "Login sukses!",
+                "is_superuser": user.is_superuser
                 # Tambahkan data lainnya jika ingin mengirim data ke Flutter.
             }, status=200)
         else:
@@ -89,9 +103,34 @@ def api_login(request):
     else:
         return JsonResponse({
             "status": False,
-            "message": "Login gagal, periksa kembali email atau kata sandi."
+            "message": "Login gagal, periksa kembali username atau kata sandi."
         }, status=401)
     
+
+@csrf_exempt
+def katalog_list(request):
+    katalogs = Katalog.objects.all()
+    katalog_data = []
+    
+    for katalog in katalogs:
+        item_data = {
+            'id': katalog.id,
+            'nama': katalog.nama,
+            'kategori': katalog.kategori,
+            'harga': katalog.harga,
+            'deskripsi': katalog.deskripsi,
+            'toko': katalog.toko,
+        }
+        
+        try:
+            category = Category.objects.get(id=katalog.kategori)
+            item_data['category_name'] = category.nama_category
+        except Category.DoesNotExist:
+            item_data['category_name'] = 'Category not found'
+            
+        katalog_data.append(item_data)
+    
+    return JsonResponse(katalog_data, safe=False)
 
 @csrf_exempt
 def api_register(request):

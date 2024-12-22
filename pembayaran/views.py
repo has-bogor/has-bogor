@@ -95,3 +95,37 @@ def delete_payment(request, payment_id):
         return redirect('pembayaran:payment_history')
 
     return render(request, 'pembayaran/delete_payment.html', {'payment': payment})
+
+@csrf_exempt
+def history_flutter(request):
+    try:
+        # Ambil pembayaran dan urutkan berdasarkan tanggal terbaru
+        pembayaran = Pembayaran.objects.all().order_by('-tanggal').values()
+        
+        # Implementasi pagination sederhana
+        page_number = request.GET.get('page', 1)
+        paginator = Paginator(pembayaran, 10)  # 10 item per halaman
+        page_obj = paginator.get_page(page_number)
+        
+        # Mengembalikan data pembayaran dalam format JSON
+        return JsonResponse({
+            'data': list(page_obj),
+            'has_next': page_obj.has_next(),
+            'has_previous': page_obj.has_previous(),
+            'total_pages': paginator.num_pages,
+        }, safe=False)
+    
+    except Exception as e:
+        # Menangani error jika ada masalah
+        return JsonResponse({'error': str(e)}, status=500)
+    
+def get_payments(request):
+    try:
+        payments = Pembayaran.objects.all()
+        print(f"Found {payments.count()} payments")
+        data = list(payments.values())
+        print(f"Data to be sent: {data}")
+        return JsonResponse(data, safe=False)
+    except Exception as e:
+        print(f"Error in get_payments: {str(e)}")
+        return JsonResponse({'error': str(e)}, status=500)

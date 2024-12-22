@@ -7,7 +7,10 @@ from penyimpanan.views import (
     update_item,
     delete_item,
     explore_katalog,
-    katalog_list
+    katalog_list,
+    add_api,
+    update_api,
+    delete_api
 )
 
 app_name = 'penyimpanan'
@@ -21,4 +24,7 @@ urlpatterns = [
     path('delete_item/<int:id>/', delete_item, name='delete_item'),
     path('explore/', explore_katalog, name='explore'),
     path('api/katalog/', katalog_list, name='katalog_list'),
+    path('api/add/', add_api, name='add_api'),
+    path('api/items/<int:id>/update/', update_api, name='update_api'),
+    path('api/items/<int:id>/delete/', delete_api, name='delete_api'),
 ]

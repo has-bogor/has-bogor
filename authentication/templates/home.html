@@ -46,7 +46,7 @@
                 <h3 class="text-xl text-white font-bold mb-2">{{ item.nama }}</h3>
                 <p class="text-gray-400">Harga: <span class="text-xl text-green-400 font-bold">Rp {{ item.harga }}</span></p>
                 <p class="text-gray-300 mb-2">{{ item.deskripsi }}</p>
-                <p class="text-gray-500">Kategori: {{ item.kategori }}</p>
+                <p class="text-gray-500">Kategori: {{ item.category_name }}</p>
                 <p class="text-gray-500">Toko: {{ item.toko }}</p>
 
                 <form action="{% url 'pembayaran:create' %}" method="POST" class="mt-4">
