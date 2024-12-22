@@ -12,6 +12,7 @@ from django.utils.html import strip_tags
 from .models import Ulasan
 from .forms import UlasanForm
 from penyimpanan.models import Katalog  # Ensure your Katalog model is imported
+from django.http import HttpResponseForbidden
 
 @login_required(login_url='/login')
 def show_ulasan(request):
@@ -42,14 +43,40 @@ def create_ulasan(request):
     return render(request, "create_ulasan.html", context)
 
 
-def edit_ulasan(request, id):
-    ulasan = get_object_or_404(Ulasan, pk=id)
-    form = UlasanForm(request.POST or None, instance=ulasan)
+# def edit_ulasan(request, id):
+#     ulasan = get_object_or_404(Ulasan, pk=id)
+#     form = UlasanForm(request.POST or None, instance=ulasan)
     
+#     if form.is_valid() and request.method == "POST":
+#         form.save()
+#         return HttpResponseRedirect(reverse('ulasan:show_ulasan'))
+
+#     katalog_items = Katalog.objects.all()
+#     context = {
+#         'form': form,
+#         'ulasan': ulasan,
+#         'katalog_items': katalog_items,
+#     }
+#     return render(request, "edit_ulasan.html", context)
+
+def edit_ulasan(request, id):
+    # Ambil ulasan berdasarkan ID, jika tidak ada, kembalikan 404
+    ulasan = get_object_or_404(Ulasan, pk=id)
+
+    # Pastikan ulasan dimiliki oleh pengguna yang login
+    if ulasan.user != request.user:
+        # Kembalikan respon 403 jika pengguna tidak diizinkan
+        return HttpResponseForbidden("Anda tidak diizinkan untuk mengedit ulasan ini.")
+
+    # Form untuk mengedit ulasan
+    form = UlasanForm(request.POST or None, instance=ulasan)
+
     if form.is_valid() and request.method == "POST":
         form.save()
+        # Redirect ke halaman daftar ulasan setelah berhasil mengedit
         return HttpResponseRedirect(reverse('ulasan:show_ulasan'))
 
+    # Ambil daftar katalog untuk ditampilkan di context (jika diperlukan)
     katalog_items = Katalog.objects.all()
     context = {
         'form': form,
@@ -58,10 +85,26 @@ def edit_ulasan(request, id):
     }
     return render(request, "edit_ulasan.html", context)
 
+
+# def delete_ulasan(request, id):
+#     ulasan = Ulasan.objects.get(id=id)
+#     ulasan.delete()
+#     return HttpResponseRedirect(reverse('ulasan:show_ulasan'))
+
 def delete_ulasan(request, id):
-    ulasan = Ulasan.objects.get(id=id)
+    # Ambil ulasan berdasarkan ID, jika tidak ada, kembalikan 404
+    ulasan = get_object_or_404(Ulasan, pk=id)
+
+    # Pastikan ulasan dimiliki oleh pengguna yang login
+    if ulasan.user != request.user:
+        # Kembalikan respon 403 jika pengguna tidak diizinkan
+        return HttpResponseForbidden("Anda tidak diizinkan untuk menghapus ulasan ini.")
+
+    # Hapus ulasan jika pengguna adalah pemiliknya
     ulasan.delete()
+    # Redirect ke halaman daftar ulasan setelah berhasil menghapus
     return HttpResponseRedirect(reverse('ulasan:show_ulasan'))
+
 
 @csrf_exempt
 @require_POST
@@ -100,6 +143,33 @@ def show_katalogs(request):
     katalog_list = list(katalogs.values('id', 'nama'))
     return JsonResponse(katalog_list, safe=False)
 
+# @csrf_exempt
+# def delete_ulasan_flutter(request):
+#     if request.method == "POST":
+#         try:
+#             # Parse the JSON data
+#             data = json.loads(request.body)
+
+#             # Get the 'id' from the parsed data
+#             ulasan_id = data.get("id")
+
+#             if not ulasan_id:
+#                 return JsonResponse({'message': 'ID is required'}, status=400)
+
+#             # Get the ulasan object and delete it
+#             ulasan = Ulasan.objects.get(id=ulasan_id)
+#             ulasan.delete()
+
+#             return JsonResponse({'message': 'success'}, status=200)
+
+#         except Ulasan.DoesNotExist:
+#             return JsonResponse({'message': 'Ulasan not found'}, status=404)
+
+#         except Exception as e:
+#             return JsonResponse({'message': f'Error: {str(e)}'}, status=500)
+#     else:
+#         return JsonResponse({'message': 'Invalid method'}, status=405)
+
 @csrf_exempt
 def delete_ulasan_flutter(request):
     if request.method == "POST":
@@ -113,8 +183,14 @@ def delete_ulasan_flutter(request):
             if not ulasan_id:
                 return JsonResponse({'message': 'ID is required'}, status=400)
 
-            # Get the ulasan object and delete it
+            # Get the ulasan object
             ulasan = Ulasan.objects.get(id=ulasan_id)
+
+            # Check if the logged-in user is the owner of the review
+            if ulasan.user != request.user:
+                return JsonResponse({'message': 'You are not allowed to delete this review'}, status=403)
+
+            # Delete the ulasan
             ulasan.delete()
 
             return JsonResponse({'message': 'success'}, status=200)
@@ -126,6 +202,7 @@ def delete_ulasan_flutter(request):
             return JsonResponse({'message': f'Error: {str(e)}'}, status=500)
     else:
         return JsonResponse({'message': 'Invalid method'}, status=405)
+
 
 @csrf_exempt
 def create_ulasan_flutter(request):
@@ -145,23 +222,50 @@ def create_ulasan_flutter(request):
     else:
         return JsonResponse({"status": "error"}, status=401)
 
+# @csrf_exempt
+# def edit_ulasan_flutter(request, id):
+#     if request.method == 'POST':
+
+#         data = json.loads(request.body)
+
+#         # Get the existing ulasan item
+#         ulasan = Ulasan.objects.get(pk=id)
+
+#         # Update the fields directly on the instance
+#         ulasan.ulasan_makanan_souvenir = Katalog.objects.get(pk=int(data['ulasan_makanan_souvenir']))
+#         ulasan.rating = int(data['rating'])
+#         ulasan.pesan_ulasan = data['pesan_ulasan']
+
+#         # Save the updated instance
+#         ulasan.save()
+
+#         return JsonResponse({"status": "success"}, status=200)
+#     else:
+#         return JsonResponse({"status": "error"}, status=401)
+
 @csrf_exempt
 def edit_ulasan_flutter(request, id):
     if request.method == 'POST':
+        try:
+            # Parse JSON data
+            data = json.loads(request.body)
 
-        data = json.loads(request.body)
+            # Ambil ulasan hanya jika milik pengguna yang sedang login
+            ulasan = get_object_or_404(Ulasan, pk=id, user=request.user)
 
-        # Get the existing ulasan item
-        ulasan = Ulasan.objects.get(pk=id)
+            # Update the ulasan fields
+            ulasan.ulasan_makanan_souvenir = get_object_or_404(Katalog, pk=int(data['ulasan_makanan_souvenir']))
+            ulasan.rating = int(data['rating'])
+            ulasan.pesan_ulasan = data['pesan_ulasan']
+            ulasan.save()
 
-        # Update the fields directly on the instance
-        ulasan.ulasan_makanan_souvenir = Katalog.objects.get(pk=int(data['ulasan_makanan_souvenir']))
-        ulasan.rating = int(data['rating'])
-        ulasan.pesan_ulasan = data['pesan_ulasan']
+            # Return success response
+            return JsonResponse({"status": "success"}, status=200)
 
-        # Save the updated instance
-        ulasan.save()
+        except Katalog.DoesNotExist:
+            return JsonResponse({'message': 'Katalog not found'}, status=404)
 
-        return JsonResponse({"status": "success"}, status=200)
+        except Exception as e:
+            return JsonResponse({'message': f'Error: {str(e)}'}, status=500)
     else:
-        return JsonResponse({"status": "error"}, status=401)
+        return JsonResponse({"status": "error", "message": "Invalid HTTP method"}, status=405)
