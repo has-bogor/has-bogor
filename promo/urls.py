@@ -16,4 +16,5 @@ urlpatterns = [
     path('delete-flutter/<uuid:id>/', delete_promo_flutter, name='delete_promo_flutter'),
     path('add-store-flutter/<uuid:id>/', add_store_flutter, name='add_store_flutter'),
     path('remove-store-flutter/<uuid:id>/', remove_store_flutter, name='remove_store_flutter'),
+    path('check-superuser/', check_superuser, name='check_superuser'),
 ]
