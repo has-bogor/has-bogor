@@ -1,3 +1,4 @@
+from category.models import Category
 from .models import Katalog
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
@@ -74,10 +75,40 @@ def explore_katalog(request):
     return render(request, 'penyimpanan/explore_katalog.html', {'katalog_items': katalog_items})
 
 def katalog_list(request):
-    katalog = list(Katalog.objects.values('id', 'nama', 'harga', 'kategori', 'deskripsi', 'toko'))
-    for item in katalog:
-        item['harga'] = float(item['harga'])
-    return JsonResponse(katalog, safe=False)
+    katalogs = Katalog.objects.all()
+    katalog_data = []
+
+    for katalog in katalogs:
+        # Convert harga to float if needed
+        try:
+            katalog.harga = float(katalog.harga)
+        except ValueError:
+            katalog.harga = 0.0
+
+        # Construct the item data
+        item_data = {
+            'id': katalog.id,
+            'nama': katalog.nama,
+            'kategori': katalog.kategori,  # Use the raw kategori value
+            'harga': katalog.harga,
+            'deskripsi': katalog.deskripsi,
+            'toko': katalog.toko,
+        }
+
+        # Manually fetch the category data
+        try:
+            category = Category.objects.get(id=katalog.kategori)
+            item_data['category_name'] = category.nama_category
+        except Category.DoesNotExist:
+            item_data['category_name'] = 'Category not found'
+
+        # Append the data to the list
+        katalog_data.append(item_data)
+
+    # Return the JSON response
+    return JsonResponse(katalog_data, safe=False)
+
+
 
 @csrf_exempt
 def add_api(request):
