@@ -10,7 +10,7 @@ from penyimpanan.models import Katalog
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-from django.contrib.auth.models import User
+
 
 def register(request):
     if request.method == "POST":
@@ -50,7 +50,7 @@ def profile(request):
     context = {'user_profile': user_profile}
     return render(request, 'profile.html', context)
 
-@login_required 
+@login_required
 def home(request):
     try:
         user_profile = UserProfile.objects.get(user=request.user)

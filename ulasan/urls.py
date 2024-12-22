@@ -15,5 +15,3 @@ urlpatterns = [
     path('create/flutter/', create_ulasan_flutter, name='create_ulasan_flutter'),
     path('edit/flutter/<int:id>/', edit_ulasan_flutter, name='edit_ulasan_flutter'),
 ]
-
-
