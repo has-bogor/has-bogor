@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.core import serializers
+from django.core.serializers.json import DjangoJSONEncoder
 from penyimpanan.forms import AddItemForm
 from django.contrib import messages
 
@@ -74,4 +75,45 @@ def explore_katalog(request):
 
 def katalog_list(request):
     katalog = list(Katalog.objects.values('id', 'nama', 'harga', 'kategori', 'deskripsi', 'toko'))
+    for item in katalog:
+        item['harga'] = float(item['harga'])
     return JsonResponse(katalog, safe=False)
+
+@csrf_exempt
+def add_api(request):
+    if request.method == "POST":
+        try:
+            # Parse JSON payload
+            data = json.loads(request.body)
+
+            # Extract fields
+            nama = data.get("nama")
+            kategori = data.get("kategori")
+            harga = data.get("harga")
+            deskripsi = data.get("deskripsi")
+            toko = data.get("toko")
+
+            # Validate fields
+            if not all([nama, kategori, harga, deskripsi, toko]):
+                return JsonResponse({"error": "All fields are required."}, status=400)
+
+            # Save new item
+            new_item = Katalog(
+                nama=nama,
+                kategori=kategori,
+                harga=harga,
+                deskripsi=deskripsi,
+                toko=toko,
+            )
+            new_item.save()
+            print(nama, kategori, harga, deskripsi, toko)
+
+            # Return success response
+            return JsonResponse({"message": "Item added successfully!"}, status=201)
+
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON payload."}, status=400)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse({"error": "Invalid request method."}, status=405)

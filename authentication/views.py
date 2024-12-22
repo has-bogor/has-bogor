@@ -52,7 +52,10 @@ def profile(request):
 
 @login_required 
 def home(request):
-    user_profile = UserProfile.objects.get(user=request.user)
+    try:
+        user_profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        user_profile = UserProfile.objects.create(user=request.user)
     katalog_items = Katalog.objects.all()
     for item in katalog_items:
         item.category_name = item.kategori  # Default to the category ID
@@ -64,7 +67,7 @@ def home(request):
 
 
     context = {
-        #'user_profile': user_profile,
+        'user_profile': user_profile,
         'katalog_items': katalog_items, 
     }
     
