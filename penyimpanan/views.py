@@ -1,3 +1,4 @@
+from category.models import Category
 from .models import Katalog
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
@@ -52,11 +53,10 @@ def update_item(request, id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Item updated successfully!')
-            return redirect('penyimpanan:show_katalog')  # Redirect hanya jika berhasil
+            return redirect('penyimpanan:show_katalog')
     else:
         form = AddItemForm(instance=item)
 
-    # Jika request GET atau form tidak valid, tampilkan halaman form edit
     return render(request, 'penyimpanan/edit_item.html', {'form': form, 'item': item})
 
 def delete_item(request, id):
@@ -67,37 +67,56 @@ def delete_item(request, id):
 def explore_katalog(request):
     search_query = request.GET.get('search', '')
     if search_query:
-        katalog_items = Katalog.objects.filter(nama__icontains=search_query)  # Gunakan model Katalog
+        katalog_items = Katalog.objects.filter(nama__icontains=search_query)
     else:
         katalog_items = Katalog.objects.all()
     
     return render(request, 'penyimpanan/explore_katalog.html', {'katalog_items': katalog_items})
 
 def katalog_list(request):
-    katalog = list(Katalog.objects.values('id', 'nama', 'harga', 'kategori', 'deskripsi', 'toko'))
-    for item in katalog:
-        item['harga'] = float(item['harga'])
-    return JsonResponse(katalog, safe=False)
+    katalogs = Katalog.objects.all()
+    katalog_data = []
+
+    for katalog in katalogs:
+        try:
+            katalog.harga = float(katalog.harga)
+        except ValueError:
+            katalog.harga = 0.0
+
+        item_data = {
+            'id': katalog.id,
+            'nama': katalog.nama,
+            'kategori': katalog.kategori,
+            'harga': katalog.harga,
+            'deskripsi': katalog.deskripsi,
+            'toko': katalog.toko,
+        }
+
+        try:
+            category = Category.objects.get(id=katalog.kategori)
+            item_data['category_name'] = category.nama_category
+        except Category.DoesNotExist:
+            item_data['category_name'] = 'Category not found'
+
+        katalog_data.append(item_data)
+
+    return JsonResponse(katalog_data, safe=False)
 
 @csrf_exempt
 def add_api(request):
     if request.method == "POST":
         try:
-            # Parse JSON payload
             data = json.loads(request.body)
 
-            # Extract fields
             nama = data.get("nama")
             kategori = data.get("kategori")
             harga = data.get("harga")
             deskripsi = data.get("deskripsi")
             toko = data.get("toko")
 
-            # Validate fields
             if not all([nama, kategori, harga, deskripsi, toko]):
                 return JsonResponse({"error": "All fields are required."}, status=400)
 
-            # Save new item
             new_item = Katalog(
                 nama=nama,
                 kategori=kategori,
@@ -108,7 +127,6 @@ def add_api(request):
             new_item.save()
             print(nama, kategori, harga, deskripsi, toko)
 
-            # Return success response
             return JsonResponse({"message": "Item added successfully!"}, status=201)
 
         except json.JSONDecodeError:
@@ -121,24 +139,20 @@ def add_api(request):
 @csrf_exempt
 def update_api(request, id):
     try:
-        # Retrieve the item to be updated
         item = Katalog.objects.get(pk=id)
     except Katalog.DoesNotExist:
         return JsonResponse({"error": "Item not found"}, status=404)
 
     if request.method == "POST":
         try:
-            # Parse the JSON body
             data = json.loads(request.body)
 
-            # Update item fields
             item.nama = data.get("nama", item.nama)
             item.harga = data.get("harga", item.harga)
             item.kategori = data.get("kategori", item.kategori)
             item.deskripsi = data.get("deskripsi", item.deskripsi)
             item.toko = data.get("toko", item.toko)
 
-            # Save the updated item
             item.save()
             return JsonResponse({"message": "Item updated successfully!"}, status=200)
         except Exception as e:
@@ -148,7 +162,7 @@ def update_api(request, id):
 
 @csrf_exempt
 def delete_api(request, id):
-    if request.method == 'POST':  # Use DELETE HTTP method for deletions
+    if request.method == 'POST':
         item = get_object_or_404(Katalog, pk=id)
         item.delete()
         return JsonResponse({"message": "Item deleted successfully"}, status=200)
